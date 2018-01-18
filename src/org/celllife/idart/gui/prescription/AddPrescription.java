@@ -1238,8 +1238,9 @@ public class AddPrescription extends GenericFormGui implements
             cmbUpdateReason.setFocus();
             missingUpdateReason.open();
             return false;
-        }else if (!cheackDispensaTrimestral()) {return false;}
-        else if (!txtWeight.getText().equals("")) {
+        } else if (!cheackDispensaTrimestral()) {
+            return false;
+        } else if (!txtWeight.getText().equals("")) {
             try {
                 Double.parseDouble(txtWeight.getText());
             } catch (NumberFormatException nfe) {
@@ -1374,116 +1375,116 @@ public class AddPrescription extends GenericFormGui implements
             }
         }
 
-            // cmbClinicalStage.setText("" + localPrescription.getClinicalStage());
-            // set previous note details
-            if (localPrescription.getNotes() != null) {
-                txtAreaNotes.setText(localPrescription.getNotes());
-            }
-            // set the previous weight
-
-            if (localPrescription.getWeight() != null) {
-                txtWeight.setText(localPrescription.getWeight().toString());
-            }
-
-            // set the previous ppe
-            try {
-
-                String ppe = (AdministrationManager.loadPpe(localPrescription.getPatient().getId()));
-
-                System.out.println(" PPE actual " + ppe);
-
-                if (ppe.trim().equals("T")) {
-                    chkBtnPPE.setSelection(true);
-                }
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            // set the previous TB
-            try {
-
-                String tb = (AdministrationManager.loadTb(localPrescription.getPatient().getId()));
-
-                System.out.println(" TB actual " + tb);
-
-                if (tb.trim().equals("T")) {
-                    chkBtnTB.setSelection(true);
-                }
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            // set the previous ptv
-            try {
-
-                String ptv = (AdministrationManager.loadPtv(localPrescription.getPatient().getId()));
-
-                System.out.println(" PTV actual " + ptv);
-                if (ptv.trim().equals("T")) {
-                    chkBtnPTV.setSelection(true);
-                }
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            // Generate a new prescription id
-            cmdUpdatePrescriptionId();
-
-            List<PrescribedDrugs> drugs = localPrescription.getPrescribedDrugs();
-            for (int i = 0; i < drugs.size(); i++) {
-
-                PrescribedDrugs pd = drugs.get(i);
-                Drug theDrug = pd.getDrug();
-                Form theForm = theDrug.getForm();
-
-                if (theForm.getFormLanguage1().equals("")) // is a cream - no amnt per time
-                {
-                    tempAmtPerTime = "";
-                } else {
-                    if (new BigDecimal(pd.getAmtPerTime()).scale() == 0) {
-                        tempAmtPerTime = ""
-                                + new BigDecimal(pd.getAmtPerTime())
-                                        .unscaledValue().intValue();
-                    } else {
-                        tempAmtPerTime = "" + pd.getAmtPerTime();
-                    }
-                }
-
-                TableItem ti = new TableItem(tblDrugs, SWT.NONE);
-                String[] temp = new String[8];
-                temp[0] = "" + intDrugTableSize;
-                // temp[1] = "0";
-                temp[1] = theDrug.getName();
-                temp[2] = theForm.getActionLanguage1();
-                temp[3] = tempAmtPerTime;
-                temp[4] = theForm.getFormLanguage1();
-                temp[5] = "" + pd.getTimesPerDay();
-                temp[6] = "Vezes por dia";
-
-                ti.setText(temp);
-                ti.setData(pd);
-                intDrugTableSize += 1;
-
-            }
+        // cmbClinicalStage.setText("" + localPrescription.getClinicalStage());
+        // set previous note details
+        if (localPrescription.getNotes() != null) {
+            txtAreaNotes.setText(localPrescription.getNotes());
         }
-        /**
-         * This method is called if the user clicks on a row in the drugs table.
-         * The user is then asked if they want to delete the drug that they've
-         * selected.
-         *
-         */
+        // set the previous weight
+
+        if (localPrescription.getWeight() != null) {
+            txtWeight.setText(localPrescription.getWeight().toString());
+        }
+
+        // set the previous ppe
+        try {
+
+            String ppe = (AdministrationManager.loadPpe(localPrescription.getPatient().getId()));
+
+            System.out.println(" PPE actual " + ppe);
+
+            if (ppe.trim().equals("T")) {
+                chkBtnPPE.setSelection(true);
+            }
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // set the previous TB
+        try {
+
+            String tb = (AdministrationManager.loadTb(localPrescription.getPatient().getId()));
+
+            System.out.println(" TB actual " + tb);
+
+            if (tb.trim().equals("T")) {
+                chkBtnTB.setSelection(true);
+            }
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // set the previous ptv
+        try {
+
+            String ptv = (AdministrationManager.loadPtv(localPrescription.getPatient().getId()));
+
+            System.out.println(" PTV actual " + ptv);
+            if (ptv.trim().equals("T")) {
+                chkBtnPTV.setSelection(true);
+            }
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // Generate a new prescription id
+        cmdUpdatePrescriptionId();
+
+        List<PrescribedDrugs> drugs = localPrescription.getPrescribedDrugs();
+        for (int i = 0; i < drugs.size(); i++) {
+
+            PrescribedDrugs pd = drugs.get(i);
+            Drug theDrug = pd.getDrug();
+            Form theForm = theDrug.getForm();
+
+            if (theForm.getFormLanguage1().equals("")) // is a cream - no amnt per time
+            {
+                tempAmtPerTime = "";
+            } else {
+                if (new BigDecimal(pd.getAmtPerTime()).scale() == 0) {
+                    tempAmtPerTime = ""
+                            + new BigDecimal(pd.getAmtPerTime())
+                                    .unscaledValue().intValue();
+                } else {
+                    tempAmtPerTime = "" + pd.getAmtPerTime();
+                }
+            }
+
+            TableItem ti = new TableItem(tblDrugs, SWT.NONE);
+            String[] temp = new String[8];
+            temp[0] = "" + intDrugTableSize;
+            // temp[1] = "0";
+            temp[1] = theDrug.getName();
+            temp[2] = theForm.getActionLanguage1();
+            temp[3] = tempAmtPerTime;
+            temp[4] = theForm.getFormLanguage1();
+            temp[5] = "" + pd.getTimesPerDay();
+            temp[6] = "Vezes por dia";
+
+            ti.setText(temp);
+            ti.setData(pd);
+            intDrugTableSize += 1;
+
+        }
+    }
+
+    /**
+     * This method is called if the user clicks on a row in the drugs table. The
+     * user is then asked if they want to delete the drug that they've selected.
+     *
+     */
     private void cmdRemoveDrugWidgetSelected() {
 
         TableItem[] ti = tblDrugs.getSelection();
@@ -2335,10 +2336,10 @@ public class AddPrescription extends GenericFormGui implements
 
         localPrescription.setPrescribedDrugs(prescribedDrugsList);
         // set dispensatrimestral
-        if(cmbDispensaTristral.getText().contentEquals("Sim")){
+        if (cmbDispensaTristral.getText().contentEquals("Sim")) {
             localPrescription.setDispensaTrimestral(1);
         }
-        if(cmbDispensaTristral.getText().contentEquals("Nao")){
+        if (cmbDispensaTristral.getText().contentEquals("Nao")) {
             localPrescription.setDispensaTrimestral(0);
         }
     }
@@ -2606,56 +2607,62 @@ public class AddPrescription extends GenericFormGui implements
     }
 
     private boolean cheackDispensaTrimestral() {
-        try{
-        String result = cmbDispensaTristral.getItem(cmbDispensaTristral.getSelectionIndex());
-        switch (result) {
-            case "Sim":
-            {
-                String prescritionDuration = cmbDuration.getItem(cmbDuration.getSelectionIndex());
-
-                
-                if (!"3 meses".equals(prescritionDuration)) {
-                    MessageBox mb = new MessageBox(getShell());
-                    mb.setText("Dispensa Trimestral");
-                    mb.setMessage("Selecionou dispensa trimestral, mas a duracao da prescricao nao e de 3 meses. por favor corrigir");
-                    mb.open();
-                    return false;
-                } else  {
-                    return true;
-                }
-                
-            }
-            case "Nao":
-                {
+        try {
+            String result = cmbDispensaTristral.getItem(cmbDispensaTristral.getSelectionIndex());
+            switch (result) {
+                case "Sim": {
                     String prescritionDuration = cmbDuration.getItem(cmbDuration.getSelectionIndex());
-                    if (prescritionDuration.contentEquals("3 meses")) {
+
+                    if (!"3 meses".equals(prescritionDuration)) {
                         MessageBox mb = new MessageBox(getShell());
                         mb.setText("Dispensa Trimestral");
-                        mb.setMessage("A duracao da prescricao  e de 3 meses. Mas nao selecionou dispensa trimestral por favor corrigir");
+                        mb.setMessage("Selecionou dispensa trimestral, mas a duracao da prescricao nao e de 3 meses. por favor corrigir");
                         mb.open();
                         return false;
-                        
-                    } 
-                    else { return true; }
+                    } else {
+                        return true;
+                    }
+
                 }
-            default:
-                MessageBox mb = new MessageBox(getShell());
-                mb.setText("Dispensa Trimestral");
-                mb.setMessage("Seleciona especifique se e dispensa trimestral ou nao");
-                mb.open();
-                return false;
+                case "Nao": {
+                    String prescritionDuration = cmbDuration.getItem(cmbDuration.getSelectionIndex());
+                    if (prescritionDuration.contentEquals("3 meses")) {
+                        ///perguntar aqui
+                        MessageBox mb = new MessageBox(getShell(), SWT.ICON_QUESTION
+                                | SWT.YES | SWT.NO);
+
+                        mb.setText("Dispensa Trimestral");
+                        mb.setMessage("A duracao da prescricao  e de 3 meses. Mas nao selecionou dispensa trimestral. Deseja continuar?");
+                        switch (mb.open()) {
+                            case SWT.YES:
+                                // Return true, continuar a dispensa
+                                return true;
+                  
+                            case SWT.NO:
+                                return false;
+                        }
+
+                    } else {
+                        return true;
+                    }
+                }
+                default:
+                    MessageBox mb = new MessageBox(getShell());
+                    mb.setText("Dispensa Trimestral");
+                    mb.setMessage("Especifique se e dispensa trimestral ou nao");
+                    mb.open();
+                    return false;
+            }
+        } catch (java.lang.IllegalArgumentException ex) {
+
+            MessageBox mb = new MessageBox(getShell());
+            mb.setText("Dispensa Trimestral");
+            mb.setMessage("Dispensa trimestral nao foi Selecionada");
+            mb.open();
+            return false;
+
         }
-        } catch(java.lang.IllegalArgumentException ex){
-            
-               MessageBox mb = new MessageBox(getShell());
-                mb.setText("Dispensa Trimestral");
-                mb.setMessage("Dispensa trimestral nao foi Selecionada");
-                mb.open();
-                return false;
-                        
-        }
-       
-   
+
     }
 
     /**
