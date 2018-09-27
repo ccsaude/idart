@@ -553,6 +553,36 @@ public class CommonObjects {
 		}
 
 	}
+        
+        
+        	public static void populateTipoDeAfinidade(Session sess, CCombo combo) {
+
+		List<SimpleDomain> afinidades = AdministrationManager.getAllTiposAfinidade(sess);
+
+		for (SimpleDomain s : afinidades) {
+				combo.add(s.getValue());
+			}
+
+		if (combo.getItemCount() > 0) {
+			// Set the combo box to blank -> ensures that user
+			// is forced to enter the information
+			combo.setText("");
+		}
+
+	}
+                
+                public static void populateDesintegracao(Session sess, CCombo combo) {
+
+		combo.add("Sim");
+                combo.add("Nao");
+		
+		if (combo.getItemCount() > 0) {
+			// Set the combo box to blank -> ensures that user
+			// is forced to enter the information
+			combo.setText("");
+		}
+
+	}
 	
 	
 	/**

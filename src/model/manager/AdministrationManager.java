@@ -90,6 +90,20 @@ public class AdministrationManager {
 
         return result;
     }
+    
+      /**
+     *
+     * Devolve lista de tipos de afinidade de Gaac para alimentar o combobox no formulario de
+     * Gaac
+     *
+     */
+    @SuppressWarnings("unchecked")
+    public static List<SimpleDomain> getAllTiposAfinidade(Session sess)
+            throws HibernateException {
+        List<SimpleDomain> result = sess.createQuery(
+                "select s from SimpleDomain as s where s.name='tipo_afinidade' "  ).list();
+        return result;
+    }
 
     /**
      *

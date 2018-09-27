@@ -46,9 +46,7 @@ public class Pregnancy {
 	private Patient patient;
 
 	private Date confirmDate;
-
 	private Date endDate;
-
 	private char modified;
 
 	public Pregnancy() {
