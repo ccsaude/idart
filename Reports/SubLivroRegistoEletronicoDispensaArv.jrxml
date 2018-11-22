@@ -48,7 +48,6 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="New Dataset 1"/>
 	<parameter name="path" class="java.lang.String">
 		<parameterDescription><![CDATA[Path for the report files]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -60,66 +59,156 @@
 	<parameter name="stockCenterName" class="java.lang.String">
 		<defaultValueExpression><![CDATA["CIPRA"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="facilityName" class="java.lang.String">
-		<defaultValueExpression><![CDATA["Desmond Tutu Centre Pharmacy"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="stockCenterId" class="java.lang.Integer">
-		<parameterDescription><![CDATA[An Integer of the Clnic's Identifier]]></parameterDescription>
-		<defaultValueExpression><![CDATA[new Integer(131)]]></defaultValueExpression>
-	</parameter>
-	<parameter name="dateFormat" class="java.lang.String">
-		<parameterDescription><![CDATA[Exact same value as date, but formatted]]></parameterDescription>
-		<defaultValueExpression><![CDATA["2005-09-01"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="pharmacist1" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="pharmacist2" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="monthStart" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="monthEnd" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\eclipse.OLD\\wp\\idart\\Reports\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateEnd" class="java.util.Date"/>
-	<parameter name="totalpacientesfarmacia" class="java.lang.Integer"/>
-	<parameter name="totalpacientesinicio" class="java.lang.Integer"/>
-	<parameter name="totalpacientesmanter" class="java.lang.Integer"/>
-	<parameter name="totalpacientesalterar" class="java.lang.Integer"/>
-	<parameter name="totalpacientesppe" class="java.lang.Integer"/>
-	<parameter name="totalpacientesptvmanter" class="java.lang.Integer"/>
-	<parameter name="totalpacientesptvinicia" class="java.lang.Integer"/>
-	<parameter name="totalpacientesptvalterar" class="java.lang.Integer"/>
-	<parameter name="mesesdispensados" class="java.lang.Integer"/>
-	<parameter name="dataelaboracao" class="java.lang.String"/>
-	<parameter name="pacientesEmTarv" class="java.lang.Integer"/>
-	<parameter name="mes" class="java.lang.String"/>
-	<parameter name="mes2" class="java.lang.String"/>
-	<parameter name="tbinicio" class="java.lang.Integer"/>
-	<parameter name="tbalteracao" class="java.lang.Integer"/>
-	<parameter name="tbmanutencao" class="java.lang.Integer"/>
-	<parameter name="username" class="java.lang.String"/>
+	<parameter name="idpatient" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[250]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idprescription" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[2116204]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select
-distinct d.id,
-d.name,
-f.formlanguage1,
-d.packsize,
-a.code as atccode,
-d.stockcode, d.pediatric
-from drug as d
-left outer join stock as s on s.drug = d.id
-left outer join atccode as a on d.atccode_id = a.id
-left outer join form as f on d.form=f.id
-where s.stockCenter = $P{stockCenterId}
-and d.sidetreatment = 'F'
-and d.pediatric='F'
-order by d.pediatric asc]]>
+		<![CDATA[select p.id as id,p.patientId as patientid,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/AZT/NVP]'::character varying,60,true) as LuZiNeAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/TDF/EFV]'::character varying,30,true) as LuTeEfAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/AZT]'::character varying,60,true) as LuZiAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/D4T/NVP]'::character varying,60,true) as LuStNeAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/D4T]'::character varying,60,true) as LuStAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/TDF]'::character varying,30,true) as LuTddulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[EFV]'::character varying,30,true) as EfAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[LPV/RTV]'::character varying,120,true) as LpRtAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[ABC]'::character varying,60,true) as AbcAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[NVP]'::character varying,60,true) as NvpAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC]'::character varying,60,true) as tcAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[AZT]'::character varying,60,true) as AztAdulto,
+pickupdrugs($P{date},$P{dateEnd},p.id,'Outro'::character varying,0,true) as OutroAdulto,
+
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/D4T/NVP]'::character varying,60,false) as LuStNePed,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/D4T]'::character varying,60,false) as LuStPed,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/AZT/NVP]'::character varying,60,false) as LuZiNePed,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/AZT]'::character varying,60,false) as LuZiPed,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[LPV/RTV] Lopinavir 1'::character varying,120,false) as LupCompPed,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[LPV/RTV] Lopinavir 8'::character varying,60,false) as LupOralPed,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[ABC/3TC]'::character varying,30,false) as AbLuPed,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[EFV] Efavirenze 2'::character varying,30,false) as Efv2Ped,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[EFV] Efavirenze 5'::character varying,60,false) as Efv5Ped,
+pickupdrugs($P{date},$P{dateEnd},p.id,'[ABC]'::character varying,60,false) as AbcPed,
+pickupdrugs($P{date},$P{dateEnd},p.id,'Outro'::character varying,0,false) as OutroPed,
+regimePaciente(pr.id, 'AZT+3TC+NVP') as azt3tcnvp,
+regimePaciente(pr.id, 'TDF+3TC+EFV') as tdf3tcefv,
+regimePaciente(pr.id, 'AZT+3TC+EFV') as azt3tcefv,
+regimePaciente(pr.id, 'd4T30+3TC+NVP') as d4t303tcnvp,
+regimePaciente(pr.id, 'd4T30+3TC+EFV') as d4t303tclpv,
+regimePaciente(pr.id, 'd4T+3TC+LPV/RTV') as d4t3tclpvr,
+regimePaciente(pr.id, 'AZT+3TC+LPV/RTV') as azt3tclpv,
+regimePaciente(pr.id, 'TDF+3TC+LPV/r') as tdf3tclpv,
+regimePaciente(pr.id, 'ABC+3TC+LPV/r') as abc3tclpv,
+regimePaciente(pr.id, 'd4T+3TC+LPV/RTV') as d4t3tclpv,
+regimePaciente(pr.id, 'd4T+3TC+ABC') as d4t3tcabc,
+regimePaciente(pr.id, 'd4T+3TC+EFV') as d4t3tcefv,
+regimePaciente(pr.id, 'AZT 60+3TC+NVP') as azt603tcnvp,
+regimePaciente(pr.id, 'AZT 60+3TC+EFV') as azt603tcefv,
+regimePaciente(pr.id, 'AZT 60+3TC+ABC') as azt603tcabc,
+regimePaciente(pr.id, 'AZT 60+3TC+LPV/r') as azt603tclpv,
+regimePaciente(pr.id, 'ABC+3TC+LPV/r') as abc3tclpvl,
+regimePaciente(pr.id, 'ABC+3TC+EFV') as abc3tcefv,
+pr.duration/4 as mesesDispensados,
+ CASE
+    WHEN pr.reasonforupdate = 'Inicia' THEN 'X'
+    ELSE ''
+  END
+  AS Novo,
+   CASE
+    WHEN pr.reasonforupdate = 'Manter' THEN 'X'
+    ELSE ''
+  END
+  AS Manuntencao,
+   CASE
+    WHEN pr.reasonforupdate = 'Alterar' THEN 'X'
+    ELSE ''
+  END
+  AS Alteracao,
+   CASE
+    WHEN pr.ppe = 'T' THEN 'X'
+    ELSE ''
+  END
+  AS ppe,
+   CASE
+    WHEN pr.ptv = 'T' THEN 'X'
+    ELSE ''
+  END
+  AS ptv,
+   CASE
+    WHEN pr.tipodt = 'Novo' THEN 'X'
+    ELSE ''
+  END
+  AS NovoDt,
+   CASE
+    WHEN pr.tipodt IS NOT NULL AND pr.tipodt <> 'Novo' THEN 'X'
+    ELSE ''
+  END
+  AS ManuntencaoDt
+from Patient as p
+inner join prescription pr on pr.patient = p.id
+where p.id = $P{idpatient} and pr.id = $P{idprescription}
+group by p.id,pr.duration,pr.id, pr.reasonforupdate, pr.ppe,pr.ptv,pr.tipodt
+order by pr.date asc
+limit 1;]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
-	<field name="name" class="java.lang.String"/>
-	<field name="formlanguage1" class="java.lang.String"/>
-	<field name="packsize" class="java.lang.Integer"/>
-	<field name="atccode" class="java.lang.String"/>
-	<field name="stockcode" class="java.lang.String"/>
-	<field name="pediatric" class="java.lang.String"/>
+	<field name="patientid" class="java.lang.String"/>
+	<field name="luzineadulto" class="java.lang.String"/>
+	<field name="luteefadulto" class="java.lang.String"/>
+	<field name="luziadulto" class="java.lang.String"/>
+	<field name="lustneadulto" class="java.lang.String"/>
+	<field name="lustadulto" class="java.lang.String"/>
+	<field name="lutddulto" class="java.lang.String"/>
+	<field name="efadulto" class="java.lang.String"/>
+	<field name="lprtadulto" class="java.lang.String"/>
+	<field name="abcadulto" class="java.lang.String"/>
+	<field name="nvpadulto" class="java.lang.String"/>
+	<field name="tcadulto" class="java.lang.String"/>
+	<field name="aztadulto" class="java.lang.String"/>
+	<field name="outroadulto" class="java.lang.String"/>
+	<field name="lustneped" class="java.lang.String"/>
+	<field name="lustped" class="java.lang.String"/>
+	<field name="luzineped" class="java.lang.String"/>
+	<field name="luziped" class="java.lang.String"/>
+	<field name="lupcompped" class="java.lang.String"/>
+	<field name="luporalped" class="java.lang.String"/>
+	<field name="abluped" class="java.lang.String"/>
+	<field name="efv2ped" class="java.lang.String"/>
+	<field name="efv5ped" class="java.lang.String"/>
+	<field name="abcped" class="java.lang.String"/>
+	<field name="outroped" class="java.lang.String"/>
+	<field name="azt3tcnvp" class="java.lang.String"/>
+	<field name="tdf3tcefv" class="java.lang.String"/>
+	<field name="azt3tcefv" class="java.lang.String"/>
+	<field name="d4t303tcnvp" class="java.lang.String"/>
+	<field name="d4t303tclpv" class="java.lang.String"/>
+	<field name="d4t3tclpvr" class="java.lang.String"/>
+	<field name="azt3tclpv" class="java.lang.String"/>
+	<field name="tdf3tclpv" class="java.lang.String"/>
+	<field name="abc3tclpv" class="java.lang.String"/>
+	<field name="d4t3tclpv" class="java.lang.String"/>
+	<field name="d4t3tcabc" class="java.lang.String"/>
+	<field name="d4t3tcefv" class="java.lang.String"/>
+	<field name="azt603tcnvp" class="java.lang.String"/>
+	<field name="azt603tcefv" class="java.lang.String"/>
+	<field name="azt603tcabc" class="java.lang.String"/>
+	<field name="azt603tclpv" class="java.lang.String"/>
+	<field name="abc3tclpvl" class="java.lang.String"/>
+	<field name="abc3tcefv" class="java.lang.String"/>
+	<field name="mesesdispensados" class="java.lang.Integer"/>
+	<field name="novo" class="java.lang.String"/>
+	<field name="manuntencao" class="java.lang.String"/>
+	<field name="alteracao" class="java.lang.String"/>
+	<field name="ppe" class="java.lang.String"/>
+	<field name="ptv" class="java.lang.String"/>
+	<field name="novodt" class="java.lang.String"/>
+	<field name="manuntencaodt" class="java.lang.String"/>
 	<variable name="test" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA["test"]]></variableExpression>
 		<initialValueExpression><![CDATA["test"]]></initialValueExpression>
@@ -127,274 +216,268 @@ order by d.pediatric asc]]>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="32">
+		<band height="24">
 			<line>
-				<reportElement key="line-28" x="1263" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1263" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="198" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="198" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1174" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1174" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-1" mode="Opaque" x="1" y="28" width="1489" height="1" forecolor="#000000" backcolor="#000000"/>
+				<reportElement key="line-1" mode="Opaque" x="1" y="23" width="1489" height="1" forecolor="#000000" backcolor="#000000"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="904" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="904" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="825" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="825" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="174" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="174" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1425" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1425" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="527" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="527" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="715" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="715" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="987" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="987" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="960" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="960" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1014" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1014" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1398" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1398" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="499" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="499" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="473" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="473" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="92" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="92" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="607" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="607" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="662" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="662" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="796" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="796" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="770" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="770" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="635" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="635" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1319" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1319" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="581" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="581" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="742" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="742" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="363" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="363" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1067" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1067" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="933" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="933" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1371" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1371" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1040" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1040" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="334" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="334" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="687" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="687" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-2" mode="Opaque" x="1237" y="1" width="1" height="28" forecolor="#000000" backcolor="#000000"/>
+				<reportElement key="line-2" mode="Opaque" x="1237" y="1" width="1" height="23" forecolor="#000000" backcolor="#000000"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="227" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="227" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1292" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1292" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1120" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1120" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="144" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="144" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1201" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1201" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="852" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="852" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="416" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="416" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1094" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1094" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="879" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="879" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="65" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="65" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="390" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="390" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
@@ -406,75 +489,323 @@ order by d.pediatric asc]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="446" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="446" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="255" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="255" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1147" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1147" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="1346" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="1346" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-2" mode="Opaque" x="1" y="1" width="1" height="28" forecolor="#000000" backcolor="#000000"/>
+				<reportElement key="line-2" mode="Opaque" x="1" y="1" width="1" height="23" forecolor="#000000" backcolor="#000000"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="309" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="309" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-2" mode="Opaque" x="1490" y="1" width="1" height="28" forecolor="#000000" backcolor="#000000"/>
+				<reportElement key="line-2" mode="Opaque" x="1490" y="1" width="1" height="23" forecolor="#000000" backcolor="#000000"/>
 				<graphicElement fill="Solid">
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="119" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="119" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="282" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="282" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-28" x="553" y="1" width="1" height="28" backcolor="#000000"/>
+				<reportElement key="line-28" x="553" y="1" width="1" height="23" backcolor="#000000"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
+			<textField>
+				<reportElement x="2" y="1" width="64" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{patientid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="66" y="2" width="26" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{luzineadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="2" width="26" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{luteefadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="2" width="24" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{luziadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="2" width="29" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lustneadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="2" width="23" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lustadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="199" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lutddulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{efadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="257" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lprtadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{abcadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="2" width="24" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nvpadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="335" y="2" width="26" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tcadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{aztadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="391" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{outroadulto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="2" width="26" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lustneped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lustped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="474" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{luzineped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="2" width="26" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{luziped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="528" y="2" width="25" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lupcompped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="554" y="3" width="27" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{luporalped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="582" y="3" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{abluped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="608" y="3" width="27" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{efv2ped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="636" y="2" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{efv5ped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="663" y="2" width="24" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{abcped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="688" y="2" width="27" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{outroped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1399" y="3" width="26" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{manuntencaodt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1372" y="3" width="26" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{novodt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1347" y="3" width="24" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ptv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1320" y="2" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ppe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1293" y="3" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alteracao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1264" y="3" width="28" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{manuntencao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1238" y="3" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{novo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1201" y="3" width="36" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{mesesdispensados}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="716" y="3" width="26" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{azt3tcnvp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="743" y="2" width="27" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tdf3tcefv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="771" y="3" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{azt3tcefv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="797" y="4" width="28" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{d4t303tcnvp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="826" y="3" width="26" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{d4t303tclpv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="853" y="3" width="26" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{d4t3tclpvr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="880" y="3" width="24" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{azt3tclpv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="905" y="2" width="28" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tdf3tclpv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="934" y="2" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{abc3tclpv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="961" y="2" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{d4t3tclpv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="988" y="2" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{d4t3tcabc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1016" y="3" width="24" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{d4t3tcefv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1041" y="3" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{azt603tcnvp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1068" y="2" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{azt603tcefv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1095" y="2" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{azt603tcabc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1122" y="4" width="25" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{azt603tclpv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1148" y="3" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{abc3tclpvl}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1175" y="3" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{abc3tcefv}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band/>
 	</detail>
-	<pageFooter>
-		<band height="23" splitType="Stretch"/>
-	</pageFooter>
-	<lastPageFooter>
-		<band height="21" splitType="Stretch"/>
-	</lastPageFooter>
-	<summary>
-		<band height="23" splitType="Stretch"/>
-	</summary>
 </jasperReport>
