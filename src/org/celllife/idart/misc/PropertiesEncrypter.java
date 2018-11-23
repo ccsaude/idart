@@ -201,7 +201,7 @@ public class PropertiesEncrypter {
 
 	public void savePropertiesToFile(String fileName) throws IOException {
 		File outFile = new File(fileName);
-		OutputStream out;
+		OutputStream out = null;
 		try {
 			out = new FileOutputStream(outFile);
 		} catch (FileNotFoundException e) {

@@ -47,6 +47,7 @@ import org.celllife.idart.gui.reportParameters.DrugsDispensed;
 import org.celllife.idart.gui.reportParameters.EpisodeStats;
 import org.celllife.idart.gui.reportParameters.EpisodesStartedOrEndedReportGUI;
 import org.celllife.idart.gui.reportParameters.FilaGeralReport;
+import org.celllife.idart.gui.reportParameters.LivroEletronicoDispensaARV;
 import org.celllife.idart.gui.reportParameters.LostToFollowUp;
 import org.celllife.idart.gui.reportParameters.LostToFollowUpReturned;
 import org.celllife.idart.gui.reportParameters.MissedAppointments;
@@ -422,6 +423,9 @@ private void createGrpClinicManagementReports() {
 		reportGUIs.put(GenericReportGuiInterface.REPORT_MIAMISAU,
 				new MmiaReportMISAU(getShell(), false));
 		
+                reportGUIs.put("Livro Electronico ARV",
+				new LivroEletronicoDispensaARV(getShell(), false));
+                
 		reportGUIs.put(GenericReportGuiInterface.REPORT_IDART,
 				new RegisteredIdart(getShell(), false));
 		

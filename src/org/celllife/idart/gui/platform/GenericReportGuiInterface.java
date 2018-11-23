@@ -55,5 +55,6 @@ public interface GenericReportGuiInterface {
         static String REPORT_LOST_TO_FOLLOW_UP  = Messages.getString("reports.losttofollowup");
         static String REPORT_LOST_TO_FOLLOW_UP_RETURNED  = Messages.getString("reports.losttofollowupreturned");
         static String REPORT_SEGUNDA_LINHA_AVALIACAO  = Messages.getString("reports.segundaslinhasavaliacao");
+        static String REPORT_LIVRO_ELETRONICO_ARV  = Messages.getString("reports.livroEletronico");
 	
 }
