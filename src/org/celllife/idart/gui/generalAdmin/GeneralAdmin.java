@@ -68,7 +68,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.hibernate.Session;
-
+import org.celllife.idart.gui.gaac.addGaac;
 /**
  */
 public class GeneralAdmin extends GenericAdminGui {
@@ -109,20 +109,85 @@ public class GeneralAdmin extends GenericAdminGui {
         // create the 4 groups
         createGrpPharmacy();
         createGrpImport();
-        createGrpClinic();
+        //createGrpClinic();
         createGrpDrug();
         createGrpDoctor();
         createGrpDrugGroup();
+        createGrpGaac();
     }
 
     @Override
     protected void setLogger() {
         setLog(Logger.getLogger(this.getClass()));
     }
+    
+       /**
+     * This method initializes grpGaac
+     */
+     private void createGrpGaac() {
+
+        // grpGaac
+        Group grpGaac = new Group(getCompOptions(), SWT.NONE);
+        grpGaac.setBounds(new Rectangle(495, 13, 305, 150));
+        grpGaac.setText("                 " + Messages.getString("GeneralAdmin.group.gaac.title")); //$NON-NLS-1$
+        grpGaac.setFont(ResourceUtils.getFont(iDartFont.VERASANS_12));
+
+        // lblPicGaac
+        Label lblPicGaac = new Label(grpGaac, SWT.NONE);
+        lblPicGaac.setBounds(new org.eclipse.swt.graphics.Rectangle(6, 0,
+                50, 43));
+        lblPicGaac.setText(EMPTY);
+        lblPicGaac.setImage(ResourceUtils.getImage(iDartImage.CLINIC));
+
+        // btnGaacAdd
+        Button btnGaacAdd = new Button(grpGaac, SWT.NONE);
+        btnGaacAdd.setBounds(new org.eclipse.swt.graphics.Rectangle(35, 55,
+                235, 30));
+        btnGaacAdd
+                .setToolTipText(Messages.getString("gaac.screen.tooltip.add")); //$NON-NLS-1$
+        btnGaacAdd.setText(Messages.getString("Gaac.button.title.add")); //$NON-NLS-1$
+        btnGaacAdd.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        btnGaacAdd
+                .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+                    @Override
+                    public void widgetSelected(
+                            org.eclipse.swt.events.SelectionEvent e) {
+                        cmd_gaacAdd();
+                    }
+                });
+        btnGaacAdd.setEnabled(true);
+        // btnGaacUpdate
+        Button btnGaacUpdate = new Button(grpGaac, SWT.NONE);
+        btnGaacUpdate.setBounds(new org.eclipse.swt.graphics.Rectangle(35,
+                100, 235, 30));
+        btnGaacUpdate
+                .setToolTipText(Messages.getString("gaac.screen.tooltip.update")); //$NON-NLS-1$
+
+        btnGaacUpdate.setText(Messages.getString("Gaac.button.title.update")); //$NON-NLS-1$
+        btnGaacUpdate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        btnGaacUpdate
+                .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+                    @Override
+                    public void widgetSelected(
+                            org.eclipse.swt.events.SelectionEvent e) {
+                        cmd_gaacAdd();
+                    }
+                });
+        btnGaacUpdate.setEnabled(true);
+    }
+
+         
+    public void cmd_gaacAdd(){
+             // AddGaac(true) to ADD new gaac
+        addGaac.addInitialisationOption(GenericFormGui.OPTION_isAddNotUpdate,
+                true);
+        new addGaac(getShell(),true);
+    }
+
 
     /**
      * This method initializes grpClinics
-     */
+     
     private void createGrpClinic() {
 
         // grpClinics
@@ -173,7 +238,7 @@ public class GeneralAdmin extends GenericAdminGui {
                     }
                 });
         btnClinicsUpdate.setEnabled(false);
-    }
+    }   */
 
     /**
      * This method initializes grpDoctors
