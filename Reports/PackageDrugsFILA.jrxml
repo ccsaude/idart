@@ -14,7 +14,9 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="path" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\colaco\\Documents\\Projectos CCS\\Sub\\idart\\idart\\Reports"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="pickdate" class="java.sql.Timestamp" isForPrompting="false"/>
 	<parameter name="patientId" class="java.lang.String">
 		<defaultValueExpression><![CDATA["11010601/10/0996"]]></defaultValueExpression>
@@ -97,7 +99,7 @@ order by dispensedate DESC]]>
 					<subreportParameterExpression><![CDATA[$P{pickdate}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "PackageDrugsFILASub.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{path} + java.io.File.separator + "PackageDrugsFILASub.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

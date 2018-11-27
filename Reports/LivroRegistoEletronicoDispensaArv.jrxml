@@ -48,7 +48,11 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="New Dataset 1"/>
+	<subDataset name="New Dataset 1">
+		<queryString language="SQL">
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
 	<parameter name="path" class="java.lang.String">
 		<parameterDescription><![CDATA[Path for the report files]]></parameterDescription>
 		<defaultValueExpression><![CDATA["C:\\Users\\colaco\\Documents\\Projectos CCS\\Sub\\idart\\idart\\Reports"]]></defaultValueExpression>
@@ -69,49 +73,53 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select p.id as id,p.patientId as patientid,c.clinicname as facilityName,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/AZT/NVP]'::character varying,60,true) as LuZiNeAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/TDF/EFV]'::character varying,30,true) as LuTeEfAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/AZT]'::character varying,60,true) as LuZiAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/D4T/NVP]'::character varying,60,true) as LuStNeAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/D4T]'::character varying,60,true) as LuStAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/TDF]'::character varying,30,true) as LuTddulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[EFV]'::character varying,30,true) as EfAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[LPV/RTV]'::character varying,120,true) as LpRtAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[ABC]'::character varying,60,true) as AbcAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[NVP]'::character varying,60,true) as NvpAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC]'::character varying,60,true) as tcAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[AZT]'::character varying,60,true) as AztAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'Outro'::character varying,0,true) as OutroAdulto,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/D4T/NVP]'::character varying,60,false) as LuStNePed,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/D4T]'::character varying,60,false) as LuStPed,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/AZT/NVP]'::character varying,60,false) as LuZiNePed,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[3TC/AZT]'::character varying,60,false) as LuZiPed,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[LPV/RTV] Lopinavir 1'::character varying,120,false) as LupCompPed,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[LPV/RTV] Lopinavir 8'::character varying,60,false) as LupOralPed,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[ABC/3TC]'::character varying,30,false) as AbLuPed,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[EFV] Efavirenze 2'::character varying,30,false) as Efv2Ped,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[EFV] Efavirenze 5'::character varying,60,false) as Efv5Ped,
-pickupdrugs($P{date},$P{dateEnd},p.id,'[ABC]'::character varying,60,false) as AbcPed,
-pickupdrugs($P{date},$P{dateEnd},p.id,'Outro'::character varying,0,false) as OutroPed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC/AZT/NVP] Lamivudina 150mg/Zidovudina 300mg/Nevirapina 200mg'::character varying,60,true) as LuZiNeAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[TDF/3TC/EFV] Tenofovir 300mg/Lamivudina 300mg/Efavirenze 600mg'::character varying,30,true) as LuTeEfAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC/AZT] Lamivudina 150mg/ Zidovudina 300mg'::character varying,60,true) as LuZiAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC/D4T/NVP] Lamivudina 150mg/Stavudina 30mg/Nevirapina 200mg'::character varying,60,true) as LuStNeAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC/D4T]Lamivudina 150mg/Stavudina 30mg'::character varying,60,true) as LuStAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[TDF/3TC] Tenofovir 300mg/Lamivudina 300mg'::character varying,30,true) as LuTddulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[EFV] Efavirenz 600mg'::character varying,30,true) as EfAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[LPV/RTV] Lopinavir/Ritonavir -Aluvia 200mg/50mg'::character varying,120,true) as LpRtAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[ABC] Abacavir 300mg'::character varying,60,true) as AbcAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[NVP] Nevirapine 200mg'::character varying,60,true) as NvpAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC] Lamivudine150mg'::character varying,60,true) as tcAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[AZT] Zidovudine 300mg'::character varying,60,true) as AztAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'Outro'::character varying,0,true) as OutroAdulto,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC/D4T/NVP] Lamivudina 150mg/Stavudina 30mg/Nevirapina 200mg'::character varying,60,false) as LuStNePed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC/D4T]Lamivudina 30mg/Stavudina 6mg'::character varying,60,false) as LuStPed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC/AZT/NVP] Lamivudina 30mg/Zidovudina 60mg/Nevirapina 50mg'::character varying,60,false) as LuZiNePed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[3TC/AZT] Lamivudina 30mg/ Zidovudina 60mg'::character varying,60,false) as LuZiPed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[LPV/RTV] Lopinavir/Ritonavir -Aluvia 100mg/25mg'::character varying,120,false) as LupCompPed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[LPV/RTV]  Lopinavir/Ritonavir-Kaletra 80/20 mg/ml'::character varying,60,false) as LupOralPed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[ABC/3TC] Abacavir 60 and Lamivudina 30mg'::character varying,30,false) as AbLuPed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[EFV] Efavirenz 200mg'::character varying,30,false) as Efv2Ped,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[EFV] Efavirenz 50mg'::character varying,60,false) as Efv5Ped,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'[ABC] Abacavir 60mg'::character varying,60,false) as AbcPed,
+pickupdrugs($P{date},$P{dateEnd},pr.id,'Outro'::character varying,0,false) as OutroPed,
 regimePaciente(pr.id, 'AZT+3TC+NVP') as azt3tcnvp,
 regimePaciente(pr.id, 'TDF+3TC+EFV') as tdf3tcefv,
 regimePaciente(pr.id, 'AZT+3TC+EFV') as azt3tcefv,
 regimePaciente(pr.id, 'd4T30+3TC+NVP') as d4t303tcnvp,
 regimePaciente(pr.id, 'd4T30+3TC+EFV') as d4t303tclpv,
-regimePaciente(pr.id, 'd4T+3TC+LPV/RTV') as d4t3tclpvr,
-regimePaciente(pr.id, 'AZT+3TC+LPV/RTV') as azt3tclpv,
+regimePaciente(pr.id, 'd4T+3TC+LPV/r') as d4t3tclpvr,
+regimePaciente(pr.id, 'AZT+3TC+LPV/r') as azt3tclpv,
 regimePaciente(pr.id, 'TDF+3TC+LPV/r') as tdf3tclpv,
 regimePaciente(pr.id, 'ABC+3TC+LPV/r') as abc3tclpv,
-regimePaciente(pr.id, 'd4T+3TC+LPV/RTV') as d4t3tclpv,
-regimePaciente(pr.id, 'd4T+3TC+ABC') as d4t3tcabc,
-regimePaciente(pr.id, 'd4T+3TC+EFV') as d4t3tcefv,
-regimePaciente(pr.id, 'AZT 60+3TC+NVP') as azt603tcnvp,
-regimePaciente(pr.id, 'AZT 60+3TC+EFV') as azt603tcefv,
-regimePaciente(pr.id, 'AZT 60+3TC+ABC') as azt603tcabc,
-regimePaciente(pr.id, 'AZT 60+3TC+LPV/r') as azt603tclpv,
+regimePaciente(pr.id, 'd4T+3TC+LPV/r(2DFC Baby+LPV/r)') as d4t3tclpv,
+regimePaciente(pr.id, 'd4T+3TC+ABC (2DFC Baby + ABC )') as d4t3tcabc,
+regimePaciente(pr.id, 'd4T+3TC+EFV (2DFC Baby + EFV)') as d4t3tcefv,
+regimePaciente(pr.id, 'AZT60+3TC+NVP (3DFC)') as azt603tcnvp,
+regimePaciente(pr.id, 'AZT 60+3TC+EFV (2DFC + EFV)') as azt603tcefv,
+regimePaciente(pr.id, 'AZT 60+3TC+ABC (2DFC + ABC)') as azt603tcabc,
+regimePaciente(pr.id, 'AZT 60+3TC+LPV/r(2DFC+LPV/r)') as azt603tclpv,
 regimePaciente(pr.id, 'ABC+3TC+LPV/r') as abc3tclpvl,
 regimePaciente(pr.id, 'ABC+3TC+EFV') as abc3tcefv,
-pr.duration/4 as mesesDispensados,
+ CASE
+    WHEN packdrug.amount = 0 THEN 0
+    ELSE pack.weekssupply/4
+  END
+  AS mesesDispensados,
  CASE
     WHEN pr.reasonforupdate = 'Inicia' THEN 'X'
     ELSE ''
@@ -150,8 +158,10 @@ pr.duration/4 as mesesDispensados,
 from Patient as p
 inner join clinic c on c.id = p.clinic
 inner join prescription pr on pr.patient = p.id
+inner join package pack on pack.prescription = pr.id
+inner join packageddrugs packdrug on packdrug.parentPackage = pack.id
 where pr.date between $P{date} and $P{dateEnd} and c.mainclinic = true
-group by p.id,pr.duration,pr.id, pr.reasonforupdate, pr.ppe, pr.ptv, pr.tipodt, c.clinicname
+group by p.id,pr.duration,pr.id, pr.reasonforupdate, pr.ppe, pr.ptv, pr.tipodt, c.clinicname,pack.weekssupply,packdrug.amount
 order by pr.date asc]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
@@ -2535,7 +2545,7 @@ order by pr.date asc]]>
 			<line>
 				<reportElement key="line-2" mode="Opaque" x="0" y="1" width="1" height="17" forecolor="#000000" backcolor="#000000"/>
 				<graphicElement fill="Solid">
-					<pen lineWidth="2.0"/>
+					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<textField>
