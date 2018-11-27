@@ -73,6 +73,7 @@ public class LivroEletronicoDispensaARV extends GenericReportGui {
 		super(parent, REPORTTYPE_MIA, activate);
 	}
 
+        
 	/**
 	 * This method initializes newMonthlyStockOverview
 	 */

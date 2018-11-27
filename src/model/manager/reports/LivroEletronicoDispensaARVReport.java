@@ -18,6 +18,7 @@ import org.celllife.idart.database.hibernate.User;
 import org.celllife.idart.messages.Messages;
 import org.eclipse.swt.widgets.Shell;
 
+
 public class LivroEletronicoDispensaARVReport extends AbstractJasperReport {
 	
 	private final StockCenter stockCenter;
