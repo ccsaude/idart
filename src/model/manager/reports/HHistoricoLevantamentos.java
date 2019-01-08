@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import model.manager.excel.conversion.exceptions.ReportException;
 import org.celllife.idart.commonobjects.LocalObjects;
@@ -42,46 +43,59 @@ public class HHistoricoLevantamentos extends AbstractJasperReport {
 
 	@Override
 	protected Map<String, Object> getParameterMap() throws ReportException {
-
-
-
-
 		
 		// Set the parameters for the report
-				Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 				
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-			SimpleDateFormat dateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd");
+                Vector<String> v = new Vector<String>();
+	
+                if (this.inicio) v.add("Inicia");
+                if (this.manutencao) v.add("Manter");
+                if (this.alteraccao) v.add("Alterar");
 
-		map.put("date", theStartDate);
+                String condicao="(\'";
+
+                if(v.size()==3){
+                    for(int j=0;j<v.size()-1;j++)
+                    condicao +=v.get(j)+"\' , \'";
+                condicao +=v.get(v.size()-1)+"\')";
+                }
+	
+                if(v.size()==2){
+                    for(int j=0;j<v.size()-1;j++)
+                    condicao +=v.get(j)+"\' , \'";
+                    condicao +=v.get(v.size()-1)+"\')";
+		}
+                if(v.size()==1){
+                    condicao +=v.get(0)+"\')";
+		}
+                
+                 if (this.inicio) 
+                    map.put("inicia", "Inicia");
+                if (this.manutencao) 
+                    map.put("manter", "Manter");
+                if (this.alteraccao) 
+                    map.put("alterar", "Alterar");
+                
+                map.put("date", theStartDate);
 		map.put("dateFormat", dateFormat.format(theStartDate));
 		map.put("monthStart", dateFormat.format(theStartDate));
 		//calStart.add(Calendar.MONTH, 1);
 
-
 		map.put("monthEnd", dateFormat.format(theEndDate));
 		map.put("dateEnd", theEndDate);
-		
 		map.put("mes", mesPortugues(theStartDate));
 		map.put("mes2",mesPortugues(theEndDate));
 
-ConexaoJDBC con=new ConexaoJDBC();
-		String query= con.getQueryHistoricoLevantamentos(this.inicio, this.manutencao, this.alteraccao,dateFormat.format(theStartDate),dateFormat.format(theEndDate));
-		
-
-
-		
-		
-		map.put("query",query);
-	
+             //   ConexaoJDBC con=new ConexaoJDBC();
+	//	String query= con.getQueryHistoricoLevantamentos(this.inicio, this.manutencao, this.alteraccao,dateFormat.format(theStartDate),dateFormat.format(theEndDate));
+		map.put("condicao",condicao);
 		map.put("path", getReportPath());
-		map.put("provincia","Zambézia");
-		map.put("distrito","Nicoadala");
-		
-
+		map.put("provincia","Maputo Cidade");
+		map.put("distrito"," -- -- -- ");
 		map.put("facilityName", LocalObjects.currentClinic.getClinicName());
-
 		return map;
 	}
 

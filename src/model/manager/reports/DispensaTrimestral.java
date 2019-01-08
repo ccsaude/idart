@@ -65,12 +65,16 @@ public class DispensaTrimestral extends AbstractJasperReport {
             int totalpacientesmanter = conn.totalPacientesManterDispensaTrimestral(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
             System.out.println("Total de pacientes a manter arv " + totalpacientesmanter);
 
-            int totalpacientesreinicio = conn.totalPacientesAlteracaoDispensaTrimestral(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
-            System.out.println("Total de pacientes a alterar arv " + totalpacientesreinicio);
+            int totalpacientesTransporte = conn.totalPacientesManuntencaoTransporteDispensaTrimestral(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
+            System.out.println("Total de pacientes a transportar arv " + totalpacientesTransporte);
 
+            int totalpacientesCumulativo = conn.totalPacientesCumulativoDispensaTrimestral(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
+            System.out.println("Total de pacientes Cumulativo " + totalpacientesCumulativo);
+            
             map.put("totalpacientesmanter", totalpacientesmanter);
             map.put("totalpacientesnovos", totalpacientesnovos);
-            map.put("totalpacientesreinicio", totalpacientesreinicio);
+            map.put("totalpacienteManuntencaoTransporte", totalpacientesTransporte);
+            map.put("totalpacienteCumulativo", totalpacientesCumulativo);
             map.put("facilityName", LocalObjects.currentClinic.getClinicName());
             map.put("dateStart",  theStartDate);
             map.put("dateEnd", theEndDate);

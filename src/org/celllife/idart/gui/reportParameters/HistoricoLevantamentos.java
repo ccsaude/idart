@@ -156,41 +156,15 @@ public class HistoricoLevantamentos extends GenericReportGui {
 
 		else {
 			try {
-				
-			
-				
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
-				 
-
-
-				
-				
-				
 				Date theStartDate = calendarStart.getCalendar().getTime(); 
-			
 				Date theEndDate=  calendarEnd.getCalendar().getTime(); 
-				
-			
-				
-				
-
-				
-				//theStartDate = sdf.parse(strTheDate);
-				
-				 
-				
-			
-
-	
-				
 				HHistoricoLevantamentos report = new HHistoricoLevantamentos(
 						getShell(), theStartDate, theEndDate,chkBtnInicio.getSelection(),chkBtnManutencao.getSelection(),chkBtnAlteraccao.getSelection());
 				viewReport(report);
 			} catch (Exception e) {
 				getLog()
-				.error(
-						"Exception while running Historico levantamento report",
-						e);
+				.error("Exception while running Historico levantamento report",e);
 			}
 		}
 

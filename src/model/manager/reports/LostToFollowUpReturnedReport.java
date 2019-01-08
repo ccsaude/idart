@@ -17,6 +17,7 @@ public class LostToFollowUpReturnedReport extends AbstractJasperReport {
 	private final String clinicName;
 	private final Date startDate;
 	private final Date endDate;
+        
 
 	public LostToFollowUpReturnedReport(Shell parent, String clinicName,
 			Date theStartDate, Date theEndDate) {

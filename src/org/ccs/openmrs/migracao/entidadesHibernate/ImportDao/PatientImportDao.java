@@ -8,14 +8,11 @@
  */
 package org.ccs.openmrs.migracao.entidadesHibernate.ImportDao;
 
-import java.io.PrintStream;
 import java.io.Serializable;
-import java.sql.Connection;
 import java.util.List;
 import org.ccs.openmrs.migracao.connection.hibernateConection;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.PatientDaoInterface;
 import org.celllife.idart.database.hibernate.Patient;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

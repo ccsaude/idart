@@ -2522,112 +2522,109 @@ public String getQueryHistoricoLevantamentos(boolean i, boolean m, boolean a, St
 	  
 		condicao +=v.get(0)+"\')";
 		}
+        
+        
+        
+// Alterado por Colaco Resolve a Nhongo: Duplicacao de Pacientes
+
+String query = "select distinct " +
+                "p.id as id," +
+                "p.patientId as nid," +
+                "p.firstnames as nome," +
+                "p.lastname as apelido," +
+                "extract(year FROM age(current_date, p.dateofbirth)) as idade," +
+                "c.clinicname as facilityName," +
+                "pr.reasonforupdate as tipotarv," +
+                "rt.regimeesquema as regime," +
+                "lt.linhanome as linha," +
+                "SUM(packdrug.amount) as qtd," +
+                "pack.pickupdate as datalevantamento," +
+                "to_date(pdit.dateexpectedstring, 'DD-Mon-YYYY') as dataproximolevantamento " +
+                "from Patient as p " +
+                "inner join clinic c on c.id = p.clinic " +
+                "inner join prescription pr on pr.patient = p.id " +
+                "inner join package pack on pack.prescription = pr.id " +
+                "inner join packageddrugs packdrug on packdrug.parentPackage = pack.id " +
+                "inner join regimeterapeutico rt on rt.regimeid = pr.regimeid " +
+                "inner join linhat lt on lt.linhaid = pr.linhaid " +
+                "inner join packagedruginfotmp pdit on pdit.packageddrug = packdrug.id " +
+                "where pr.date::timestamp::date >= '"+startDate+"'::timestamp::date " +
+                "AND pr.date::timestamp::date <= '" +endDate +"'::timestamp::date " +
+                "group by 1,2,3,4,5,6,7,8,9,11,12 " +
+                "order by pack.pickupdate asc ";
 
 
-
-	String query=""
-			
-			
-		+ " SELECT DISTINCT dispensas_e_prescricoes.nid, patient.firstnames as nome, patient.lastname as apelido, "
-		+ " extract(year FROM age(current_date, patient.dateofbirth)) as idade, "
-		+ " dispensas_e_prescricoes.tipotarv,  "
-     + "   dispensas_e_prescricoes.regime, "
-     + "    dispensas_e_prescricoes.datalevantamento, dispensas_e_prescricoes.weekssupply as dias, "
-    + "    dispensas_e_prescricoes.dataproximolevantamento, dispensas_e_prescricoes.linha, dispensas_e_prescricoes.dispensedqty as qtd "
-    + "    FROM "
-+ "  (SELECT   "
-					
- 	+ "  dispensa_packege.nid , "
-    + "    prescription_package.tipotarv,  "
-    + "    prescription_package.regime, "
-     + "    dispensa_packege.datalevantamento, "
-     + "    dispensa_packege.dataproximolevantamento , prescription_package.linha, dispensa_packege.dispensedqty,dispensa_packege.weekssupply"
-	 + " 	FROM  "
-
-	 + " 	( "
-	 	+ "   SELECT  "
-
-	 + " 		prescription.id, "
-	 + " package.packageid ,prescription.reasonforupdate as tipotarv, regimeterapeutico.regimeesquema as regime , linhat.linhanome as linha "
-
- 	+ " 	 FROM  "
-
-	 + " 	 prescription,  "
- 	 	+ " package , regimeterapeutico , linhat"
- 
-	 	+ "  WHERE   "
-
-	 	 + " prescription.id = package.prescription  "
-
-	 	+ "  AND  "
-	  + " 	 prescription.ppe=\'F\' "
-      
-  		+ " 	AND 	prescription.regimeid=regimeterapeutico.regimeid "
-	  	+ " AND   "
-
-	+ "  	 prescription.reasonforupdate IN "+condicao
-	+ " AND prescription.linhaid=linhat.linhaid "
-	 
-	+ " 	 )as prescription_package,  "
-
-	 + " 	 (  "
-	 			+ " 	 SELECT  "
-	
-
-	 + " 	 packagedruginfotmp.patientid as nid,  "
-	 + " 	 packagedruginfotmp.packageid,"
-	 + " 	 packagedruginfotmp.dispensedate as datalevantamento, packagedruginfotmp.weekssupply,"
-	+ "  	 to_date(packagedruginfotmp.dateexpectedstring, 'DD-Mon-YYYY') as dataproximolevantamento ,packagedruginfotmp.dispensedqty "
-	 	  
-	+ "  	 FROM "
-	 	+ "  	 package, packagedruginfotmp  "
-
-	  + " 	 WHERE  "
-
- 	+ " 	 package.packageid=packagedruginfotmp.packageid  "
- 	+ " 	 AND  "
- 
-	+ "  					 packagedruginfotmp.dispensedate::timestamp::date >=  "
-	+ "  \'"+startDate+"\'::timestamp::date  AND  packagedruginfotmp.dispensedate::timestamp::date <=  "
-	+ "   \'"+endDate+"\'::timestamp::date  "
-	  + " 	) as dispensa_packege,"
-      + "     ( "
-      + "     select packagedruginfotmp.patientid,  "
-	 	 
-	 + " 	  max(packagedruginfotmp.dispensedate) as lastdispense"
-	 
- 	 
-	 + " 	 FROM "
-	 + " 	 package, packagedruginfotmp  "
-
-	  	+ "  WHERE  "
-
- 		+ "  package.packageid=packagedruginfotmp.packageid  "
- 	+ " 	 AND  "
- 
-	 		+ " 			 packagedruginfotmp.dispensedate::timestamp::date >=  "
-	+ "  \'"+startDate+"\'::timestamp::date  AND  packagedruginfotmp.dispensedate::timestamp::date <=  "
-	+ "   \'"+endDate+"\'::timestamp::date  "
-	  
-	+ "   group by packagedruginfotmp.patientid "
- 
-   + "       ) as ultimadatahora  "
-
-	+ "  	 WHERE  "
-	+ "  	 dispensa_packege.packageid=prescription_package.packageid  "
-	 	 
-	 + " 	 and "
-    + "    dispensa_packege.datalevantamento=ultimadatahora.lastdispense "
-    + "    ) as dispensas_e_prescricoes "
-   + "     ,"
-       + "     patient "
-       
-    + "    where "
-       
-    + "    dispensas_e_prescricoes.nid=patient.patientid AND patient.id NOT IN  "
-    + "     (select patient.id from patient inner join episode on patient.id=episode.patient  WHERE episode.startreason  like '%Transito%' OR episode.startreason like '%aternidade%'  )"
-                + "order by dispensas_e_prescricoes.datalevantamento; ";
-        //Alterado por Colaco Nhongo. Nao emprime o Ficheiro correcto       
+//	String query="SELECT DISTINCT dispensas_e_prescricoes.nid, patient.firstnames as nome, patient.lastname as apelido, "
+//                    +" extract(year FROM age(current_date, patient.dateofbirth)) as idade, "
+//                    +" dispensas_e_prescricoes.tipotarv,  "
+//                    +" dispensas_e_prescricoes.regime, "
+//                    +" dispensas_e_prescricoes.datalevantamento, dispensas_e_prescricoes.weekssupply as dias, "
+//                    +" dispensas_e_prescricoes.dataproximolevantamento, dispensas_e_prescricoes.linha, dispensas_e_prescricoes.dispensedqty as qtd "
+//                    +" FROM "
+//                    +" (SELECT   "					
+//                    +" dispensa_packege.nid , "
+//                    +" prescription_package.tipotarv,  "
+//                    +" prescription_package.regime, "
+//                    +" dispensa_packege.datalevantamento, "
+//                    +" dispensa_packege.dataproximolevantamento , prescription_package.linha, dispensa_packege.dispensedqty,dispensa_packege.weekssupply"
+//                    +" FROM  "
+//                    +" ( "
+//                    +" SELECT  "
+//                    +" prescription.id, "
+//                    +" package.packageid ,prescription.reasonforupdate as tipotarv, regimeterapeutico.regimeesquema as regime , linhat.linhanome as linha "
+//                    +" FROM  "
+//                    +" prescription,  "
+//                    +" package , regimeterapeutico , linhat"
+//                    +" WHERE   "
+//                    +" prescription.id = package.prescription  "
+//                    +" AND  "
+//                    +" prescription.ppe=\'F\' "
+//                    +" AND prescription.regimeid=regimeterapeutico.regimeid "
+//                    +" AND   "
+//                    +" prescription.reasonforupdate IN "+condicao
+//                    +" AND prescription.linhaid=linhat.linhaid "
+//                    +" )as prescription_package,  "
+//                    +" (  "
+//                    +" SELECT  "
+//                    +" packagedruginfotmp.patientid as nid,  "
+//                    +" packagedruginfotmp.packageid,"
+//                    +" packagedruginfotmp.dispensedate as datalevantamento, packagedruginfotmp.weekssupply,"
+//                    +" to_date(packagedruginfotmp.dateexpectedstring, 'DD-Mon-YYYY') as dataproximolevantamento , SUM(packagedruginfotmp.dispensedqty) as  dispensedqty"
+//                    +" FROM "
+//                    +" package, packagedruginfotmp  "
+//                    +" WHERE  "
+//                    + " 	 package.packageid=packagedruginfotmp.packageid  "
+//                    + " 	 AND  " 
+//                    + "  					 packagedruginfotmp.dispensedate::timestamp::date >=  "
+//                    + "  \'"+startDate+"\'::timestamp::date  AND  packagedruginfotmp.dispensedate::timestamp::date <=  "
+//                    + "   \'"+endDate+"\'::timestamp::date  "
+//                    + " group by 1,2,3,4,5 "
+//                    + " 	) as dispensa_packege,"
+//                    + "     ( "
+//                    + "     select packagedruginfotmp.patientid,  "
+//                    + " 	  max(packagedruginfotmp.dispensedate) as lastdispense"	 
+//                    + " 	 FROM "
+//                    + " 	 package, packagedruginfotmp  "
+//                    + "  WHERE  "
+//                    + "  package.packageid=packagedruginfotmp.packageid  "
+//                    + " 	 AND  "
+//                    + " 			 packagedruginfotmp.dispensedate::timestamp::date >=  "
+//                    + "  \'"+startDate+"\'::timestamp::date  AND  packagedruginfotmp.dispensedate::timestamp::date <=  "
+//                    + "   \'"+endDate+"\'::timestamp::date  "
+//                    + "   group by packagedruginfotmp.patientid "
+//                    + "       ) as ultimadatahora  "
+//                    + "  	 WHERE  "
+//                    + "  	 dispensa_packege.packageid=prescription_package.packageid  "	 	 
+//                    + " 	 and "
+//                    + "    dispensa_packege.datalevantamento=ultimadatahora.lastdispense "
+//                    + "    ) as dispensas_e_prescricoes "
+//                    + "     ,"
+//                    + "     patient "
+//                    + "    where "
+//                    + "    dispensas_e_prescricoes.nid=patient.patientid AND patient.id NOT IN  "
+//                    + "     (select patient.id from patient inner join episode on patient.id=episode.patient  WHERE episode.startreason  like '%Transito%' OR episode.startreason like '%aternidade%'  )"
+//                    + " order by dispensas_e_prescricoes.datalevantamento; ";
+//        //Alterado por Colaco Nhongo. Nao emprime o Ficheiro correcto       
         //  + "     (select patient.id  	from patient,episode  WHERE  patient.id=episode.patient  and episode.startreason  like '%Transito%' OR episode.startreason   like '%aternidade%'  ); ";
  
 
@@ -3575,11 +3572,11 @@ boolean jatemFilaInicio=false;
 public int totalPacientesNovosDispensaTrimestral(String startDate, String endDate) throws ClassNotFoundException, SQLException{
 
       String query= " SELECT count(*) soma " +
-                          " FROM ( SELECT patient, dispensatrimestral,min(date) date " +
-                                        "FROM prescription " +
-                                        "WHERE dispensatrimestral=1 " +
-                                        "group by  patient, dispensatrimestral  having count(dispensatrimestral) < 2 ) v " +
-                    " WHERE   v.date::timestamp::date BETWEEN " + "\'"+startDate+"\'" + " AND " + " \'"+endDate+"\'";
+                    " FROM ( SELECT patient, dispensatrimestral, date " +
+                            "FROM prescription " +
+                            "WHERE dispensatrimestral=1 AND tipodt = 'Novo' " +
+                            "AND date::date BETWEEN " + "\'"+startDate+"\'" + " AND " + " \'"+endDate+"\'"+
+                            "group by patient, dispensatrimestral, date ) v ";
      
 	int total=0;
 	conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
@@ -3607,11 +3604,13 @@ public int totalPacientesNovosDispensaTrimestral(String startDate, String endDat
 public int totalPacientesManterDispensaTrimestral(String startDate, String endDate) throws ClassNotFoundException, SQLException{
 
       String query= " SELECT count(*) soma " +
-                    " FROM ( SELECT patient, dispensatrimestral, max(date) date " +
-                    " FROM prescription " +
-                    " WHERE dispensatrimestral=1 " +
-                    " group by  patient, dispensatrimestral ) v " +
-                    " WHERE v.date::timestamp::date < " + "\'"+startDate+"\'";
+                    " FROM ( SELECT distinct pr.patient, pr.dispensatrimestral, pr.date " +
+                    " FROM prescription pr" +
+                    " inner join package pack on pack.prescription = pr.id "+
+                    " inner join packageddrugs packdrug on packdrug.parentPackage = pack.id "+
+                    " WHERE (pr.dispensatrimestral=1 and pr.tipodt = 'Manuntencao') AND packdrug.amount <> 0" +
+                    " AND pr.date::date between " + "\'"+startDate+"\' AND "+ "\'"+endDate+"\'"+
+                    " group by  pr.patient, pr.dispensatrimestral,pr.date ) v ";
      
 	int total=0;
 	conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
@@ -3637,13 +3636,38 @@ public int totalPacientesManterDispensaTrimestral(String startDate, String endDa
  * @throws ClassNotFoundException
  * @throws SQLException
  */
-public int totalPacientesAlteracaoDispensaTrimestral(String startDate, String endDate) throws ClassNotFoundException, SQLException{
+public int totalPacientesManuntencaoTransporteDispensaTrimestral(String startDate, String endDate) throws ClassNotFoundException, SQLException{
 
       String query= " SELECT count(*) soma " +
-                          " FROM ( SELECT patient, dispensatrimestral,min(date) date " +
-                                  "FROM prescription " +
-                                  "WHERE dispensatrimestral=1 " +
-                                  "group by  patient, dispensatrimestral ) v";
+                          " FROM ( SELECT distinct pr.patient, pr.date " +
+                                  " FROM prescription pr" +
+                                  " inner join package pack on pack.prescription = pr.id "+
+                                  " inner join packageddrugs packdrug on packdrug.parentPackage = pack.id "+
+                                  " WHERE packdrug.amount = 0 AND (pr.dispensatrimestral=1 and pr.tipodt = 'Manuntencao')"+
+                                  " AND pr.date::date between " + "\'"+startDate+"\' AND "+ "\'"+endDate+"\'"+
+                                  " group by  pr.patient, pr.date ) v ";
+     
+	int total=0;
+	conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
+        ResultSet rs=st.executeQuery(query);
+		if (rs != null)
+	        {          
+	           rs.next();
+	           total=rs.getInt("soma");
+ 	           rs.close(); //
+	        }
+    
+	return total;
+        
+}
+
+public int totalPacientesCumulativoDispensaTrimestral(String startDate, String endDate) throws ClassNotFoundException, SQLException{
+
+      String query= " SELECT count(*) soma " +
+                          " FROM ( SELECT distinct pr.patient " +
+                                  " FROM prescription pr" +
+                                  " WHERE pr.dispensatrimestral = 1 "+
+                                  " group by  pr.patient ) v ";
      
 	int total=0;
 	conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);

@@ -34,6 +34,7 @@ import org.celllife.idart.gui.platform.GenericAdminGui;
 import org.celllife.idart.gui.platform.GenericReportGui;
 import org.celllife.idart.gui.platform.GenericReportGuiInterface;
 import org.celllife.idart.gui.reportParameters.ARVDrugUsage;
+import org.celllife.idart.gui.reportParameters.AbandonosIdartOpenMRS;
 import org.celllife.idart.gui.reportParameters.AvaliacaoSegundasLinhas;
 import org.celllife.idart.gui.reportParameters.ClinicIndicators;
 import org.celllife.idart.gui.reportParameters.CohortDrugCollections;
@@ -515,7 +516,9 @@ private void createGrpClinicManagementReports() {
 				new MissedAppointmentsDT(getShell(), false));
                  reportGUIs.put(GenericReportGuiInterface.REPORT_LOST_TO_FOLLOW_UP,
 				new LostToFollowUp(getShell(), false));
-                  reportGUIs.put(GenericReportGuiInterface.REPORT_LOST_TO_FOLLOW_UP_RETURNED,
+                reportGUIs.put(GenericReportGuiInterface.REPORT_CONFIRMACA_ABANDONOS_OPENMRS,
+				new AbandonosIdartOpenMRS(getShell(), false));
+                reportGUIs.put(GenericReportGuiInterface.REPORT_LOST_TO_FOLLOW_UP_RETURNED,
 				new LostToFollowUpReturned(getShell(), false));
 
 		// M & E Reports
