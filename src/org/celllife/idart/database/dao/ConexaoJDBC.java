@@ -1777,6 +1777,220 @@ tb=rs.getString("tb");
 }
 
 
+public String carregaCcr(int idpaciente) throws ClassNotFoundException, SQLException
+
+{
+	
+	String query=" "
+			+ " SELECT "
+			+ " ccr "
+			+ "  FROM "
+			+ "   "
+			+ "  prescription "
+			+ "  WHERE "
+			+ "   "
+			+ "  "
+			+ "  prescription.patient="+idpaciente
+			+ "  AND "
+			+ "  prescription.current=\'T\'"
+			+ "";
+	
+	
+	 conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
+
+	 String ccr="";
+		ResultSet rs=st.executeQuery(query);
+		
+		if (rs != null)
+        {
+           
+            while (rs.next())
+            {
+
+
+                ccr=rs.getString("ccr");
+
+            } 
+            rs.close(); //
+        }
+		
+		return ccr;
+		
+		
+}
+
+
+public String carregaSaaj(int idpaciente) throws ClassNotFoundException, SQLException
+
+{
+	
+	String query=" "
+			+ " SELECT "
+			+ " saaj "
+			+ "  FROM "
+			+ "   "
+			+ "  prescription "
+			+ "  WHERE "
+			+ "   "
+			+ "  "
+			+ "  prescription.patient="+idpaciente
+			+ "  AND "
+			+ "  prescription.current=\'T\'"
+			+ "";
+	
+	
+	 conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
+
+	 String saaj="";
+		ResultSet rs=st.executeQuery(query);
+		
+		if (rs != null)
+        {
+           
+            while (rs.next())
+            {
+
+
+                saaj=rs.getString("saaj");
+
+            } 
+            rs.close(); //
+        }
+		
+		return saaj;
+		
+		
+}
+
+
+public String carregaAf(int idpaciente) throws ClassNotFoundException, SQLException
+
+{
+	
+	String query=" "
+			+ " SELECT "
+			+ " af "
+			+ "  FROM "
+			+ "   "
+			+ "  prescription "
+			+ "  WHERE "
+			+ "   "
+			+ "  "
+			+ "  prescription.patient="+idpaciente
+			+ "  AND "
+			+ "  prescription.current=\'T\'"
+			+ "";
+	
+	
+	 conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
+
+	 String af="";
+		ResultSet rs=st.executeQuery(query);
+		
+		if (rs != null)
+        {
+           
+            while (rs.next())
+            {
+
+
+                af=rs.getString("af");
+
+            } 
+            rs.close(); //
+        }
+		
+		return af;
+		
+		
+}
+
+
+public String carregaCa(int idpaciente) throws ClassNotFoundException, SQLException
+
+{
+	
+	String query=" "
+			+ " SELECT "
+			+ " ca "
+			+ "  FROM "
+			+ "   "
+			+ "  prescription "
+			+ "  WHERE "
+			+ "   "
+			+ "  "
+			+ "  prescription.patient="+idpaciente
+			+ "  AND "
+			+ "  prescription.current=\'T\'"
+			+ "";
+	
+	
+	 conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
+
+	 String ca="";
+		ResultSet rs=st.executeQuery(query);
+		
+		if (rs != null)
+        {
+           
+            while (rs.next())
+            {
+
+
+                ca=rs.getString("ca");
+
+            } 
+            rs.close(); //
+        }
+		
+		return ca;
+		
+		
+}
+
+
+public String carregaFr(int idpaciente) throws ClassNotFoundException, SQLException
+
+{
+	
+	String query=" "
+			+ " SELECT "
+			+ " fr "
+			+ "  FROM "
+			+ "   "
+			+ "  prescription "
+			+ "  WHERE "
+			+ "   "
+			+ "  "
+			+ "  prescription.patient="+idpaciente
+			+ "  AND "
+			+ "  prescription.current=\'T\'"
+			+ "";
+	
+	
+	 conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
+
+	 String fr="";
+		ResultSet rs=st.executeQuery(query);
+		
+		if (rs != null)
+        {
+           
+            while (rs.next())
+            {
+
+
+            fr=rs.getString("fr");
+
+            } 
+            rs.close(); //
+        }
+		
+		return fr;
+		
+		
+}
+
 /**
  * Devolve se um ARV é pediátrico ou adulto
  * 
@@ -1893,7 +2107,7 @@ public int mesesDispensados(String startDate, String endDate) throws SQLExceptio
 			+ " weekssupply, packageid"
 			+ " FROM packagedruginfotmp "
 			+ ""
-			+ " WHERE "
+			+ " WHERE packagedruginfotmp.dispensedqty <> 0 AND "
 			+ "  packagedruginfotmp.dispensedate::timestamp::date >= "
 			+ "\'"+startDate+"\'::timestamp::date "
 					+ "AND packagedruginfotmp.dispensedate::timestamp::date <="
@@ -3643,7 +3857,7 @@ public int totalPacientesManuntencaoTransporteDispensaTrimestral(String startDat
                                   " FROM prescription pr" +
                                   " inner join package pack on pack.prescription = pr.id "+
                                   " inner join packageddrugs packdrug on packdrug.parentPackage = pack.id "+
-                                  " WHERE packdrug.amount = 0 AND (pr.dispensatrimestral=1 and pr.tipodt = 'Manuntencao')"+
+                                  " WHERE packdrug.amount = 0"+
                                   " AND pr.date::date between " + "\'"+startDate+"\' AND "+ "\'"+endDate+"\'"+
                                   " group by  pr.patient, pr.date ) v ";
      
