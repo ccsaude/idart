@@ -299,6 +299,48 @@ public class AdministrationManager {
 
     }
 
+    //Previous CCR
+    public static String loadCcr(int idPatient) throws ClassNotFoundException, SQLException {
+        ConexaoJDBC conn = new ConexaoJDBC();
+
+        return conn.carregaCcr(idPatient);
+
+    }
+    
+    //Previous SAAJ
+    public static String loadSaaj(int idPatient) throws ClassNotFoundException, SQLException {
+        ConexaoJDBC conn = new ConexaoJDBC();
+
+        return conn.carregaSaaj(idPatient);
+
+    }
+    
+    //Previous AF
+    public static String loadAf(int idPatient) throws ClassNotFoundException, SQLException {
+        ConexaoJDBC conn = new ConexaoJDBC();
+
+        return conn.carregaAf(idPatient);
+
+    }
+    
+    //Previous CA
+    public static String loadCa(int idPatient) throws ClassNotFoundException, SQLException {
+        ConexaoJDBC conn = new ConexaoJDBC();
+
+        return conn.carregaCa(idPatient);
+
+    }
+    
+    //Previous Fr
+    public static String loadFr(int idPatient) throws ClassNotFoundException, SQLException {
+        ConexaoJDBC conn = new ConexaoJDBC();
+
+        return conn.carregaFr(idPatient);
+
+    }
+    
+    
+    
 //Previous Pediatric or Adult ARV
     public static String loadPediatric(int iddrug) throws ClassNotFoundException, SQLException {
         ConexaoJDBC conn = new ConexaoJDBC();
