@@ -27,14 +27,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import model.manager.AdministrationManager;
 import model.manager.DeletionsManager;
 import model.manager.DrugManager;
 import model.manager.PackageManager;
 import model.manager.PatientManager;
 import model.manager.reports.PatientHistoryReport;
-
 import org.apache.log4j.Logger;
 import org.celllife.function.AndRule;
 import org.celllife.function.DateRuleFactory;
@@ -94,8 +92,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
@@ -147,6 +143,8 @@ public class AddPrescription extends GenericFormGui implements
 
     private Group grpPatientID;
 
+    private Group grpPatientMDS;
+
     private int intDrugTableSize = 1;
 
     private Label lblNewPrescriptionId;
@@ -172,12 +170,24 @@ public class AddPrescription extends GenericFormGui implements
     //Data de inicio noutro serviço
     private DateButton btnDataInicioNoutroServico;
 
-    //pacientes PTV , PPE & TB
+    //pacientes PTV , PPE, TB, SAAJ, CCR, GAAC, AF, CA, FR 
     private Button chkBtnPPE;
 
     private Button chkBtnPTV;
 
     private Button chkBtnTB;
+
+    private Button chkBtnSAAJ;
+
+    private Button chkBtnCCR;
+
+    private Button chkBtnGAAC;
+
+    private Button chkBtnAF;
+
+    private Button chkBtnCA;
+
+    private Button chkBtnFR;
 
     // cotrimoxazol & isoniazida
     private Button chkBtnTPI;
@@ -378,13 +388,24 @@ public class AddPrescription extends GenericFormGui implements
 
         // grpPatientID
         grpPatientID = new Group(getShell(), SWT.NONE);
-        grpPatientID.setBounds(new Rectangle(235, 68, 480, 140));
+        grpPatientID.setBounds(new Rectangle(40, 68, 480, 140));
+
+        grpPatientMDS = new Group(getShell(), SWT.NONE);
+        grpPatientMDS.setBounds(new Rectangle(530, 68, 210, 140));
 
         // Patient ID
         Label lblPatientId = new Label(grpPatientID, SWT.NONE);
         lblPatientId.setBounds(new Rectangle(10, 15, 110, 20));
         lblPatientId.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
         lblPatientId.setText(Messages.getString("patient.label.patientid")); //$NON-NLS-1$
+
+        // Patient MDS
+        Label lblPatientMDS = new Label(grpPatientMDS, SWT.NONE);
+        lblPatientMDS.setBounds(new Rectangle(10, 10, 200, 20));
+        lblPatientMDS.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        lblPatientMDS.setBackground(ResourceUtils.getColor(iDartColor.GREEN));
+        lblPatientMDS.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8_BOLD));
+        lblPatientMDS.setText("Modelos Diferenciados de Serviços"); //$NON-NLS-1$
 
         txtPatientId = new Text(grpPatientID, SWT.BORDER);
         txtPatientId.setBounds(new Rectangle(160, 13, 150, 20));
@@ -410,8 +431,8 @@ public class AddPrescription extends GenericFormGui implements
                     @Override
                     public void widgetSelected(
                             org.eclipse.swt.events.SelectionEvent e) {
-                                cmdSearchWidgetSelected();
-                            }
+                        cmdSearchWidgetSelected();
+                    }
                 });
 
         btnEkapaSearch = new Button(grpPatientID, SWT.NONE);
@@ -433,8 +454,8 @@ public class AddPrescription extends GenericFormGui implements
                     @Override
                     public void widgetSelected(
                             org.eclipse.swt.events.SelectionEvent e) {
-                                cmdEkapaSearchWidgetSelected();
-                            }
+                        cmdEkapaSearchWidgetSelected();
+                    }
                 });
 
         if (thePatient != null) {
@@ -562,7 +583,8 @@ public class AddPrescription extends GenericFormGui implements
             }
 
             @Override
-            public void widgetDefaultSelected(SelectionEvent arg0) {}
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
         });
 
         cmbMotivoMudanca = new CCombo(grpPatientID, SWT.BORDER | SWT.READ_ONLY);
@@ -601,21 +623,70 @@ public class AddPrescription extends GenericFormGui implements
 //		lblPPE.setBounds(new Rectangle(320, 60, 50, 20));
 //		lblPPE.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 //		lblPPE.setText("PPE");
-        chkBtnPTV = new Button(grpPatientID, SWT.CHECK);
+        chkBtnPTV = new Button(grpPatientMDS, SWT.CHECK);
         chkBtnPTV.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, false, false, 1, 1));
-        chkBtnPTV.setBounds(new Rectangle(320, 40, 75, 20));
-        chkBtnPTV.setText("PTV B+");
+        chkBtnPTV.setBounds(new Rectangle(10, 30, 40, 20));
+        chkBtnPTV.setText("PTV");
         chkBtnPTV.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
         chkBtnPTV.setSelection(false);
 
-        chkBtnPPE = new Button(grpPatientID, SWT.CHECK);
+        chkBtnPPE = new Button(grpPatientMDS, SWT.CHECK);
         chkBtnPPE.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
-        chkBtnPPE.setBounds(new Rectangle(320, 60, 50, 20));
+        chkBtnPPE.setBounds(new Rectangle(10, 50, 40, 20));
         chkBtnPPE.setText("PPE");
         chkBtnPPE.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
         chkBtnPPE.setSelection(false);
 
-//		rdBtnPPE.addMouseListener(new MouseAdapter() {
+        chkBtnTB = new Button(grpPatientMDS, SWT.CHECK);
+        chkBtnTB.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
+        chkBtnTB.setBounds(new Rectangle(10, 70, 50, 20));
+        chkBtnTB.setText("TB");
+        chkBtnTB.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        chkBtnTB.setSelection(false);
+
+        chkBtnCCR = new Button(grpPatientMDS, SWT.CHECK);
+        chkBtnCCR.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
+        chkBtnCCR.setBounds(new Rectangle(10, 90, 50, 20));
+        chkBtnCCR.setText("CCR");
+        chkBtnCCR.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        chkBtnCCR.setSelection(false);
+
+        chkBtnSAAJ = new Button(grpPatientMDS, SWT.CHECK);
+        chkBtnSAAJ.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
+        chkBtnSAAJ.setBounds(new Rectangle(10, 110, 50, 20));
+        chkBtnSAAJ.setText("SAAJ");
+        chkBtnSAAJ.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        chkBtnSAAJ.setSelection(false);
+
+        chkBtnGAAC = new Button(grpPatientMDS, SWT.CHECK);
+        chkBtnGAAC.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
+        chkBtnGAAC.setBounds(new Rectangle(70, 30, 120, 20));
+        chkBtnGAAC.setText("GAAC");
+        chkBtnGAAC.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        chkBtnGAAC.setSelection(false);
+
+        chkBtnAF = new Button(grpPatientMDS, SWT.CHECK);
+        chkBtnAF.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
+        chkBtnAF.setBounds(new Rectangle(70, 50, 120, 20));
+        chkBtnAF.setText("Abordagem Familiar");
+        chkBtnAF.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        chkBtnAF.setSelection(false);
+
+        chkBtnCA = new Button(grpPatientMDS, SWT.CHECK);
+        chkBtnCA.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
+        chkBtnCA.setBounds(new Rectangle(70, 70, 120, 20));
+        chkBtnCA.setText("Clube de Adesao");
+        chkBtnCA.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        chkBtnCA.setSelection(false);
+
+        chkBtnFR = new Button(grpPatientMDS, SWT.CHECK);
+        chkBtnFR.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
+        chkBtnFR.setBounds(new Rectangle(70, 90, 120, 20));
+        chkBtnFR.setText("Fluxo Rapido");
+        chkBtnFR.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        chkBtnFR.setSelection(false);
+
+        //		rdBtnPPE.addMouseListener(new MouseAdapter() {
 //			@Override
 //			public void mouseUp(MouseEvent mu) {
 //				if(rdBtnPPE.getSelection())
@@ -623,13 +694,7 @@ public class AddPrescription extends GenericFormGui implements
 //					
 //			}
 //		});
-        chkBtnTB = new Button(grpPatientID, SWT.CHECK);
-        chkBtnTB.setLayoutData(new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false, 1, 1));
-        chkBtnTB.setBounds(new Rectangle(320, 80, 50, 20));
-        chkBtnTB.setText("TB");
-        chkBtnTB.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-        chkBtnTB.setSelection(false);
-
+        avaliaMDSSelection();
     }
 
     @SuppressWarnings("unchecked")
@@ -785,8 +850,8 @@ public class AddPrescription extends GenericFormGui implements
                     @Override
                     public void widgetSelected(
                             org.eclipse.swt.events.SelectionEvent e) {
-                                cmdAddDoctorWidgetSelected();
-                            }
+                        cmdAddDoctorWidgetSelected();
+                    }
                 });
         btnAddDoctor.setToolTipText("Pressionar este botão para adicionar um novo clínico");
 
@@ -926,8 +991,8 @@ public class AddPrescription extends GenericFormGui implements
                     @Override
                     public void widgetSelected(
                             org.eclipse.swt.events.SelectionEvent e) {
-                                cmdAddDrugWidgetSelected();
-                            }
+                        cmdAddDrugWidgetSelected();
+                    }
                 });
         btnAddDrug.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
@@ -941,8 +1006,8 @@ public class AddPrescription extends GenericFormGui implements
                     @Override
                     public void widgetSelected(
                             org.eclipse.swt.events.SelectionEvent e) {
-                                cmdRemoveDrugWidgetSelected();
-                            }
+                        cmdRemoveDrugWidgetSelected();
+                    }
                 });
         btnRemoveDrug.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
@@ -970,16 +1035,16 @@ public class AddPrescription extends GenericFormGui implements
                     public void widgetSelected(
                             org.eclipse.swt.events.SelectionEvent e) {
 
-                                if (tblDrugs.getSelectionIndex() != -1) {
-                                    cmdMoveDrug(-1);
-                                } else {
-                                    MessageBox mb = new MessageBox(getShell(),
-                                            SWT.ICON_QUESTION | SWT.OK);
-                                    mb.setText("No Drug Selected ");
-                                    mb.setMessage("Please select a drug to move.");
-                                    mb.open();
-                                }
-                            }
+                        if (tblDrugs.getSelectionIndex() != -1) {
+                            cmdMoveDrug(-1);
+                        } else {
+                            MessageBox mb = new MessageBox(getShell(),
+                                    SWT.ICON_QUESTION | SWT.OK);
+                            mb.setText("No Drug Selected ");
+                            mb.setMessage("Please select a drug to move.");
+                            mb.open();
+                        }
+                    }
                 });
 
         btnMoveDown = new Button(grpDrugs, SWT.NONE);
@@ -991,16 +1056,16 @@ public class AddPrescription extends GenericFormGui implements
                     @Override
                     public void widgetSelected(
                             org.eclipse.swt.events.SelectionEvent e) {
-                                if (tblDrugs.getSelectionIndex() != -1) {
-                                    cmdMoveDrug(1);
-                                } else {
-                                    MessageBox mb = new MessageBox(getShell(),
-                                            SWT.ICON_QUESTION | SWT.OK);
-                                    mb.setText("No Drug Selected ");
-                                    mb.setMessage("Please select a drug to move.");
-                                    mb.open();
-                                }
-                            }
+                        if (tblDrugs.getSelectionIndex() != -1) {
+                            cmdMoveDrug(1);
+                        } else {
+                            MessageBox mb = new MessageBox(getShell(),
+                                    SWT.ICON_QUESTION | SWT.OK);
+                            mb.setText("No Drug Selected ");
+                            mb.setMessage("Please select a drug to move.");
+                            mb.open();
+                        }
+                    }
                 });
 
         createDrugsTable();
@@ -1356,7 +1421,7 @@ public class AddPrescription extends GenericFormGui implements
         cmbDoctor.setText(""
                 + AdministrationManager.getDoctor(getHSession(),
                         localPrescription.getDoctor().getFullname())
-                .getFullname());
+                        .getFullname());
 
         try {
             cmbRegime.setText(""
@@ -1479,6 +1544,91 @@ public class AddPrescription extends GenericFormGui implements
             e.printStackTrace();
         }
 
+        // set the previous CCR
+        try {
+
+            String ccr = (AdministrationManager.loadCcr(localPrescription.getPatient().getId()));
+
+            System.out.println(" CCR actual " + ccr);
+            if (ccr.trim().equals("T")) {
+                chkBtnCCR.setSelection(true);
+            }
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // set the previous SAAJ
+        try {
+
+            String saaj = (AdministrationManager.loadSaaj(localPrescription.getPatient().getId()));
+
+            System.out.println(" SAAJ actual " + saaj);
+            if (saaj.trim().equals("T")) {
+                chkBtnSAAJ.setSelection(true);
+            }
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // set the previous Abordagem Familiar
+        try {
+
+            String af = (AdministrationManager.loadAf(localPrescription.getPatient().getId()));
+
+            System.out.println(" Abordagem Familiar actual " + af);
+            if (af.trim().equals("T")) {
+                chkBtnAF.setSelection(true);
+            }
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // set the previous Clube de Adesao
+        try {
+
+            String ca = (AdministrationManager.loadCa(localPrescription.getPatient().getId()));
+
+            System.out.println(" CA actual " + ca);
+            if (ca.trim().equals("T")) {
+                chkBtnCA.setSelection(true);
+            }
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // set the previous Fluxo Rapido
+        try {
+
+            String fr = (AdministrationManager.loadFr(localPrescription.getPatient().getId()));
+
+            System.out.println(" FR actual " + fr);
+            if (fr.trim().equals("T")) {
+                chkBtnFR.setSelection(true);
+            }
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         // Generate a new prescription id
         cmdUpdatePrescriptionId();
 
@@ -1496,7 +1646,7 @@ public class AddPrescription extends GenericFormGui implements
                 if (new BigDecimal(pd.getAmtPerTime()).scale() == 0) {
                     tempAmtPerTime = ""
                             + new BigDecimal(pd.getAmtPerTime())
-                            .unscaledValue().intValue();
+                                    .unscaledValue().intValue();
                 } else {
                     tempAmtPerTime = "" + pd.getAmtPerTime();
                 }
@@ -1719,8 +1869,8 @@ public class AddPrescription extends GenericFormGui implements
             cmdUpdatePrescriptionId();
         }
         loadPatientDetails();
-
         enableFields(true);
+        avaliaMDSSelectionActual();
         btnSearch.setEnabled(false);
         btnEkapaSearch.setEnabled(false);
         txtPatientId.setEnabled(false);
@@ -1917,25 +2067,25 @@ public class AddPrescription extends GenericFormGui implements
 
             mSave
                     .setText(isInitialPrescription ? "Registar a prescrição inicial do paciente "
-                                    .concat(txtPatientId.getText())
-                                    : "Registar Nova prescrição do paciente "
+                            .concat(txtPatientId.getText())
+                            : "Registar Nova prescrição do paciente "
                                     .concat(txtPatientId.getText()));
             mSave
                     .setMessage(isInitialPrescription ? "Quer registar esta prescrição para o paciente "
-                                    .concat(txtPatientId.getText()).concat("?")
-                                    : "Quer actualizar as mudanças para o paciente "
+                            .concat(txtPatientId.getText()).concat("?")
+                            : "Quer actualizar as mudanças para o paciente "
                                     .concat(txtPatientId.getText()).concat("?"));
 
             //Para reasonforupdate inicia
             mSaveInicia
                     .setText(isInitialPrescription ? "Registar a prescrição inicial do paciente "
-                                    .concat(txtPatientId.getText())
-                                    : "Registar Nova prescrição do paciente "
+                            .concat(txtPatientId.getText())
+                            : "Registar Nova prescrição do paciente "
                                     .concat(txtPatientId.getText()));
             mSaveInicia
                     .setMessage(isInitialPrescription ? "ATENÇÃO: SELECCIONOU O TIPO TARV INICIAL\nTEM A CERTEZA DE QUE ESTE PACIENTE ESTÁ A INICIAR O TARV? \n NID:  "
-                                    .concat(txtPatientId.getText()).concat("?")
-                                    : "ATENÇÃO: SELECCIONOU O TIPO TARV INICIAL\nTEM A CERTEZA DE QUE ESTE PACIENTE ESTÁ A INICIAR O TARV? \n NID: "
+                            .concat(txtPatientId.getText()).concat("?")
+                            : "ATENÇÃO: SELECCIONOU O TIPO TARV INICIAL\nTEM A CERTEZA DE QUE ESTE PACIENTE ESTÁ A INICIAR O TARV? \n NID: "
                                     .concat(txtPatientId.getText()).concat(""));
 
             if (cmbUpdateReason.getText().trim().equals("Inicia")) {
@@ -1969,7 +2119,7 @@ public class AddPrescription extends GenericFormGui implements
                                     drugs = drugs
                                             + "\n\t\t"
                                             + prescribedDrugs.get(i).getDrug()
-                                            .getName();
+                                                    .getName();
                                 }
                                 MessageBox box = new MessageBox(getShell(),
                                         SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -1982,10 +2132,10 @@ public class AddPrescription extends GenericFormGui implements
                                                 + " (detalhes abaixo). \n\n"
                                                 + "Clínico: "
                                                 + oldPrescription.getDoctor()
-                                                .getFullname()
+                                                        .getFullname()
                                                 + "\nRegime: "
                                                 + oldPrescription.getRegimeTerapeutico()
-                                                .getRegimeesquema()
+                                                        .getRegimeesquema()
                                                 + "\nDuração: "
                                                 + oldPrescription.getDuration()
                                                 + " semanas "
@@ -2035,7 +2185,7 @@ public class AddPrescription extends GenericFormGui implements
                             done.setText("Base de dados actualizada");
                             done.setMessage("Prescrição '".concat(
                                     localPrescription.getPrescriptionId()).concat(
-                                            "' foi adicionado ao paciente '").concat(
+                                    "' foi adicionado ao paciente '").concat(
                                             localPrescription.getPatient().getPatientId())
                                     .concat("'."));
                             done.open();
@@ -2049,7 +2199,7 @@ public class AddPrescription extends GenericFormGui implements
                                     .setMessage("A prescrição '"
                                             .concat(
                                                     localPrescription
-                                                    .getPrescriptionId())
+                                                            .getPrescriptionId())
                                             .concat(
                                                     "' tem a data de registo antes da data de de registo da prescrição anterior. A Prescrição não pôde ser salvo "));
                             errorBox.open();
@@ -2110,7 +2260,7 @@ public class AddPrescription extends GenericFormGui implements
                                     drugs = drugs
                                             + "\n\t\t"
                                             + prescribedDrugs.get(i).getDrug()
-                                            .getName();
+                                                    .getName();
                                 }
                                 MessageBox box = new MessageBox(getShell(),
                                         SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -2123,10 +2273,10 @@ public class AddPrescription extends GenericFormGui implements
                                                 + " (detalhes abaixo). \n\n '"
                                                 + "Clínico: "
                                                 + oldPrescription.getDoctor()
-                                                .getFullname()
+                                                        .getFullname()
                                                 + "\nRegime: "
                                                 + oldPrescription.getRegimeTerapeutico()
-                                                .getRegimeesquema()
+                                                        .getRegimeesquema()
                                                 + "\nDuração: "
                                                 + oldPrescription.getDuration()
                                                 + " semanas "
@@ -2176,7 +2326,7 @@ public class AddPrescription extends GenericFormGui implements
                             done.setText("Base de dados actualizada");
                             done.setMessage("Prescrição '".concat(
                                     localPrescription.getPrescriptionId()).concat(
-                                            "' foi adicionado ao paciente '").concat(
+                                    "' foi adicionado ao paciente '").concat(
                                             localPrescription.getPatient().getPatientId())
                                     .concat("'."));
                             done.open();
@@ -2190,7 +2340,7 @@ public class AddPrescription extends GenericFormGui implements
                                     .setMessage("A prescrição '"
                                             .concat(
                                                     localPrescription
-                                                    .getPrescriptionId())
+                                                            .getPrescriptionId())
                                             .concat(
                                                     "' tem a data de registo antes da data de de registo da prescrição anterior. A Prescrição não pôde ser salvo "));
                             errorBox.open();
@@ -2259,29 +2409,62 @@ public class AddPrescription extends GenericFormGui implements
         localPrescription.setReasonForUpdate(cmbUpdateReason.getText());
         localPrescription.setDatainicionoutroservico(btnDataInicioNoutroServico.getDate());
         localPrescription.setTipoDT(cmbTipoDispensaTristral.getText());
-        
-        //PTV , PPE and Tb
+
+        //PTV , PPE, TB, CCR, SAAJ, GAAC, AF, CA, FR
         if (chkBtnPPE.getSelection()) {
             localPrescription.setPpe('T');
-
         } else {
             localPrescription.setPpe('F');
         }
 
         if (chkBtnPTV.getSelection()) {
             localPrescription.setPtv('T');
-
         } else {
             localPrescription.setPtv('F');
         }
 
         if (chkBtnTB.getSelection()) {
             localPrescription.setTb('T');
-
         } else {
             localPrescription.setTb('F');
         }
 
+        if (chkBtnCCR.getSelection()) {
+            localPrescription.setCcr('T');
+        } else {
+            localPrescription.setCcr('F');
+        }
+        
+        if (chkBtnSAAJ.getSelection()) {
+            localPrescription.setSaaj('T');
+        } else {
+            localPrescription.setSaaj('F');
+        }
+        
+        if (chkBtnGAAC.getSelection()) {
+            localPrescription.setGaac('T');
+        } else {
+            localPrescription.setGaac('F');
+        }
+        
+        if (chkBtnAF.getSelection()) {
+            localPrescription.setAf('T');
+        } else {
+            localPrescription.setAf('F');
+        }
+        
+        if (chkBtnCA.getSelection()) {
+            localPrescription.setCa('T');
+        } else {
+            localPrescription.setCa('F');
+        }
+        
+        if (chkBtnFR.getSelection()) {
+            localPrescription.setFr('T');
+        } else {
+            localPrescription.setFr('F');
+        }
+        
         //TPC AND TPI
         if (chkBtnTPC.getSelection()) {
             localPrescription.setTpc('T');
@@ -2455,7 +2638,7 @@ public class AddPrescription extends GenericFormGui implements
                     if (new BigDecimal(rd.getAmtPerTime()).scale() == 0) {
                         tempAmtPerTime = ""
                                 + new BigDecimal(rd.getAmtPerTime())
-                                .unscaledValue().intValue();
+                                        .unscaledValue().intValue();
                     } else {
                         tempAmtPerTime = "" + rd.getAmtPerTime();
                     }
@@ -2529,6 +2712,12 @@ public class AddPrescription extends GenericFormGui implements
             chkBtnPPE.setSelection(false);
             chkBtnTB.setSelection(false);
             chkBtnPTV.setSelection(false);
+            chkBtnCCR.setSelection(false);
+            chkBtnSAAJ.setSelection(false);
+            chkBtnAF.setSelection(false);
+            chkBtnCA.setSelection(false);
+            chkBtnFR.setSelection(false);
+            chkBtnGAAC.setSelection(false);
             chkBtnTPC.setSelection(false);
             chkBtnTPI.setSelection(false);
             btnSearch.setEnabled(true);
@@ -2580,6 +2769,12 @@ public class AddPrescription extends GenericFormGui implements
         chkBtnPPE.setEnabled(enable);
         chkBtnTB.setEnabled(enable);
         chkBtnPTV.setEnabled(enable);
+        chkBtnCCR.setEnabled(enable);
+        chkBtnSAAJ.setEnabled(enable);
+        chkBtnAF.setEnabled(enable);
+        chkBtnCA.setEnabled(enable);
+        chkBtnFR.setEnabled(enable);
+        chkBtnGAAC.setEnabled(enable);
         chkBtnTPI.setEnabled(enable);
         chkBtnTPC.setEnabled(enable);
         Color theColour;
@@ -2623,8 +2818,8 @@ public class AddPrescription extends GenericFormGui implements
                     @Override
                     public void widgetSelected(
                             org.eclipse.swt.events.SelectionEvent e) {
-                                cmdDispenseARVDrugsSelected();
-                            }
+                        cmdDispenseARVDrugsSelected();
+                    }
                 });
         btnDispenseDrugs.setEnabled(false);
     }
@@ -2663,16 +2858,16 @@ public class AddPrescription extends GenericFormGui implements
                     } else {
                         prescritionDuration = cmbDuration.getItem(cmbDuration.getSelectionIndex());
                     }
-                  
-                    if(cmbTipoDispensaTristral.getSelectionIndex() < 0){
+
+                    if (cmbTipoDispensaTristral.getSelectionIndex() < 0) {
                         MessageBox mb = new MessageBox(getShell(),
-                        SWT.ICON_ERROR | SWT.OK);
+                                SWT.ICON_ERROR | SWT.OK);
                         mb.setText("Dispensa Trimestral");
                         mb.setMessage("Selecionou dispensa trimestral, especifique o tipo de Dispensa Trimesteal do Paciente");
                         mb.open();
                         return false;
                     }
-                    
+
                     if (("3 meses".equals(prescritionDuration) || ("3 months".equals(prescritionDuration)))) {
                         return true;
                     } else {
@@ -2792,6 +2987,382 @@ public class AddPrescription extends GenericFormGui implements
         if (o instanceof LinhaT) {
             LinhaT r = (LinhaT) o;
             cmbLinha.setText(r.getLinhanome());
+        }
+    }
+
+    // By Grande PN Chaguala 2019
+    public void avaliaMDSSelection() {
+
+        chkBtnCCR.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnCCR.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    chkBtnTB.setEnabled(true);
+                    chkBtnPTV.setEnabled(true);
+                    chkBtnPPE.setEnabled(true);
+                    chkBtnSAAJ.setEnabled(true);
+                    chkBtnGAAC.setEnabled(true);
+                    chkBtnAF.setEnabled(true);
+                    chkBtnCA.setEnabled(true);
+                    chkBtnFR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+        chkBtnTB.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnTB.getSelection()) {
+                    chkBtnCCR.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    chkBtnCCR.setEnabled(true);
+                    chkBtnPTV.setEnabled(true);
+                    chkBtnPPE.setEnabled(true);
+                    chkBtnSAAJ.setEnabled(true);
+                    chkBtnGAAC.setEnabled(true);
+                    chkBtnAF.setEnabled(true);
+                    chkBtnCA.setEnabled(true);
+                    chkBtnFR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+        chkBtnPTV.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnPTV.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnCCR.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    chkBtnTB.setEnabled(true);
+                    chkBtnCCR.setEnabled(true);
+                    chkBtnPPE.setEnabled(true);
+                    chkBtnSAAJ.setEnabled(true);
+                    chkBtnGAAC.setEnabled(true);
+                    chkBtnAF.setEnabled(true);
+                    chkBtnCA.setEnabled(true);
+                    chkBtnFR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+        chkBtnSAAJ.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnSAAJ.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnCCR.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    chkBtnTB.setEnabled(true);
+                    chkBtnPTV.setEnabled(true);
+                    chkBtnPPE.setEnabled(true);
+                    chkBtnCCR.setEnabled(true);
+                    chkBtnGAAC.setEnabled(true);
+                    chkBtnAF.setEnabled(true);
+                    chkBtnCA.setEnabled(true);
+                    chkBtnFR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+        chkBtnPPE.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnPPE.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnCCR.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    chkBtnTB.setEnabled(true);
+                    chkBtnPTV.setEnabled(true);
+                    chkBtnCCR.setEnabled(true);
+                    chkBtnSAAJ.setEnabled(true);
+                    chkBtnGAAC.setEnabled(true);
+                    chkBtnAF.setEnabled(true);
+                    chkBtnCA.setEnabled(true);
+                    chkBtnFR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+        chkBtnGAAC.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnGAAC.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnCCR.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    chkBtnTB.setEnabled(true);
+                    chkBtnPTV.setEnabled(true);
+                    chkBtnPPE.setEnabled(true);
+                    chkBtnSAAJ.setEnabled(true);
+                    chkBtnCCR.setEnabled(true);
+                    chkBtnAF.setEnabled(true);
+                    chkBtnCA.setEnabled(true);
+                    chkBtnFR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+        chkBtnAF.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnAF.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnCCR.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    chkBtnTB.setEnabled(true);
+                    chkBtnPTV.setEnabled(true);
+                    chkBtnPPE.setEnabled(true);
+                    chkBtnSAAJ.setEnabled(true);
+                    chkBtnGAAC.setEnabled(true);
+                    chkBtnCCR.setEnabled(true);
+                    chkBtnCA.setEnabled(true);
+                    chkBtnFR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+        chkBtnCA.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnCA.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCCR.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    chkBtnTB.setEnabled(true);
+                    chkBtnPTV.setEnabled(true);
+                    chkBtnPPE.setEnabled(true);
+                    chkBtnSAAJ.setEnabled(true);
+                    chkBtnGAAC.setEnabled(true);
+                    chkBtnAF.setEnabled(true);
+                    chkBtnCCR.setEnabled(true);
+                    chkBtnFR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+        chkBtnFR.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                // TODO Auto-generated method stub
+                if (chkBtnFR.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnCCR.setEnabled(false);
+                } else {
+                    chkBtnTB.setEnabled(true);
+                    chkBtnPTV.setEnabled(true);
+                    chkBtnPPE.setEnabled(true);
+                    chkBtnSAAJ.setEnabled(true);
+                    chkBtnGAAC.setEnabled(true);
+                    chkBtnAF.setEnabled(true);
+                    chkBtnCA.setEnabled(true);
+                    chkBtnCCR.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent arg0) {
+            }
+        });
+
+    }
+
+    private void avaliaMDSSelectionActual() {
+        if (chkBtnPTV.getSelection()) {
+            chkBtnTB.setEnabled(false);
+            chkBtnCCR.setEnabled(false);
+            chkBtnPPE.setEnabled(false);
+            chkBtnSAAJ.setEnabled(false);
+            chkBtnGAAC.setEnabled(false);
+            chkBtnAF.setEnabled(false);
+            chkBtnCA.setEnabled(false);
+            chkBtnFR.setEnabled(false);
+        } else {
+            if (chkBtnTB.getSelection()) {
+                chkBtnPTV.setEnabled(false);
+                chkBtnCCR.setEnabled(false);
+                chkBtnPPE.setEnabled(false);
+                chkBtnSAAJ.setEnabled(false);
+                chkBtnGAAC.setEnabled(false);
+                chkBtnAF.setEnabled(false);
+                chkBtnCA.setEnabled(false);
+                chkBtnFR.setEnabled(false);
+            } else {
+                if (chkBtnCCR.getSelection()) {
+                    chkBtnTB.setEnabled(false);
+                    chkBtnPTV.setEnabled(false);
+                    chkBtnPPE.setEnabled(false);
+                    chkBtnSAAJ.setEnabled(false);
+                    chkBtnGAAC.setEnabled(false);
+                    chkBtnAF.setEnabled(false);
+                    chkBtnCA.setEnabled(false);
+                    chkBtnFR.setEnabled(false);
+                } else {
+                    if (chkBtnPPE.getSelection()) {
+                        chkBtnTB.setEnabled(false);
+                        chkBtnCCR.setEnabled(false);
+                        chkBtnPTV.setEnabled(false);
+                        chkBtnSAAJ.setEnabled(false);
+                        chkBtnGAAC.setEnabled(false);
+                        chkBtnAF.setEnabled(false);
+                        chkBtnCA.setEnabled(false);
+                        chkBtnFR.setEnabled(false);
+                    } else {
+                        if (chkBtnSAAJ.getSelection()) {
+                            chkBtnTB.setEnabled(false);
+                            chkBtnCCR.setEnabled(false);
+                            chkBtnPPE.setEnabled(false);
+                            chkBtnPTV.setEnabled(false);
+                            chkBtnGAAC.setEnabled(false);
+                            chkBtnAF.setEnabled(false);
+                            chkBtnCA.setEnabled(false);
+                            chkBtnFR.setEnabled(false);
+                        } else {
+                            if (chkBtnGAAC.getSelection()) {
+                                chkBtnTB.setEnabled(false);
+                                chkBtnCCR.setEnabled(false);
+                                chkBtnPPE.setEnabled(false);
+                                chkBtnSAAJ.setEnabled(false);
+                                chkBtnPTV.setEnabled(false);
+                                chkBtnAF.setEnabled(false);
+                                chkBtnCA.setEnabled(false);
+                                chkBtnFR.setEnabled(false);
+                            } else {
+                                if (chkBtnAF.getSelection()) {
+                                    chkBtnTB.setEnabled(false);
+                                    chkBtnCCR.setEnabled(false);
+                                    chkBtnPPE.setEnabled(false);
+                                    chkBtnSAAJ.setEnabled(false);
+                                    chkBtnGAAC.setEnabled(false);
+                                    chkBtnPTV.setEnabled(false);
+                                    chkBtnCA.setEnabled(false);
+                                    chkBtnFR.setEnabled(false);
+                                } else {
+                                    if (chkBtnCA.getSelection()) {
+                                        chkBtnTB.setEnabled(false);
+                                        chkBtnCCR.setEnabled(false);
+                                        chkBtnPPE.setEnabled(false);
+                                        chkBtnSAAJ.setEnabled(false);
+                                        chkBtnGAAC.setEnabled(false);
+                                        chkBtnAF.setEnabled(false);
+                                        chkBtnPTV.setEnabled(false);
+                                        chkBtnFR.setEnabled(false);
+                                    } else {
+                                        if (chkBtnFR.getSelection()) {
+                                            chkBtnTB.setEnabled(false);
+                                            chkBtnCCR.setEnabled(false);
+                                            chkBtnPPE.setEnabled(false);
+                                            chkBtnSAAJ.setEnabled(false);
+                                            chkBtnGAAC.setEnabled(false);
+                                            chkBtnAF.setEnabled(false);
+                                            chkBtnPTV.setEnabled(false);
+                                            chkBtnCA.setEnabled(false);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

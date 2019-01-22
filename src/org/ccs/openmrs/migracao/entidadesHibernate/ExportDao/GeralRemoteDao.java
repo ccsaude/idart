@@ -119,7 +119,7 @@ public class GeralRemoteDao implements GlobalPropertyDaoInterface<String, String
         SQLQuery sqlquery = getCurrentSession().createSQLQuery(queryOpenmrs);
     //    query.addEntity(List.class);
         List lostfollowupList = sqlquery.list();
-   //     System.out.println(lostfollowupList);
+        System.out.println(lostfollowupList);
         return lostfollowupList;
     }
 
