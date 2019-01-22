@@ -53,6 +53,7 @@ import org.celllife.idart.gui.reportParameters.LostToFollowUp;
 import org.celllife.idart.gui.reportParameters.LostToFollowUpReturned;
 import org.celllife.idart.gui.reportParameters.MissedAppointments;
 import org.celllife.idart.gui.reportParameters.MissedAppointmentsAPSS;
+import org.celllife.idart.gui.reportParameters.MissedAppointmentsChamadas;
 import org.celllife.idart.gui.reportParameters.MissedAppointmentsDT;
 import org.celllife.idart.gui.reportParameters.MissedAppointmentsNew;
 import org.celllife.idart.gui.reportParameters.MmiaReportMISAU;
@@ -418,9 +419,9 @@ private void createGrpClinicManagementReports() {
 		
 		
 		// MMIA Reports
-		reportGUIs.put(GenericReportGuiInterface.REPORT_MIA,
-				new MmiaReport(getShell(), false));
-		
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_MIA,
+//				new MmiaReport(getShell(), false));
+//		
 		reportGUIs.put(GenericReportGuiInterface.REPORT_MIAMISAU,
 				new MmiaReportMISAU(getShell(), false));
 		
@@ -510,6 +511,8 @@ private void createGrpClinicManagementReports() {
 				new MissedAppointmentsAPSS(getShell(), false));
                 reportGUIs.put(GenericReportGuiInterface.REPORT_MISSED_APPOINTMENTS_NEW,
 				new MissedAppointmentsNew(getShell(), false));
+                 reportGUIs.put(GenericReportGuiInterface.REPORT_MISSED_APPOINTMENTS_CHAMADAS,
+				new MissedAppointmentsChamadas(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_MISSED_APPOINTMENTS,
 				new MissedAppointments(getShell(), false));
                 reportGUIs.put(GenericReportGuiInterface.REPORT_MISSED_APPOINTMENTS_DT,
