@@ -108,6 +108,12 @@ public class Prescription {
 	private char ppe;
 	private char ptv;
 	private char tb;
+        private char ccr;
+        private char saaj;
+        private char gaac;
+        private char af;
+        private char ca;
+        private char fr;
 	private char tpc;
 	private char tpi;
 
@@ -143,7 +149,7 @@ public class Prescription {
 			List<PrescribedDrugs> prescribedDrugs, String prescriptionId,
 			String reasonForUpdate, String notes, RegimeTerapeutico regimeTerapeutico, 
                         Clinic clinic, Date datainicionoutroservico, String motivoMudanca, 
-                        char ppe, char ptv, char tb, char tpc, char tpi,int dispensaTrimestral, String tipoDT) {
+                        char ppe, char ptv, char tb, char ccr, char saaj, char gaac, char af, char ca, char fr, char tpc, char tpi,int dispensaTrimestral, String tipoDT) {
 		super();
 		this.clinicalStage = clinicalStage;
 		this.current = current;
@@ -164,6 +170,12 @@ public class Prescription {
 		this.ppe=ppe;
 		this.ptv=ptv;
 		this.tb=tb;
+                this.ccr=ccr;
+                this.saaj=saaj;
+                this.gaac=gaac;
+                this.af=af;
+                this.ca=ca;
+                this.fr=fr;
 		this.tpc=tpc;
 		this.tpi=tpi;
                 this.dispensaTrimestral=dispensaTrimestral;
@@ -549,6 +561,55 @@ public class Prescription {
 		return tb;
 	}
 	
+        public char getFr() {
+		return fr;
+	}
+
+	public void setFr(char fr) {
+		this.fr = fr;
+	}
+        
+        public char getCcr() {
+		return ccr;
+	}
+
+	public void setCcr(char ccr) {
+		this.ccr = ccr;
+	}
+        
+        public char getSaaj() {
+		return saaj;
+	}
+
+	public void setSaaj(char saaj) {
+		this.saaj = saaj;
+	}
+        
+        public char getGaac() {
+		return gaac;
+	}
+
+	public void setGaac(char gaac) {
+		this.gaac = gaac;
+	}
+        
+        public char getAf() {
+		return af;
+	}
+
+	public void setAf(char af) {
+		this.af = af;
+	}
+        
+        public char getCa() {
+		return ca;
+	}
+
+	public void setCa(char ca) {
+		this.ca = ca;
+	}
+        
+        
 	public void setTb(char tb) {
 		this.tb = tb;
 	}
