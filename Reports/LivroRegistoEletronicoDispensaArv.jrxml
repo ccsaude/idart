@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="510"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -69,7 +69,7 @@
 		<defaultValueExpression><![CDATA["C:\\Users\\colaco\\Documents\\Projectos CCS\\Sub\\idart\\idart\\Reports\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dateEnd" class="java.util.Date">
-		<defaultValueExpression><![CDATA[new Date("01/02/2018")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Date("02/01/2018")]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select  p.id as id,p.patientId as patientid,c.clinicname as facilityName,
@@ -154,14 +154,15 @@ regimePaciente(pr.id, 'ABC+3TC+EFV') as abc3tcefv,
     WHEN pr.tipodt = 'Manuntencao' OR (pr.dispensatrimestral = 1 AND pr.tipodt <> 'Novo' ) THEN 'X'
     ELSE ''
   END
-  AS ManuntencaoDt
+  AS ManuntencaoDt,
+pr.date  as dataPrescricao
 from Patient as p
 inner join clinic c on c.id = p.clinic
 inner join prescription pr on pr.patient = p.id
 inner join package pack on pack.prescription = pr.id
 inner join packageddrugs packdrug on packdrug.parentPackage = pack.id
 where pr.date between $P{date} and $P{dateEnd} and c.mainclinic = true
-group by p.id,pr.duration,pr.id, pr.reasonforupdate,p.patientId, pr.ppe, c.clinicname,pr.ptv, pr.tipodt, pack.weekssupply,packdrug.amount
+group by p.id,pr.duration,pr.id, pr.reasonforupdate,p.patientId, pr.ppe, c.clinicname,pr.ptv, pr.tipodt, pack.weekssupply,packdrug.amount,pr.date
 order by pr.date asc]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>

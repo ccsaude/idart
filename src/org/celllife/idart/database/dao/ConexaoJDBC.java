@@ -568,96 +568,57 @@ public int totalPacientesInicioP(String startDate, String endDate)throws ClassNo
 public int totalPacientesManter(String startDate, String endDate)throws ClassNotFoundException, SQLException{
 	int total=0;
  
-	String query=" SELECT  DISTINCT "
-+" dispensa_packege.patientid "
+	String query=" SELECT  DISTINCT dispensa_packege.packageid "
 +"	FROM "
-
 +"	(SELECT "
-
 +"	prescription.id, package.packageid "
-
-+" FROM "
-
-+" prescription, "
-+" 	package "
-
-+ ", ( "
++"  FROM prescription, package, ( "
 + " select patient.id "
 + " from patient,episode "
-
 + " WHERE "
 + " patient.id=episode.patient "
 + " and episode.startreason not like '%Transito%' and episode.startreason not like \'%aternidade%\' "
-
 + " )as naotransito "
- 
-	 + " 	 WHERE  "
-
++ " 	 WHERE  "
  + " naotransito.id =prescription.patient "
 + " AND  "
-
 +" prescription.id = package.prescription "
-
 +" AND "
 +"  prescription.ppe=\'F\'  "
-			
 +" AND  "
-
 +" (prescription.reasonforupdate=\'Manter\' OR prescription.reasonforupdate=\'Transfer de\' OR prescription.reasonforupdate=\'Reiniciar\')  "
-
 +" )as prescription_package, "
-
 +" ( "
 +" SELECT "
- 
-
-+" packagedruginfotmp.patientid, "
-+" packagedruginfotmp.packageid,"
-+ "packagedruginfotmp.dispensedate "
-
++" package.packageid,"
++ "package.pickupdate "
 +" FROM "
-+" package, packagedruginfotmp "
-
++" package, packageddrugs "
 +" WHERE "
-
-+" package.packageid=packagedruginfotmp.packageid "
-+" AND "
-
-+"				 packagedruginfotmp.dispensedate::timestamp::date >= "
-+ "\'"+startDate+"\'::timestamp::date  AND  packagedruginfotmp.dispensedate::timestamp::date <= "
-	+ " \'"+endDate+"\'::timestamp::date"
++" packageddrugs.parentpackage = package.id "
++" AND packageddrugs.amount <> 0 AND "
++" package.pickupdate::date >= "
++ "\'"+startDate+"\'::date  AND  package.pickupdate::date <= "
+	+ " \'"+endDate+"\'::date"
 +" ) as dispensa_packege ,"
-          
 	 + " ("
-      + "     select packagedruginfotmp.patientid,  "
-	 	 
-	 + " 	  max(packagedruginfotmp.dispensedate) as lastdispense"
-	 
- 	 
+     + "     select package.packageid,  "
+	 + " 	 max(package.pickupdate) as lastdispense"
 	 + " 	 FROM "
-	 + " 	 package, packagedruginfotmp  "
-
+	 + " 	 package, packageddrugs  "
 	 + "  	 WHERE  "
-
- 	 + "	 package.packageid=packagedruginfotmp.packageid  "
- 	 + "	 AND  "
- 
-	  + "					 packagedruginfotmp.dispensedate::timestamp::date >=  "
-	+ "\'"+startDate+"\'::timestamp::date  AND  packagedruginfotmp.dispensedate::timestamp::date <=  "
-	 + " \'"+endDate+"\'::timestamp::date  "
-	  
-	 + "  group by packagedruginfotmp.patientid "
- 
-      + "     ) as ultimadatahora "
-
-	+ "	 WHERE  "
-	+ "	 dispensa_packege.packageid=prescription_package.packageid  "
+ 	 + "	 packageddrugs.parentpackage = package.id  "
+ 	 + "	 AND  packageddrugs.amount <> 0 AND "
+	 + "	 package.pickupdate::date >=  "
+	 + "\'"+startDate+"\'::date  AND  package.pickupdate::date <=  "
+	 + " \'"+endDate+"\'::date  " 
+	 + "  group by package.packageid "
+     + "     ) as ultimadatahora "
+	 + "	 WHERE  "
+	 + "	 dispensa_packege.packageid=prescription_package.packageid  "
      + "	  and  "
-     + "  dispensa_packege.dispensedate=ultimadatahora.lastdispense";
-			
-
-	
-	
+     + "  dispensa_packege.pickupdate=ultimadatahora.lastdispense";
+				
 	 conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
 
 
@@ -2133,6 +2094,45 @@ somaSemanas+=rs.getInt("weekssupply");
 	
 	return meses;
 }
+
+
+public int mesesDispensadosParaDT(String startDate, String endDate) throws SQLException{
+	
+	int meses=0;
+	double somaSemanas=0;
+	
+	String query=" SELECT "
+			+ " package.weekssupply, package.packageid"
+			+ " FROM package "
+			+ "inner join packageddrugs on packageddrugs.parentpackage = package.id "
+			+ " WHERE packageddrugs.amount = 0 AND "
+			+ " package.pickupdate::date >= "
+			+ "\'"+startDate+"\'::date "
+					+ "AND package.pickupdate::date <="
+					+ " \'"+endDate+"\'::date GROUP BY package.packageid, package.weekssupply";
+	
+	ResultSet rs=st.executeQuery(query);
+	
+	if (rs != null)
+    {
+       
+        while (rs.next())
+        {
+
+
+somaSemanas+=rs.getInt("weekssupply");
+
+        } 
+        rs.close(); //
+        
+        meses=(int) Math.round(somaSemanas/4);
+    }
+	
+	
+	return meses;
+}
+
+
 
 /**
  * Insere pacientes que nao estao ainda no SESP

@@ -75,37 +75,30 @@ public class MiaReportMISAU extends AbstractJasperReport {
 		
 			int totalpacientesinicio = conn.totalPacientesInicio(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
 			System.out.println("Total de pacientes Inicio arv "+ totalpacientesinicio);
-			
-			
+						
 			int totalpacientesmanter = conn.totalPacientesManter(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
 			System.out.println("Total de pacientes a manter arv "+ totalpacientesmanter);
 		
-             int totalpacientesalterar =conn.totalPacientesAlterar(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
+                        int totalpacientesalterar =conn.totalPacientesAlterar(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
  			System.out.println("Total de pacientes a alterar arv "+ totalpacientesalterar);
- 			
- 			
- 			
- 			
- 			 int totalpacientesppe =conn.totalPacientesPPE(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
+
+                        int totalpacientesppe =conn.totalPacientesPPE(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
   			System.out.println("Total de pacientes ppe "+ totalpacientesppe);
-  			
-  			
-  			
-  			
-  			 int totalpacienteptv =conn.totalPacientesPTV(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
+
+                        int totalpacienteptv =conn.totalPacientesPTV(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
    			System.out.println("Total de pacientes ptv "+ totalpacienteptv);
    			
-   			
-			
-			int mesesdispensados=conn.mesesDispensados(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
+   			int mesesdispensados=conn.mesesDispensados(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
 			System.out.println("Meses dispensados "+ mesesdispensados);
-			
-			ConexaoODBC conn2=new ConexaoODBC();
-			int pacientesEmTarv=conn2.pacientesActivosEmTarv();
-			int pacientesEmTarvLinhaJ=conn2.linhaJResumoMensal(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
-			System.out.println("Pacientes em tarv  "+ pacientesEmTarv);
-			
-			System.out.println("Pacientes em tarv Linha J:  "+ pacientesEmTarvLinhaJ);
+			 
+                        int mesesdispensadosparaDT = conn.mesesDispensadosParaDT(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
+                        System.out.println("Meses dispensados Para DT "+ mesesdispensadosparaDT);
+//			ConexaoODBC conn2=new ConexaoODBC();
+//			int pacientesEmTarv=conn2.pacientesActivosEmTarv();
+//			int pacientesEmTarvLinhaJ=conn2.linhaJResumoMensal(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
+//			System.out.println("Pacientes em tarv  "+ pacientesEmTarv);
+//			
+//			System.out.println("Pacientes em tarv Linha J:  "+ pacientesEmTarvLinhaJ);
 			int pacientesEmTransito=conn.totalPacientesTransito(dateFormat.format(theStartDate), dateFormat.format(theEndDate));
 		map.put("stockCenterId", new Integer(stockCenter.getId()));
 		map.put("date", theStartDate);
@@ -133,8 +126,8 @@ public class MiaReportMISAU extends AbstractJasperReport {
 		map.put("totalpacientesppe",totalpacientesppe);
 		map.put("totalpacienteptv",totalpacienteptv);
 		map.put("mesesdispensados",mesesdispensados);
-		map.put("pacientesEmTarv",pacientesEmTarv);
-		map.put("linhaJ", pacientesEmTarvLinhaJ);
+		map.put("pacientesEmTarv",mesesdispensadosparaDT);
+//		map.put("linhaJ", pacientesEmTarvLinhaJ);
 		map.put("transito", pacientesEmTransito);
 		map.put("dataelaboracao", new SimpleDateFormat("dd/MM/yyyy").format(new Date())); 
 		map.put("mes", mesPortugues(theStartDate));

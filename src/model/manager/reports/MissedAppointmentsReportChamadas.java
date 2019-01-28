@@ -24,14 +24,17 @@ public class MissedAppointmentsReportChamadas extends AbstractJasperReport {
 	private final int minDays;
 	private final Date theDate;
 	private final int maxDays;
+        private final boolean dt;
 
 	public MissedAppointmentsReportChamadas(Shell parent, String clinicName,
-			int minDays, int maxDays, Date theDate) {
+			int minDays, int maxDays, Date theDate,boolean dt) {
 		super(parent);
 		this.clinicName = clinicName;
 		this.minDays = minDays;
 		this.maxDays = maxDays;
 		this.theDate = theDate;
+                this.dt = dt;
+                
 	}
 
 	@Override
@@ -59,7 +62,10 @@ public class MissedAppointmentsReportChamadas extends AbstractJasperReport {
 
 	@Override
 	protected String getReportFileName() {
+            if(dt)
 		return "RelatorioAbandonosFaltososDTChamadas";
+            else
+                return "RelatorioAbandonosFaltososRETChamadas";
 	}
 
 }

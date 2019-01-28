@@ -26,9 +26,9 @@ where prescription.regimeid=regimeterapeutico.regimeid AND
 
   		  AND
 
-  		   package.pickupdate::timestamp::date >=
-$P{monthStart}::timestamp::date  AND  package.pickupdate::timestamp::date <=
-	   $P{monthEnd}::timestamp::date  order by pediatrico asc) as tabela
+  		   package.pickupdate::date >=
+$P{monthStart}::date  AND  package.pickupdate::date <=
+	   $P{monthEnd}::date  order by pediatrico asc) as tabela
 	    group by regimeesquema
 ) AS abc
 
@@ -41,9 +41,9 @@ where prescription.regimeid=regimeterapeutico.regimeid AND
   		  AND regimeterapeutico.active=true and prescription.id=package.prescription
 AND package.weekssupply=8
   		   AND
-  		   package.pickupdate::timestamp::date >=
-	$P{monthStart}::timestamp::date - INTEGER '30' AND  package.pickupdate::timestamp::date <=
-	    $P{monthEnd}::timestamp::date - INTEGER '30'  order by pediatrico asc) as tabela
+  		   package.pickupdate::date >=
+	$P{monthStart}::date - INTEGER '30' AND  package.pickupdate::date <=
+	    $P{monthEnd}::date - INTEGER '30'  order by pediatrico asc) as tabela
 	    group by regimeesquema
 ) as abc2 on abc.regimeesquema=abc2.regimeesquema]]>
 	</queryString>

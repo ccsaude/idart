@@ -302,6 +302,7 @@ public class AddPrescription extends GenericFormGui implements
                     if (script != null) {
                         localPrescription = script;
                         loadPrescriptionDetails();
+                        avaliaMDSSelectionActual();
                         cmbUpdateReason.setEnabled(true);
                     } else {
                         setFormToInitialPrescription();

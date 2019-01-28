@@ -1,4 +1,4 @@
-/*
+    /*
  * iDART: The Intelligent Dispensing of Antiretroviral Treatment
  * Copyright (C) 2006 Cell-Life
  *
@@ -428,8 +428,8 @@ private void createGrpClinicManagementReports() {
                 reportGUIs.put("Livro Electronico ARV",
 				new LivroEletronicoDispensaARV(getShell(), false));
                 
-		reportGUIs.put(GenericReportGuiInterface.REPORT_IDART,
-				new RegisteredIdart(getShell(), false));
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_IDART,
+//				new RegisteredIdart(getShell(), false));
 		
 		reportGUIs.put(GenericReportGuiInterface.REPORT_TPC,
 				new CotrimoxazolReport(getShell(), false));
@@ -471,40 +471,40 @@ private void createGrpClinicManagementReports() {
 				new StockTakeReportGUI(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_DRUGS_DISPENSED,
 				new DrugsDispensed(getShell(), false));
-		reportGUIs.put(GenericReportGuiInterface.REPORT_COHORT_COLLECTIONS,
-				new CohortDrugCollections(getShell(), false));
-		reportGUIs.put(GenericReportGuiInterface.REPORT_MONTHLY_RECEIPT_ISSUE,
-				new MonthlyReceiptsAndIssues(getShell(), false));
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_COHORT_COLLECTIONS,
+//				new CohortDrugCollections(getShell(), false));
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_MONTHLY_RECEIPT_ISSUE,
+//				new MonthlyReceiptsAndIssues(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_ARV_DRUG_USAGE,
 				new ARVDrugUsage(getShell(), false));
 
 		// Clinic Management Reports
 
-		PackageProcessingReportGUI packsCreated = new PackageProcessingReportGUI(
-				getShell(), false);
-		packsCreated.setPackageStage(PackageLifeStage.PACKED);
-		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_CREATED,
-				packsCreated);
+//		PackageProcessingReportGUI packsCreated = new PackageProcessingReportGUI(
+//				getShell(), false);
+//		packsCreated.setPackageStage(PackageLifeStage.PACKED);
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_CREATED,
+//				packsCreated);
 
-		PackageProcessingReportGUI packsLeft = new PackageProcessingReportGUI(
-				getShell(), false);
-		packsLeft.setPackageStage(PackageLifeStage.SCANNED_OUT);
-		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_LEAVING,
-				packsLeft);
+//		PackageProcessingReportGUI packsLeft = new PackageProcessingReportGUI(
+//				getShell(), false);
+//		packsLeft.setPackageStage(PackageLifeStage.SCANNED_OUT);
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_LEAVING,
+//				packsLeft);
 
-		PackageProcessingReportGUI packsRec = new PackageProcessingReportGUI(
-				getShell(), false);
-		packsRec.setPackageStage(PackageLifeStage.SCANNED_IN);
-		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_RECEIVED,
-				packsRec);
+//		PackageProcessingReportGUI packsRec = new PackageProcessingReportGUI(
+//				getShell(), false);
+//		packsRec.setPackageStage(PackageLifeStage.SCANNED_IN);
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_RECEIVED,
+//				packsRec);
 
-		PackageProcessingReportGUI packsCollected = new PackageProcessingReportGUI(
-				getShell(), false);
-		packsCollected.setPackageStage(PackageLifeStage.PICKED_UP);
-		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_COLLECTED,
-				packsCollected);
-		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_AWAITING_PICKUP,
-				new PackagesAwaiting(getShell(), false));
+//		PackageProcessingReportGUI packsCollected = new PackageProcessingReportGUI(
+//				getShell(), false);
+//		packsCollected.setPackageStage(PackageLifeStage.PICKED_UP);
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_COLLECTED,
+//				packsCollected);
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_PACKAGES_AWAITING_PICKUP,
+//				new PackagesAwaiting(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_PATIENTS_EXPECTED_ON_A_DAY,
 				new PatientsExpected(getShell(), false));
                 reportGUIs.put(GenericReportGuiInterface.REPORT_MISSED_APPOINTMENTS_APSS,
@@ -517,22 +517,22 @@ private void createGrpClinicManagementReports() {
 				new MissedAppointments(getShell(), false));
                 reportGUIs.put(GenericReportGuiInterface.REPORT_MISSED_APPOINTMENTS_DT,
 				new MissedAppointmentsDT(getShell(), false));
-                 reportGUIs.put(GenericReportGuiInterface.REPORT_LOST_TO_FOLLOW_UP,
-				new LostToFollowUp(getShell(), false));
+//                 reportGUIs.put(GenericReportGuiInterface.REPORT_LOST_TO_FOLLOW_UP,
+//				new LostToFollowUp(getShell(), false));
                 reportGUIs.put(GenericReportGuiInterface.REPORT_CONFIRMACA_ABANDONOS_OPENMRS,
 				new AbandonosIdartOpenMRS(getShell(), false));
                 reportGUIs.put(GenericReportGuiInterface.REPORT_LOST_TO_FOLLOW_UP_RETURNED,
 				new LostToFollowUpReturned(getShell(), false));
 
 		// M & E Reports
-		reportGUIs.put(GenericReportGuiInterface.REPORT_DRUG_COMBINATIONS,
-				new DrugCombinations(getShell(), false));
-		reportGUIs.put(GenericReportGuiInterface.REPORT_EPISODES_STATS,
-				new EpisodeStats(getShell(), false));
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_DRUG_COMBINATIONS,
+//				new DrugCombinations(getShell(), false));
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_EPISODES_STATS,
+//				new EpisodeStats(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_TRANSACTION_LOG,
 				new TransactionLog(getShell(), false));
-		reportGUIs.put(GenericReportGuiInterface.REPORT_PRESCRIBING_DOCTORS,
-				new PrescribingDoctors(getShell(), false));
+//		reportGUIs.put(GenericReportGuiInterface.REPORT_PRESCRIBING_DOCTORS,
+//				new PrescribingDoctors(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_PEPFAR,
 				new PepfarReportGUI(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_CLINIC_INDICATORS,

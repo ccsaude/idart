@@ -19,7 +19,11 @@ import org.celllife.idart.gui.utils.iDartFont;
 import org.celllife.idart.gui.utils.iDartImage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
@@ -39,6 +43,10 @@ public class MissedAppointmentsChamadas extends GenericReportGui {
 	private Label lblClinic;
 
 	private CCombo cmbClinic;
+        
+        private Button chkBtnDT;
+
+        private Button chkBtnRET;
 
 	private Label lblMinimumDaysLate;
 
@@ -136,7 +144,49 @@ public class MissedAppointmentsChamadas extends GenericReportGui {
 		txtMaximumDaysLate.setText("11");
                 txtMaximumDaysLate.setEditable(true);
 		txtMaximumDaysLate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+                
+                chkBtnDT = new Button(grpClinicSelection, SWT.CHECK);
+                chkBtnDT.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, false, false, 1, 1));
+                chkBtnDT.setBounds(new Rectangle(270, 56, 50, 21));
+                chkBtnDT.setText("DT");
+                chkBtnDT.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+                chkBtnDT.setSelection(false);
+                
+                chkBtnRET = new Button(grpClinicSelection, SWT.CHECK);
+                chkBtnRET.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, false, false, 1, 1));
+                chkBtnRET.setBounds(new Rectangle(270, 86, 150, 21));
+                chkBtnRET.setText("Retenção 1 Mês");
+                chkBtnRET.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+                chkBtnRET.setSelection(false);
 
+                chkBtnDT.addSelectionListener(new SelectionListener() {
+                @Override
+                public void widgetSelected(SelectionEvent arg0) {
+                    // TODO Auto-generated method stub
+                    if (chkBtnDT.getSelection()) 
+                        chkBtnRET.setEnabled(false);
+                     else 
+                        chkBtnRET.setEnabled(true);     
+                }
+                @Override
+                public void widgetDefaultSelected(SelectionEvent arg0) {
+                }
+            });
+                 chkBtnRET.addSelectionListener(new SelectionListener() {
+                @Override
+                public void widgetSelected(SelectionEvent arg0) {
+                    // TODO Auto-generated method stub
+                    if (chkBtnRET.getSelection()) 
+                        chkBtnDT.setEnabled(false);
+                     else 
+                        chkBtnDT.setEnabled(true);     
+                }
+                @Override
+                public void widgetDefaultSelected(SelectionEvent arg0) {
+                }
+            });
+                
+                
 	}
 
 	/**
@@ -213,6 +263,16 @@ public class MissedAppointmentsChamadas extends GenericReportGui {
 			viewReport = false;
 
 		}
+                
+                if(!chkBtnDT.getSelection() && !chkBtnRET.getSelection()){
+                    MessageBox missing = new MessageBox(getShell(), SWT.ICON_ERROR
+					| SWT.OK);
+			missing.setText("Nenhum tipo de relatorio foi seleccionado");
+			missing
+			.setMessage("Nenhum tipo de relatorio foi seleccionado. Por favor selecione a DT ou Retenção 1 Mês.");
+			missing.open();
+			viewReport = false;
+                }
 
 		if (txtMinimumDaysLate.getText().equals("")
 				|| txtMaximumDaysLate.getText().equals("")) {
@@ -272,11 +332,13 @@ public class MissedAppointmentsChamadas extends GenericReportGui {
 		}
 
 		if (viewReport) {
+                    
                        MissedAppointmentsReportChamadas report = new MissedAppointmentsReportChamadas(
                                getShell(),cmbClinic.getText(),
                                Integer.parseInt(txtMinimumDaysLate.getText()),
                                Integer.parseInt(txtMaximumDaysLate.getText()),
-                               swtCal.getCalendar().getTime());
+                               swtCal.getCalendar().getTime(),
+                               chkBtnDT.getSelection());
 			viewReport(report);
 		}
 

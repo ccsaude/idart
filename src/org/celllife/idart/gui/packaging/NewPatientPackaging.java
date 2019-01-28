@@ -864,15 +864,19 @@ public class NewPatientPackaging extends GenericFormGui implements
             @Override
             public void widgetDisposed(DisposeEvent e) {
                 Patient patient = myPrescription.getPatient();
+                if(patient == null){
+                   clearForm();
+                }else{
+                
                 closeAndReopenSession();
                 patient = PatientManager.getPatient(getHSession(), patient.getId());
-                if ((patient != null)
-                        && (patient
+                if ((patient != null) && (patient
                         .getCurrentPrescription() != null)) {
                     populatePatientDetails(patient.getId());
                 } else {
                     clearForm();
                 }
+            }
             }
         });
 

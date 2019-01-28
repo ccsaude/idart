@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="107"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -395,10 +395,10 @@ order by d.pediatric asc]]>
 				</staticText>
 				<staticText>
 					<reportElement x="338" y="190" width="110" height="24"/>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Pacientes activos em TARV na US (Farmácia)]]></text>
+					<text><![CDATA[Total Dispensados em DT ]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="465" y="43" width="55" height="19"/>
