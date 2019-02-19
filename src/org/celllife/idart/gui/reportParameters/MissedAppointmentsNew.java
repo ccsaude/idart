@@ -137,7 +137,7 @@ public class MissedAppointmentsNew extends GenericReportGui {
 
 		txtMinimumDaysLate = new Text(grpClinicSelection, SWT.BORDER);
 		txtMinimumDaysLate.setBounds(new Rectangle(201, 56, 45, 20));
-		txtMinimumDaysLate.setText("4");
+		txtMinimumDaysLate.setText("5");
                 txtMinimumDaysLate.setEditable(true);
 		txtMinimumDaysLate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
@@ -148,7 +148,7 @@ public class MissedAppointmentsNew extends GenericReportGui {
 
 		txtMaximumDaysLate = new Text(grpClinicSelection, SWT.BORDER);
 		txtMaximumDaysLate.setBounds(new Rectangle(202, 86, 43, 19));
-		txtMaximumDaysLate.setText("11");
+		txtMaximumDaysLate.setText("9");
                 txtMaximumDaysLate.setEditable(true);
 		txtMaximumDaysLate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 

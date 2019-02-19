@@ -20,7 +20,11 @@ import org.celllife.idart.gui.utils.iDartFont;
 import org.celllife.idart.gui.utils.iDartImage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
@@ -52,6 +56,12 @@ public class MissedAppointmentsAPSS extends GenericReportGui {
 	private Group grpDateRange;
 
 	private SWTCalendar swtCal;
+        
+        private Button chkBtnALL;
+
+        private Button chkBtnPTV;
+        
+        private Button chkBtnTB;
 
 	/**
 	 * Constructor
@@ -123,7 +133,7 @@ public class MissedAppointmentsAPSS extends GenericReportGui {
 
 		txtMinimumDaysLate = new Text(grpClinicSelection, SWT.BORDER);
 		txtMinimumDaysLate.setBounds(new Rectangle(201, 56, 45, 20));
-		txtMinimumDaysLate.setText("4");
+		txtMinimumDaysLate.setText("5");
                 txtMinimumDaysLate.setEditable(true);
 		txtMinimumDaysLate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
@@ -134,9 +144,80 @@ public class MissedAppointmentsAPSS extends GenericReportGui {
 
 		txtMaximumDaysLate = new Text(grpClinicSelection, SWT.BORDER);
 		txtMaximumDaysLate.setBounds(new Rectangle(202, 86, 43, 19));
-		txtMaximumDaysLate.setText("11");
+		txtMaximumDaysLate.setText("9");
                 txtMaximumDaysLate.setEditable(true);
 		txtMaximumDaysLate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+                
+                chkBtnALL = new Button(grpClinicSelection, SWT.CHECK);
+                chkBtnALL.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, false, false, 1, 1));
+                chkBtnALL.setBounds(new Rectangle(320, 56, 135, 21));
+                chkBtnALL.setText("ADULTO E PEDIATRIA");
+                chkBtnALL.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+                chkBtnALL.setSelection(false);
+                
+                chkBtnPTV = new Button(grpClinicSelection, SWT.CHECK);
+                chkBtnPTV.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, false, false, 1, 1));
+                chkBtnPTV.setBounds(new Rectangle(270, 86, 150, 21));
+                chkBtnPTV.setText("PTV");
+                chkBtnPTV.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+                chkBtnPTV.setSelection(false);
+
+                chkBtnTB = new Button(grpClinicSelection, SWT.CHECK);
+                chkBtnTB.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, false, false, 1, 1));
+                chkBtnTB.setBounds(new Rectangle(270, 56, 150, 21));
+                chkBtnTB.setText("TB");
+                chkBtnTB.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+                chkBtnTB.setSelection(false);
+                
+                chkBtnALL.addSelectionListener(new SelectionListener() {
+                @Override
+                public void widgetSelected(SelectionEvent arg0) {
+                    // TODO Auto-generated method stub
+                    if (chkBtnALL.getSelection()){ 
+                        chkBtnPTV.setEnabled(false);
+                        chkBtnTB.setEnabled(false);
+                    }else{ 
+                        chkBtnPTV.setEnabled(true); 
+                        chkBtnTB.setEnabled(true);
+                    }
+                }
+                @Override
+                public void widgetDefaultSelected(SelectionEvent arg0) {
+                }
+            });
+                 chkBtnTB.addSelectionListener(new SelectionListener() {
+                @Override
+                public void widgetSelected(SelectionEvent arg0) {
+                    // TODO Auto-generated method stub
+                    if (chkBtnTB.getSelection()){ 
+                        chkBtnALL.setEnabled(false);
+                        chkBtnPTV.setEnabled(false);
+                    }else{ 
+                        chkBtnALL.setEnabled(true);
+                        chkBtnPTV.setEnabled(true);
+                    }
+                }
+                @Override
+                public void widgetDefaultSelected(SelectionEvent arg0) {
+                }
+            });
+                 
+            chkBtnPTV.addSelectionListener(new SelectionListener() {
+                @Override
+                public void widgetSelected(SelectionEvent arg0) {
+                    // TODO Auto-generated method stub
+                    if (chkBtnPTV.getSelection()){ 
+                        chkBtnALL.setEnabled(false);
+                        chkBtnTB.setEnabled(false);
+                    }else{ 
+                        chkBtnALL.setEnabled(true);
+                        chkBtnTB.setEnabled(true);
+                    }
+                }
+                @Override
+                public void widgetDefaultSelected(SelectionEvent arg0) {
+                }
+            });
 
 	}
 
@@ -215,6 +296,16 @@ public class MissedAppointmentsAPSS extends GenericReportGui {
 
 		}
 
+                  if(!chkBtnALL.getSelection() && !chkBtnPTV.getSelection() && !chkBtnTB.getSelection()){
+                    MessageBox missing = new MessageBox(getShell(), SWT.ICON_ERROR
+					| SWT.OK);
+			missing.setText("Nenhum tipo de relatorio foi seleccionado");
+			missing
+			.setMessage("Nenhum tipo de relatorio foi seleccionado. Por favor selecione ALL, TB ou PTV.");
+			missing.open();
+			viewReport = false;
+                }
+                
 		if (txtMinimumDaysLate.getText().equals("")
 				|| txtMaximumDaysLate.getText().equals("")) {
 			MessageBox incorrectData = new MessageBox(getShell(),
@@ -276,7 +367,7 @@ public class MissedAppointmentsAPSS extends GenericReportGui {
 			    MissedAppointmentsAPSSReport report = new MissedAppointmentsAPSSReport(getShell(),cmbClinic.getText(),
 					Integer.parseInt(txtMinimumDaysLate.getText()),
 					Integer.parseInt(txtMaximumDaysLate.getText()),
-					swtCal.getCalendar().getTime());
+					swtCal.getCalendar().getTime(),chkBtnALL.getSelection(),chkBtnPTV.getSelection(),chkBtnTB.getSelection());
 			viewReport(report);
 		}
 

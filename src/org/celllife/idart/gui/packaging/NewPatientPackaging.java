@@ -3032,6 +3032,12 @@ public class NewPatientPackaging extends GenericFormGui implements
         prescription.setPpe(mainPrescription.getPpe());
         prescription.setPtv(mainPrescription.getPtv());
         prescription.setTb(mainPrescription.getTb());
+        prescription.setGaac(mainPrescription.getGaac());
+        prescription.setAf(mainPrescription.getAf());
+        prescription.setFr(mainPrescription.getFr());
+        prescription.setCa(mainPrescription.getCa());
+        prescription.setSaaj(mainPrescription.getSaaj());
+        prescription.setCcr(mainPrescription.getCcr());
         prescription.setTpc(mainPrescription.getTpc());
         prescription.setTpi(mainPrescription.getTpi());
         prescription.setDrugTypes(mainPrescription.getDrugTypes());

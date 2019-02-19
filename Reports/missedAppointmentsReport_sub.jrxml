@@ -13,10 +13,10 @@
 		<defaultValueExpression><![CDATA[new Integer(2)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="maxDays" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(7)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(11)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="minDays" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(3)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(5)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="date" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
@@ -74,13 +74,15 @@ from patient as pat, appointment as app, patientidentifier as pi,identifiertype 
 where app.patient = pat.id
 and presc.patient = pat.id
 and presc."current" = 'T'
+and presc.tb = 'F'
+and presc.ptv = 'F'
 and idt.name = 'NID'
 and pi.value = pat.patientid
 and idt.id = pi.type_id
 and $P{clinicid} = pat.clinic
 and app.appointmentDate is not null
 and (app.visitdate::date is null)
-and ($P{date}::date - app.appointmentDate::date) between $P{minDays} and $P{maxDays}
+and (app.appointmentDate::date < $P{date}::date and ($P{date}::date - app.appointmentDate::date) between $P{minDays} and $P{maxDays})
 and exists (select prescription.id
 from prescription
 where prescription.patient = pat.id
@@ -88,7 +90,7 @@ and (($P{date} between prescription.date and prescription.endDate)or(($P{date} >
 and exists (select id from episode where episode.patient = pat.id
 and (($P{date} between episode.startdate and episode.stopdate)or(($P{date} > episode.startdate)) and (episode.stopdate is null)))
 group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
-order by dayssinceexpected asc]]>
+order by age asc]]>
 	</queryString>
 	<field name="patid" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
@@ -324,12 +326,12 @@ order by dayssinceexpected asc]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{tarv}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="471" y="0" width="21" height="20"/>
+				<reportElement x="498" y="0" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{ptv}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="497" y="0" width="21" height="20"/>
+				<reportElement x="470" y="0" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{tb}]]></textFieldExpression>
 			</textField>

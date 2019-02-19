@@ -340,7 +340,7 @@ public class GeneralAdmin extends GenericAdminGui {
                 });
 
         //Desactivar a adicao de DRUG
-        btnDrugsAdd.setEnabled(true);
+        btnDrugsAdd.setEnabled(false);
         // btnDrugsUpdate
         Button btnDrugsUpdate = new Button(grpDrugs, SWT.NONE);
         btnDrugsUpdate.setText(Messages.getString("GeneralAdmin.button.drugupdate.title")); //$NON-NLS-1$
@@ -430,7 +430,7 @@ public class GeneralAdmin extends GenericAdminGui {
                 });
 
         if (!iDartProperties.enableDrugGroupEditor) {
-            if (getUserPermission() != 'A') {
+            if (getUserPermission() != 'Z') {
                 btnRegimenAdd.setEnabled(false);
                 btnRegimenUpdate.setEnabled(false);
             }

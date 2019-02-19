@@ -48,7 +48,7 @@ END
   AS datelostfollowup,
 
   CASE
-    WHEN (app.visitdate::date - app.appointmentdate::date) < 0 THEN app.visitdate::date
+    WHEN (app.visitdate::date - app.appointmentdate::date) > 0 THEN app.visitdate::date
     ELSE null
   END
   AS datereturn,
