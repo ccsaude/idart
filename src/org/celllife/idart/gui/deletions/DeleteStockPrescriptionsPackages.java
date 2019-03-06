@@ -283,10 +283,10 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 				.getImage(iDartImage.PRESCRIPTIONDELETE));
 
 		rdBtnPrescription = new Button(grpDeletionTypeSelection, SWT.RADIO);
-                rdBtnPrescription.setEnabled(false);
+                rdBtnPrescription.setEnabled(true);
 		rdBtnPrescription.setBounds(630, 60, 185, 20);
 		rdBtnPrescription.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-		rdBtnPrescription.setText("Delete Incorrect Prescription");
+		rdBtnPrescription.setText("Remover Prescrição");
                 rdBtnPrescription.setSelection(false);
 		rdBtnPrescription
 		.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -540,12 +540,12 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 
 		if (prescriptionToRemove == null) {
 			MessageBox mb = new MessageBox(getShell());
-			mb.setText("No Prescription to Remove");
+			mb.setText("Não existem prescrições para Remover");
 			mb
-			.setMessage("Patient '"
+			.setMessage("O paciente com o NID '"
 					+ localPatient.getPatientId()
-					+ "' does not have any prescription that can be removed from the database at this point. \n\nThe only prescriptions that "
-					+ "can be removed are those for which no packages have been created.");
+					+ "' não tem alguma prescrição que pode ser removida. \n\n Não é possivel remover "
+					+ " prescrições que não tem dispensa.");
 			mb.open();
 			txtPatientId.setText("");
 			txtPackageId.setFocus();
@@ -565,12 +565,11 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 
 		if ((stockToRemove == null) || (stockToRemove.size() == 0)) {
 			MessageBox mb = new MessageBox(getShell());
-			mb.setText("No Stock to Remove");
+			mb.setText("Não existem stock por remover");
 			mb
-			.setMessage("Drug '"
+			.setMessage("O Medicamento '"
 					+ txtPatientId.getText()
-					+ "' does not have any batches that can be removed from the database at this point. \n\nThe only batches that "
-					+ "can be removed are those from which nothing has been dispensed.");
+					+ "' não tem nenhum lote que pode ser removido neste momento.");
 			mb.open();
 			txtPatientId.setText("");
 
@@ -740,7 +739,7 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 			// before we try anything, lets ask the user for their password
 			ConfirmWithPasswordDialogAdapter passwordDialog = new ConfirmWithPasswordDialogAdapter(
 					getShell(), getHSession());
-			passwordDialog.setMessage("Please enter your Password");
+			passwordDialog.setMessage("Por favor, coloque a sua senha");
 			// if password verified
 			String messg = passwordDialog.open();
 			if (messg.equalsIgnoreCase("verified")) {
@@ -910,13 +909,13 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 		}
 		grpPackageInfo = new Group(getShell(), SWT.NONE);
 		grpPackageInfo.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-		grpPackageInfo.setText("Prescription To Remove:");
+		grpPackageInfo.setText("Prescrição por Remover:");
 		grpPackageInfo.setBounds(new org.eclipse.swt.graphics.Rectangle(30,
 				260, 840, 330));
 
 		lblPackageId = new Label(grpPackageInfo, SWT.NONE);
 		lblPackageId.setBounds(new Rectangle(260, 30, 100, 20));
-		lblPackageId.setText("Prescription ID:");
+		lblPackageId.setText("Nº da Prescrição:");
 		lblPackageId.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
 		txtPackageId = new Text(grpPackageInfo, SWT.BORDER);
@@ -926,7 +925,7 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 
 		lblDatePacked = new Label(grpPackageInfo, SWT.NONE);
 		lblDatePacked.setBounds(new Rectangle(260, 55, 100, 20));
-		lblDatePacked.setText("Date Captured");
+		lblDatePacked.setText("Data de Criação");
 		lblDatePacked.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
 		txtDatePacked = new Text(grpPackageInfo, SWT.BORDER);
@@ -936,7 +935,7 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 
 		lblDrugsInPackage = new Label(grpPackageInfo, SWT.CENTER);
 		lblDrugsInPackage.setBounds(new Rectangle(230, 100, 380, 15));
-		lblDrugsInPackage.setText("Drugs on the Prescription:");
+		lblDrugsInPackage.setText("Medicamentos da Prescrição:");
 		lblDrugsInPackage.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
 		createTblDrugsInPrescription();
@@ -945,7 +944,7 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 		btnRemovePackage.setBounds(new org.eclipse.swt.graphics.Rectangle(330,
 				290, 170, 30));
 		btnRemovePackage.setEnabled(false);
-		btnRemovePackage.setText("Remove this Prescription");
+		btnRemovePackage.setText("Remover esta Prescricção");
 		btnRemovePackage.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 		btnRemovePackage
 		.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -1055,12 +1054,12 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 
 		TableColumn tblColDrugName = new TableColumn(tblDrugsInPackage,
 				SWT.NONE);
-		tblColDrugName.setText("Drug Name");
+		tblColDrugName.setText("Medicamento");
 		tblColDrugName.setWidth(380);
 
 		TableColumn tblColQuantity = new TableColumn(tblDrugsInPackage,
 				SWT.NONE);
-		tblColQuantity.setText("Dosage");
+		tblColQuantity.setText("Dosagem");
 		tblColQuantity.setWidth(265);
 
 	}
@@ -1093,11 +1092,9 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 			if (txtPackageId.getText().equals("")) {
 				MessageBox mb = new MessageBox(getShell());
 
-				mb.setText("No Package To Remove");
+				mb.setText("Não tem dispensa por remover");
 				mb
-				.setMessage("There is no package that can be removed. Please "
-						+ "enter a patient number (or use the Search button) to load a "
-						+ "possible package that can be removed.");
+				.setMessage("Não exixtem dispensas por remover para este paciente.");
 				mb.open();
 				return false;
 			}
@@ -1109,11 +1106,9 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 		else if (rdBtnPrescription.getSelection()) {
 			if (txtPackageId.getText().equals("")) {
 				MessageBox mb = new MessageBox(getShell());
-				mb.setText("No Prescription To Remove");
+				mb.setText("Não tem prescrição por remover");
 				mb
-				.setMessage("There is no prescription that can be removed. Please "
-						+ "enter a patient number (or use the Search button) to load a "
-						+ "possible prescription that can be removed.");
+				.setMessage("Não existem prescrições por remover para este paciente.");
 				mb.open();
 				return false;
 			}
@@ -1125,16 +1120,16 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 		else if (rdBtnStock.getSelection()) {
 			if (tblDrugsInPackage.getItemCount() == 0) {
 				MessageBox mb = new MessageBox(getShell());
-				mb.setText("No Stock Batch To Remove");
-				mb.setMessage("Please " + "use the Drug Search button to load "
-						+ "possible batches that can be removed.");
+				mb.setText("Não existem lotes por remover");
+				mb.setMessage("Por favor " + "use o botao procurar medicamento para encontrar o lote "
+						+ "que pretende remover.");
 				mb.open();
 				return false;
 			} else if (tblDrugsInPackage.getSelection().length == 0) {
 				MessageBox mb = new MessageBox(getShell());
-				mb.setText("No Stock Batch Selected");
+				mb.setText("Não foi seleccionado nenhum lote");
 				mb
-				.setMessage("Please select a stock batch to remove by clicking a row in the table");
+				.setMessage("Seleccione o lote apresentado na tabela para remover");
 				mb.open();
 				return false;
 			}
@@ -1327,12 +1322,11 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 
 			tx.commit();
 			MessageBox mb = new MessageBox(getShell());
-			mb.setText("Package Deletion Successful");
+			mb.setText("Dispensa Removida com Sucesso");
 			mb
-			.setMessage("This package was successfully removed from the database."
-					+ (pillCountDelete ? "Pill counts recorded at package creation time were also deleted."
-							: "")
-							+ "\n\nTo re-package this set of drugs for this patient, go back to the Patient Packaging page.");
+			.setMessage("A dispensa foi removida com sucesso."
+					+ (pillCountDelete ? " Comprimidos foram tambem removidos da dispensa."
+							: ""));
 			mb.open();
 
 		} catch (HibernateException he) {
@@ -1341,11 +1335,11 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 				tx.rollback();
 			}
 			MessageBox mb = new MessageBox(getShell());
-			mb.setText("Package Deletion Unsuccessful");
+			mb.setText("Não foi possivel remover esta dispensa.");
 			mb
-			.setMessage("There was a problem removing this package from the database.");
+			.setMessage("Ocorreu um erro ao remover esta dispensa.");
 			mb.open();
-			getLog().error("Package Deletion Unsuccessful", he);
+			getLog().error("Não foi possivel remover esta dispensa", he);
 
 		}
 		if (getHSession() != null) {
@@ -1436,9 +1430,9 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 			getHSession().flush();
 			tx.commit();
 			MessageBox mb = new MessageBox(getShell());
-			mb.setText("Prescription Deletion Successful");
+			mb.setText("A prescrição foi removida com sucesso.");
 			mb
-			.setMessage("This prescription was successfully removed from the database.");
+			.setMessage("Esta prescição foi removida com sucesso.");
 			mb.open();
 
 		} catch (HibernateException he) {
@@ -1447,9 +1441,9 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 				tx.rollback();
 			}
 			MessageBox mb = new MessageBox(getShell());
-			mb.setText("Prescription Deletion Unsuccessful");
+			mb.setText("A prescrição não foi removida");
 			mb
-			.setMessage("There was a problem removing this prescription from the database.");
+			.setMessage("Aconteceu um problema ao remover esta prescrição.");
 			mb.open();
 			getLog().error(he);
 		}
@@ -1471,9 +1465,9 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 			getHSession().flush();
 			tx.commit();
 			MessageBox mb = new MessageBox(getShell());
-			mb.setText("Stock Batch Deletion Successful");
+			mb.setText("O Lote foi removido com sucesso");
 			mb
-			.setMessage("This stock batch was successfully removed from the database.");
+			.setMessage("Este Lote foi removido com sucesso.");
 			mb.open();
 
 		} catch (HibernateException he) {
@@ -1482,9 +1476,9 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 				tx.rollback();
 			}
 			MessageBox mb = new MessageBox(getShell());
-			mb.setText("Stock Batch Deletion Unsuccessful");
+			mb.setText("O Lote não foi removido");
 			mb
-			.setMessage("There was a problem removing this stock batch from the database.");
+			.setMessage("Aconteceu um problema ao remover este Lote.");
 			mb.open();
 			getLog().error(he);
 

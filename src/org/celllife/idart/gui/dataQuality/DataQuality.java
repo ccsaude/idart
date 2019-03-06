@@ -33,6 +33,7 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 /**
  */
@@ -58,7 +59,7 @@ public class DataQuality extends GenericOthersGui {
 	 */
 	@Override
 	protected void createShell() {
-		buildShell("Data Quality Report", new Rectangle(0, 0, 600, 500));
+		buildShell("Relatorio de Qualidade de Dados", new Rectangle(0, 0, 600, 500));
 
 	}
 
@@ -68,7 +69,7 @@ public class DataQuality extends GenericOthersGui {
 	 */
 	@Override
 	protected void createCompHeader() {
-		buildCompHeader(" Data Quality ", iDartImage.PATIENTINFOLABEL);
+		buildCompHeader(" Qualidade de Dados ", iDartImage.PATIENTINFOLABEL);
 	}
 
 	/**
@@ -134,7 +135,7 @@ public class DataQuality extends GenericOthersGui {
 	protected void createCompButtons() {
 
 		Button btnRunData = new Button(getCompButtons(), SWT.PUSH);
-		btnRunData.setText("Run Data Quality Report");
+		btnRunData.setText("Executar Qualidade de Dados");
 		btnRunData.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 		btnRunData
 				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -156,7 +157,7 @@ public class DataQuality extends GenericOthersGui {
 		btnRunData.setEnabled(true);
 
 		Button btnClose = new Button(getCompButtons(), SWT.PUSH);
-		btnClose.setText("Close");
+		btnClose.setText("Fechar");
 		btnClose.setToolTipText(Messages.getString("dataquality.button.close.tooltip"));
 		btnClose
 				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -173,7 +174,8 @@ public class DataQuality extends GenericOthersGui {
 
 	private void cmdRunDataQualityReport(DataQualityInterface dqr) {
 		SafeSaveDialog dlg = new SafeSaveDialog(getShell(), FileType.CSV);
-		dlg.setFileName(dqr.getFileName());
+		if(dqr != null){
+                dlg.setFileName(dqr.getFileName());
 		String fileName = dlg.open();
 
 		if (fileName == null || fileName.isEmpty())
@@ -186,19 +188,27 @@ public class DataQuality extends GenericOthersGui {
 			new ProgressMonitorDialog(getShell()).run(true, true, dqr);
 
 			if (dqr.isReportSuccessfullyCompleted()) {
-				showMessage(MessageDialog.INFORMATION, "Report Complete",
-						"Report completed");
+				showMessage(MessageDialog.INFORMATION, "Relatório Executado",
+						"Relatório Executado");
 			}
 			else {
-				showMessage(MessageDialog.WARNING,"File Open", dqr.alreadyUsed());
+				showMessage(MessageDialog.WARNING,"Ficheiro Aberto", dqr.alreadyUsed());
 			}
 
 			Program.launch(fileName);
 		} catch (InvocationTargetException e1) {
-			getLog().error("Error running data quality report: " + dqr.getClass(), e1);
+			getLog().error("Erro ao executar o relatorio de qualidade de dados: " + dqr.getClass(), e1);
 		} catch (InterruptedException e1) {
 			// do nothing
 		}
+                }else{
+                MessageBox missing = new MessageBox(getShell(), SWT.ICON_ERROR
+					| SWT.OK);
+			missing.setText("Sem relatorio Seleccionado");
+			missing.setMessage("Nenhum relatório foi seleccionado. Por favor seleccione um na lista");
+			missing.open();
+                }
+                    
 	}
 
 	/**

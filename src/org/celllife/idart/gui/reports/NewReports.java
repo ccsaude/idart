@@ -471,10 +471,10 @@ private void createGrpClinicManagementReports() {
 				new StockTakeReportGUI(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_DRUGS_DISPENSED,
 				new DrugsDispensed(getShell(), false));
-//		reportGUIs.put(GenericReportGuiInterface.REPORT_COHORT_COLLECTIONS,
-//				new CohortDrugCollections(getShell(), false));
-//		reportGUIs.put(GenericReportGuiInterface.REPORT_MONTHLY_RECEIPT_ISSUE,
-//				new MonthlyReceiptsAndIssues(getShell(), false));
+		reportGUIs.put(GenericReportGuiInterface.REPORT_COHORT_COLLECTIONS,
+				new CohortDrugCollections(getShell(), false));
+		reportGUIs.put(GenericReportGuiInterface.REPORT_MONTHLY_RECEIPT_ISSUE,
+				new MonthlyReceiptsAndIssues(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_ARV_DRUG_USAGE,
 				new ARVDrugUsage(getShell(), false));
 

@@ -133,7 +133,7 @@ public class CohortDrugCollections extends GenericReportGui {
 	private void createGrpPharmacySelection() {
 
 		grpExplanation = new Group(getShell(), SWT.NONE);
-		grpExplanation.setText("Report description");
+		grpExplanation.setText("Descrição do Relatório");
 		grpExplanation.setFont(ResourceUtils
 				.getFont(iDartFont.VERASANS_8));
 		grpExplanation.setBounds(new org.eclipse.swt.graphics.Rectangle(
@@ -141,9 +141,8 @@ public class CohortDrugCollections extends GenericReportGui {
 
 		Label lblClinic = new Label(grpExplanation, SWT.WRAP);
 		lblClinic.setBounds(new Rectangle(6, 20, 510, 30));
-		lblClinic.setText("This reports shows the details of all packages for" +
-				" patients that have a '"+Episode.REASON_NEW_PATIENT+"' episode" +
-						" between the start and end dates specified.");
+		lblClinic.setText("Este relatório mostra detalhes de frascos para " +
+				"pacientes com visitas dentro das datas inicio e fim especificadas.");
 		lblClinic.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 	}
 	
@@ -152,8 +151,8 @@ public class CohortDrugCollections extends GenericReportGui {
 		lnkSelectAllColumns = new Link(getShell(), SWT.NONE);
 		lnkSelectAllColumns.setBounds(new Rectangle(115, 325, 220, 30));
 		lnkSelectAllColumns
-		.setText("Please select the columns you want included " +
-				"in the report or <A>select all</A> columns");
+		.setText("Seleccione as colunas que pretende incluir " +
+				"no relatório ou <A>seleccionar todas</A> colunas");
 		lnkSelectAllColumns
 		.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8_ITALIC));
 		lnkSelectAllColumns.addListener(SWT.Selection, new Listener() {
@@ -166,8 +165,8 @@ public class CohortDrugCollections extends GenericReportGui {
 		lnkSelectAllPackageColumns = new Link(getShell(), SWT.NONE);
 		lnkSelectAllPackageColumns.setBounds(new Rectangle(375, 325, 220, 30));
 		lnkSelectAllPackageColumns
-		.setText("Please select the package columns you want included in the " +
-				" report or <A>select all</A>");
+		.setText("Seleccione as colunas que pretende incluir " +
+				" no relatório ou <A>Seleccionar tudo</A>");
 		lnkSelectAllPackageColumns
 		.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8_ITALIC));
 		lnkSelectAllPackageColumns.addListener(SWT.Selection, new Listener() {
@@ -184,7 +183,7 @@ public class CohortDrugCollections extends GenericReportGui {
 		
 		lblColumnTableHeader = new Label(getShell(), SWT.BORDER);
 		lblColumnTableHeader.setBounds(new Rectangle(120, 360, 200, 20));
-		lblColumnTableHeader.setText("Column Name");
+		lblColumnTableHeader.setText("Nome da Coluna");
 		lblColumnTableHeader.setAlignment(SWT.CENTER);
 		lblColumnTableHeader.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
@@ -199,7 +198,7 @@ public class CohortDrugCollections extends GenericReportGui {
 
 		lblDrugTableHeader = new Label(getShell(), SWT.BORDER);
 		lblDrugTableHeader.setBounds(new Rectangle(370, 360, 200, 20));
-		lblDrugTableHeader.setText("Drug Name");
+		lblDrugTableHeader.setText("Nome do Medicamento");
 		lblDrugTableHeader.setAlignment(SWT.CENTER);
 		lblDrugTableHeader.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 		
@@ -254,7 +253,7 @@ public class CohortDrugCollections extends GenericReportGui {
 	 */
 	private void createGrpDateRange() {
 		grpDateRange = new Group(getShell(), SWT.NONE);
-		grpDateRange.setText("Date Range:");
+		grpDateRange.setText("Período:");
 		grpDateRange.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 		grpDateRange.setBounds(new Rectangle(79, 120, 520, 201));
 		grpDateRange.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
@@ -262,13 +261,13 @@ public class CohortDrugCollections extends GenericReportGui {
 		Label lblStartDate = new Label(grpDateRange, SWT.CENTER | SWT.BORDER);
 		lblStartDate.setBounds(new org.eclipse.swt.graphics.Rectangle(40, 30,
 				180, 20));
-		lblStartDate.setText("Select a START date:");
+		lblStartDate.setText("Seleccione a Data Inicial:");
 		lblStartDate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
 		Label lblEndDate = new Label(grpDateRange, SWT.CENTER | SWT.BORDER);
 		lblEndDate.setBounds(new org.eclipse.swt.graphics.Rectangle(300, 30,
 				180, 20));
-		lblEndDate.setText("Select an END date:");
+		lblEndDate.setText("Seleccione a Data Final:");
 		lblEndDate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 
 		calendarStart = new SWTCalendar(grpDateRange);
@@ -359,7 +358,7 @@ public class CohortDrugCollections extends GenericReportGui {
 
 		// Extra button added for clearing values from parameters
 		Button btnClear = new Button(getCompButtons(), SWT.NONE);
-		btnClear.setText("Clear");
+		btnClear.setText("Limpar");
 		btnClear.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
 		btnClear
 		.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -375,8 +374,8 @@ public class CohortDrugCollections extends GenericReportGui {
 	protected void cmdViewReportWidgetSelected() {
 
 		if (iDARTUtil.before(calendarEnd.getCalendar().getTime(), calendarStart.getCalendar().getTime())){
-			showMessage(MessageDialog.ERROR, "End date before start date",
-					"You have selected an end date that is before the start date.\nPlease select an end date after the start date.");
+			showMessage(MessageDialog.ERROR, "Data Fim antes da Data Inicio",
+					"Seleccionou data fim menor que a data Inicio.");
 			return;
 		}
 		
@@ -391,15 +390,13 @@ public class CohortDrugCollections extends GenericReportGui {
 			if (patients.size() <= 0){
 				showMessage(
 						MessageDialog.INFORMATION,
-						"No patients",
-						"No patients have a '"
-								+ Episode.REASON_NEW_PATIENT
-								+ "' episode starting between the selected dates");
+						"Sem Pacientes",
+						"Nenhum paciente com visita inicial neste periodo '");
 				return;
 			}
 			viewReport(new ExcelReportJob(reportObject, new RowPerPatientExcelExporter(patients)));
-			showMessage(MessageDialog.INFORMATION, "Report complete",
-					"Report generation complete.\n\n" + reportObject.getPath());
+			showMessage(MessageDialog.INFORMATION, "Relatório executado com sucesso",
+					"Relatório executado com sucesso.\n\n" + reportObject.getPath());
 		}
 	}
 

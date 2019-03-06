@@ -166,7 +166,7 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 	 */
 	@Override
 	protected void createShell() {
-		String shellTxt = "Stock, Prescription and Package Deletions";
+		String shellTxt = "Apagar Stock, Prescricao e Dispensa";
 		Rectangle bounds = new Rectangle(25, 0, 900, 700);
 		buildShell(shellTxt, bounds);
 		
@@ -192,7 +192,7 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 	 */
 	@Override
 	protected void createCompHeader() {
-		String txt = "Stock, Prescription and Package Deletions";
+		String txt = "Apagar Stock, Prescricao e Dispensa";
 		iDartImage icoImage = iDartImage.REDOPACKAGE;
 		buildCompHeader(txt, icoImage);
 	}
@@ -214,7 +214,7 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 		rdBtnPackage = new Button(grpDeletionTypeSelection, SWT.RADIO);
 		rdBtnPackage.setBounds(30, 60, 180, 20);
 		rdBtnPackage.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-		rdBtnPackage.setText("Undo Created Package");
+		rdBtnPackage.setText("Recriar Medicamentos");
 		rdBtnPackage.setSelection(true);
 		rdBtnPackage
 		.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -278,7 +278,7 @@ public class DeleteStockPrescriptionsPackages extends GenericOthersGui {
 		rdBtnPrescription = new Button(grpDeletionTypeSelection, SWT.RADIO);
 		rdBtnPrescription.setBounds(630, 60, 185, 20);
 		rdBtnPrescription.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-		rdBtnPrescription.setText("Delete Incorrect Prescription");
+		rdBtnPrescription.setText("Remover Prescrição");
 		rdBtnPrescription
 		.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			@Override

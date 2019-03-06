@@ -6,8 +6,8 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="java.util.*"/>
 	<import value="org.apache.commons.lang.time.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="path" class="java.lang.String">
 		<parameterDescription><![CDATA[Path for the report files]]></parameterDescription>
@@ -461,7 +461,7 @@ where id = $P{clinicid}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left" lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[PTV]]></text>
+				<text><![CDATA[SMI]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="st_stockOnHand-3" mode="Transparent" x="470" y="52" width="23" height="147" forecolor="#000000" backcolor="#FFFFFF"/>

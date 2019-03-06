@@ -277,6 +277,7 @@ public class PackageManager {
 		result = (Prescription) sess
 				.createQuery(
 						"select pre from Prescription as pre where pre.patient.id= :patientID "
+                                        //                + " order by pre.date desc, pre.prescriptionId desc")
 								+ "and size(pre.packages)=0 order by pre.date desc, pre.prescriptionId desc")
 				.setInteger("patientID", patient.getId()).setMaxResults(1)
 				.uniqueResult();

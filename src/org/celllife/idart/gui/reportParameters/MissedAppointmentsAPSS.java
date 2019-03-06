@@ -158,7 +158,7 @@ public class MissedAppointmentsAPSS extends GenericReportGui {
                 chkBtnPTV = new Button(grpClinicSelection, SWT.CHECK);
                 chkBtnPTV.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, false, false, 1, 1));
                 chkBtnPTV.setBounds(new Rectangle(270, 86, 150, 21));
-                chkBtnPTV.setText("PTV");
+                chkBtnPTV.setText("SMI");
                 chkBtnPTV.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
                 chkBtnPTV.setSelection(false);
 

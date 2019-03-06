@@ -282,6 +282,7 @@ public class PatientAdmin extends GenericAdminGui {
 		lblPicPatientVisitsandStats.setLayoutData(gdPic);
 		lblPicPatientVisitsandStats.setImage(ResourceUtils
 				.getImage(iDartImage.PAVAS));
+                lblPicPatientVisitsandStats.setEnabled(false);
 		lblPicPatientVisitsandStats.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent mu) {
@@ -306,7 +307,7 @@ public class PatientAdmin extends GenericAdminGui {
 				cmdViewPAVASWidgetSelected2();
 			}
 		});
-
+                btnPatientVisitsandStats.setEnabled(false);
 		compOptions.layout();
 		compOptionsInner.layout();
 

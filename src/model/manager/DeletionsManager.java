@@ -12,12 +12,14 @@ import org.apache.log4j.Logger;
 import org.celllife.idart.commonobjects.LocalObjects;
 import org.celllife.idart.database.hibernate.AccumulatedDrugs;
 import org.celllife.idart.database.hibernate.Appointment;
+import org.celllife.idart.database.hibernate.Drug;
 import org.celllife.idart.database.hibernate.Episode;
 import org.celllife.idart.database.hibernate.Logging;
 import org.celllife.idart.database.hibernate.PackagedDrugs;
 import org.celllife.idart.database.hibernate.Packages;
 import org.celllife.idart.database.hibernate.Patient;
 import org.celllife.idart.database.hibernate.PillCount;
+import org.celllife.idart.database.hibernate.PrescribedDrugs;
 import org.celllife.idart.database.hibernate.Prescription;
 import org.celllife.idart.database.hibernate.Regimen;
 import org.celllife.idart.database.hibernate.RegimenDrugs;
@@ -369,6 +371,23 @@ public class DeletionsManager {
 
 		// first need to delete the prescription from the patient's
 		// Set<Prescriptions>
+//                System.out.println(" Presc SET: " + thePrescription.getPatient().getPrescriptions());
+//                System.out.println(" Presc TO REMOVE: " + thePrescription);
+//                System.out.println(" Presc TO REMOVE: " + thePrescription.getARVDrugSet());
+//                
+//                if (thePrescription.getARVDrugSet().size() == 0) {
+//                    Drug d = (Drug) session.createQuery("from Drug p").list().get(0);
+//                    PrescribedDrugs drugs = new PrescribedDrugs(thePrescription, d, 0, 0, 'T');
+//                    session.save(drugs);
+//                    session.flush();
+//                    
+//                    thePrescription.getARVDrugSet().add(d);
+//                    thePrescription.getPrescribedDrugs().add(drugs);
+//                    session.save(thePrescription);
+//                    session.flush();
+//                   
+//                }
+                
 		thePrescription.getPatient().getPrescriptions().remove(thePrescription);
 
 		// delete the prescription from the session and flush to the database

@@ -5,21 +5,29 @@
         <group>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/AdministrationManager.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/generalAdmin/GeneralAdmin.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/misc/GenericTab.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/welcome/PharmacyWelcome.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/commonobjects/iDartProperties.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/misc/PropertiesEncrypter.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/patient/MergePatients.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MissedAppointmentsReportNew.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MissedAppointmentsAPSSReport.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/login/Login.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reportParameters/MissedAppointmentsAPSS.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/welcome/ClinicWelcome.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/start/PharmacyApplication.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/welcome/ReportWorkerWelcome.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/database/dao/ConexaoJDBC.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/database/hibernate/Prescription.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/packaging/NewPatientPackaging.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MissedAppointmentsReportChamadas.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reportParameters/MmiaReportMISAU.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MissedAppointmentsReportNew.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reportParameters/CohortDrugCollections.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/tmp/src/org/celllife/idart/misc/PropertiesEncrypter.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/messages/messages.properties</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/prescription/AddPrescription.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MissedAppointmentsAPSSReport.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MiaReportMISAU.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reportParameters/MissedAppointmentsDT.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/tmp/src/org/celllife/idart/commonobjects/iDartProperties.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/dataQuality/DataQuality.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reports/NewReports.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reportParameters/MissedAppointmentsAPSS.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MissedAppointmentsReportDT.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reportParameters/MissedAppointmentsChamadas.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/patient/tabs/ClinicInfoTab.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/patientAdmin/PatientAdmin.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/welcome/GenericWelcome.java</file>
         </group>
     </open-files>
 </project-private>
