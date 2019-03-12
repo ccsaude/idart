@@ -100,12 +100,12 @@ class Task1
             int current = 0;
             int contanonSend = 0;
             int lengthOfTask = packageDrugInfos.size();
-            int pacientesEmTransito =0;
+            int pacientesEmTransito = 0;
             //Esvazia o log file
             logFile = getLogFileLocation();
-             Session sess = HibernateUtil.getNewSession();
+            Session sess = HibernateUtil.getNewSession();
 
-            while (current <= lengthOfTask && !this.isCancelled()) {
+    //        while (current <= lengthOfTask && !this.isCancelled()) {
                 try {
                     Thread.sleep(this.rnd.nextInt(50) + 1);
                     if (lengthOfTask == 0) {
@@ -127,157 +127,153 @@ class Task1
                     String prescricao = "";
                     Date dataPrescricao = null;
                     for (PackageDrugInfo packageDrugInfo : packageDrugInfos) {
-                        ++current;
-                        // Abrimos um block try-catch para manter o ciclo a executar quando ocorrer uma exception
-                        // os erros vao para o logfile
-                        try {
-                            this.setProgress(100 * current / lengthOfTask);
-                            PatientImportService patientImportService = new PatientImportService();
-                            org.celllife.idart.database.hibernate.Patient importedPatient = patientImportService.findByPatientId(packageDrugInfo.getPatientId());
-                            String name = "";
-                            String surname = "";
-                            // Ultimo episodio do paciente
-                            Episode patientLastEpisdode= PatientManager.getLastEpisode(sess, packageDrugInfo.getPatientId());
-                            
-                            if (importedPatient != null) {
-                                name = importedPatient.getFirstNames();
-                                surname = importedPatient.getLastname();
+                     ++current;
+                        // Ultimo episodio do paciente
+                        Episode patientLastEpisdode = PatientManager.getLastEpisode(sess, packageDrugInfo.getPatientId());
+                       // if (!(patientLastEpisdode.getStartReason().contentEquals("Paciente em Transito") | patientLastEpisdode.getStartReason().contentEquals("Inicio na maternidade"))) {
+                            // Abrimos um block try-catch para manter o ciclo a executar quando ocorrer uma exception
+                            // os erros vao para o logfile
+                            try {
+                                this.setProgress(100 * current / lengthOfTask);
+                                PatientImportService patientImportService = new PatientImportService();
+                                org.celllife.idart.database.hibernate.Patient importedPatient = patientImportService.findByPatientId(packageDrugInfo.getPatientId());
+                                String name = "";
+                                String surname = "";
 
-//                        if (packageDrugInfo.getPatientFirstName().trim().length() > 4) {
-//                            name = packageDrugInfo.getPatientFirstName().substring(0, 3).replace("'", "");
-//                        } else {
-//                            name = packageDrugInfo.getPatientFirstName().replace("'", "");
-//                        }
-//
-//                        if (packageDrugInfo.getPatientLastName().trim().length() > 4) {
-//                            surname = packageDrugInfo.getPatientLastName().substring(0, 3).replace("'", "");
-//                        } else {
-//                            surname = packageDrugInfo.getPatientLastName().replace("'", "");
-//                        }
-                                PatientIdentifierService identifierDao = new PatientIdentifierService();
-                                List<org.ccs.openmrs.migracao.entidades.PatientIdentifier> patientIdentifierOpenmrs = null;
-              
-                              
-                                
-                                if (importedPatient.getUuid().isEmpty()) {
-                                    patientIdentifierOpenmrs = identifierDao.findByNidAndNameAndSurname(packageDrugInfo.getPatientId(), name, surname);
-                                } else {
-                                    patientIdentifierOpenmrs = identifierDao.findByPatientUuid(importedPatient.getUuid());
-                                }
+                                if (importedPatient != null) {
+                                    name = importedPatient.getFirstNames();
+                                    surname = importedPatient.getLastname();
 
-                                Patient patient = null;
-                                if (!patientIdentifierOpenmrs.isEmpty()) {
-                                    patient = patientExportService.findById(patientIdentifierOpenmrs.get(0).getPatientId().getPatientId() + "");
-                                    // patient = (Patient)this.getCurrentSession().createQuery("from Patient p where p.patientId = " + patientIdentifier.getPatientId().getPatientId()).uniqueResult();
+                                    PatientIdentifierService identifierDao = new PatientIdentifierService();
+                                    List<org.ccs.openmrs.migracao.entidades.PatientIdentifier> patientIdentifierOpenmrs = null;
 
-                                    if (patient != null) {
-                                        if (importedPatient.getUuid().isEmpty()) {
-                                            PersonService personService = new PersonService();
-                                            Person person = personService.findById(patient.getPatientId().toString());
-                                            patientIdentifierOpenmrs = identifierDao.findByNidAndNameAndSurname(packageDrugInfo.getPatientId(), name, surname);
-                                            // grava Uuid para os pacientes que nao tem durante a dispensa
-
-                                            PatientIdentifierImportService patientIdentifierImportService = new PatientIdentifierImportService();
-
-                                            PatientIdentifier importedPatientIdentifier = patientIdentifierImportService.findByIdentifier(packageDrugInfo.getPatientId());
-
-                                            if (importedPatientIdentifier != null) {
-                                                org.celllife.idart.database.hibernate.Patient p = importedPatientIdentifier.getPatient();
-
-                                                p.setUuid(person.getUuid());
-                                                patientImportService.update(p);
-                                            }
-                                        }
-                                        if (prescricao.equalsIgnoreCase(packageDrugInfo.getPackageId()) && dataPrescricao == packageDrugInfo.getDispenseDate()) {
-                                            System.err.println(" INFO: Mais de 1 Pacote foi dispensado para esta Prescricao -> " + packageDrugInfo.getPackageId());
-                                        } else {
-                                            Visit visit = ExportData.InsereVisitas(patient, packageDrugInfo, visitType, location, concept, users, visitService);
-                                            Encounter encounter = ExportData.InsereEncounter(visit, packageDrugInfo, encounterType, users, location, form, patient, encounterService);
-                                            EncounterProvider encounterProvider = ExportData.InsereEncounterProvider(packageDrugInfo, encounter, users, encounterRole, provider, encounterProviderService);
-
-                                            for (Concept concept1 : conceptsFarmacia) {
-                                                ExportData.InsereObs(patient, packageDrugInfo, location, concept1, users, encounter, obsService);
-                                            }
-                                            prescricao = packageDrugInfo.getPackageId();
-                                            dataPrescricao = packageDrugInfo.getDispenseDate();
-                                        }
-
-                                        PackageDrugInfoExportService rapidSave = new PackageDrugInfoExportService();
-                                        packageDrugInfo.setNotes("Exported");
-                                        rapidSave.update(packageDrugInfo);
+                                    if (importedPatient.getUuid().isEmpty()) {
+                                        patientIdentifierOpenmrs = identifierDao.findByNidAndNameAndSurname(packageDrugInfo.getPatientId(), name, surname);
                                     } else {
-                                        // verifica se nao e paciente em transito
-                                       
-                                        if(!(patientLastEpisdode.getStartReason().contentEquals("Paciente em Transito") | patientLastEpisdode.getStartReason().contentEquals("Inicio na maternidade"))){
-                                         contanonSend++;
-                                        } 
-                                       
+                                        patientIdentifierOpenmrs = identifierDao.findByPatientUuid(importedPatient.getUuid());
                                     }
-                                    System.err.println("**********************************************************************************************************************************************************************************");
-                                    System.err.println(" Dispensa do Paciente " + packageDrugInfo.getPatientFirstName() + " " + packageDrugInfo.getPatientLastName() + " com o nid NID " + packageDrugInfo.getPatientId() + " Enviado para o OpenMRS.");
-                                    System.err.println("**********************************************************************************************************************************************************************************");
-                                } else {
-                                       if(patientLastEpisdode.getStartReason().contentEquals("Paciente em Transito") | patientLastEpisdode.getStartReason().contentEquals("Inicio na maternidade"))
-                                       {
-                                           pacientesEmTransito++;
-                                        
+
+                                    Patient patient = null;
+                                    if (!patientIdentifierOpenmrs.isEmpty()) {
+                                        patient = patientExportService.findById(patientIdentifierOpenmrs.get(0).getPatientId().getPatientId() + "");
+
+                                        if (patient != null) {
+                                            if (importedPatient.getUuid().isEmpty()) {
+                                                PersonService personService = new PersonService();
+                                                Person person = personService.findById(patient.getPatientId().toString());
+                                                patientIdentifierOpenmrs = identifierDao.findByNidAndNameAndSurname(packageDrugInfo.getPatientId(), name, surname);
+
+                                                // grava Uuid para os pacientes que nao tem durante a dispensa
+                                                PatientIdentifierImportService patientIdentifierImportService = new PatientIdentifierImportService();
+
+                                                PatientIdentifier importedPatientIdentifier = patientIdentifierImportService.findByIdentifier(packageDrugInfo.getPatientId());
+
+                                                if (importedPatientIdentifier != null) {
+                                                    org.celllife.idart.database.hibernate.Patient p = importedPatientIdentifier.getPatient();
+
+                                                    p.setUuid(person.getUuid());
+                                                    patientImportService.update(p);
+                                                }
+                                            }
+                                            if (prescricao.equalsIgnoreCase(packageDrugInfo.getPackageId()) && dataPrescricao == packageDrugInfo.getDispenseDate()) {
+                                                System.err.println(" INFO: Mais de 1 Pacote foi dispensado para esta Prescricao -> " + packageDrugInfo.getPackageId());
+                                            } else {
+                                                Visit visit = ExportData.InsereVisitas(patient, packageDrugInfo, visitType, location, concept, users, visitService);
+                                                Encounter encounter = ExportData.InsereEncounter(visit, packageDrugInfo, encounterType, users, location, form, patient, encounterService);
+                                                EncounterProvider encounterProvider = ExportData.InsereEncounterProvider(packageDrugInfo, encounter, users, encounterRole, provider, encounterProviderService);
+
+                                                for (Concept concept1 : conceptsFarmacia) {
+                                                    ExportData.InsereObs(patient, packageDrugInfo, location, concept1, users, encounter, obsService);
+                                                }
+                                                prescricao = packageDrugInfo.getPackageId();
+                                                dataPrescricao = packageDrugInfo.getDispenseDate();
+                                            }
+
+                                            PackageDrugInfoExportService rapidSave = new PackageDrugInfoExportService();
+                                            packageDrugInfo.setNotes("Exported");
+                                            rapidSave.update(packageDrugInfo);
+                                        } else {
+                                            // verifica se nao e paciente em transito
+                                            if (!(patientLastEpisdode.getStartReason().contentEquals("Paciente em Transito") | patientLastEpisdode.getStartReason().contentEquals("Inicio na maternidade"))) {
+                                                contanonSend++;
+                                            }else{
+                                                PackageDrugInfoExportService rapidSave = new PackageDrugInfoExportService();
+                                                packageDrugInfo.setNotes("Exported");
+                                                rapidSave.update(packageDrugInfo);
+                                                
+                                              pacientesEmTransito++;
+                                            }
+
+                                        }
+                                        System.err.println("**********************************************************************************************************************************************************************************");
+                                        System.err.println(" Dispensa do Paciente " + packageDrugInfo.getPatientFirstName() + " " + packageDrugInfo.getPatientLastName() + " com o nid NID " + packageDrugInfo.getPatientId() + " Enviado para o OpenMRS.");
+                                        System.err.println("**********************************************************************************************************************************************************************************");
+                                    } else {
+                                        if (patientLastEpisdode.getStartReason().contentEquals("Paciente em Transito") | patientLastEpisdode.getStartReason().contentEquals("Inicio na maternidade")) {
+                                            PackageDrugInfoExportService rapidSave = new PackageDrugInfoExportService();
+                                            packageDrugInfo.setNotes("Exported");
+                                            rapidSave.update(packageDrugInfo);
+                                            pacientesEmTransito++;
+
                                         } else {
                                             contanonSend++;
                                             System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                                                    System.err.println("Paciente " + packageDrugInfo.getPatientFirstName() + " " + packageDrugInfo.getPatientLastName() + " com o nid NID " + packageDrugInfo.getPatientId() + " nao foi encontrado no OpenMRS. Verifique o NID no OpenMRS ou Contacte o Administrador");
-                                                    List<String> listNidsProblematicos = new ArrayList<>();
-                                                    listNidsProblematicos.add("---------------------------------------------------------------------- ----------------------------------------------------------------");
-                                                    listNidsProblematicos.add("NID: " + packageDrugInfo.getPatientId());
-                                                    listNidsProblematicos.add("NOME: " + packageDrugInfo.getPatientFirstName());
-                                                    listNidsProblematicos.add("APELIDO: " + packageDrugInfo.getPatientLastName());
-                                                    listNidsProblematicos.add("ERRO: " + " nao foi encontrado no OpenMRS. Verifique o NID no OpenMRS ou Contacte o Administrador");
-                                                    listNidsProblematicos.add("CAUSA: " + "Verificar se no openmrs o nome,nid,apelido do paciente sao iguais");
-                                                    rwTextFile.writeSmallTextFile(listNidsProblematicos, logFile);
-                                                    System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                                       
-                                       
-                                       }
-                                    
+                                            System.err.println("Paciente " + packageDrugInfo.getPatientFirstName() + " " + packageDrugInfo.getPatientLastName() + " com o nid NID " + packageDrugInfo.getPatientId() + " nao foi encontrado no OpenMRS. Verifique o NID no OpenMRS ou Contacte o Administrador");
+                                            List<String> listNidsProblematicos = new ArrayList<>();
+                                            listNidsProblematicos.add("---------------------------------------------------------------------- ----------------------------------------------------------------");
+                                            listNidsProblematicos.add("NID: " + packageDrugInfo.getPatientId());
+                                            listNidsProblematicos.add("NOME: " + packageDrugInfo.getPatientFirstName());
+                                            listNidsProblematicos.add("APELIDO: " + packageDrugInfo.getPatientLastName());
+                                            listNidsProblematicos.add("ERRO: " + " nao foi encontrado no OpenMRS. Verifique o NID no OpenMRS ou Contacte o Administrador");
+                                            listNidsProblematicos.add("CAUSA: " + "Verificar se no openmrs o nome,nid,apelido do paciente sao iguais");
+                                            rwTextFile.writeSmallTextFile(listNidsProblematicos, logFile);
+                                            System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
                                         }
-                            } else {
-                                
-                                 if(patientLastEpisdode.getStartReason().contentEquals("Paciente em Transito") | patientLastEpisdode.getStartReason().contentEquals("Inicio na maternidade"))
-                                       {
-                                           pacientesEmTransito++;
+
+                                    }
+                                } else {
+
+                                    if (patientLastEpisdode.getStartReason().contentEquals("Paciente em Transito") | patientLastEpisdode.getStartReason().contentEquals("Inicio na maternidade")) {
+                                        PackageDrugInfoExportService rapidSave = new PackageDrugInfoExportService();
+                                        packageDrugInfo.setNotes("Exported");
+                                        rapidSave.update(packageDrugInfo);
                                         
-                                        } 
-                               else{
-                                         contanonSend++;
-                                             List<String> listNidsProblematicos = new ArrayList<>();
-                                             listNidsProblematicos.add("---------------------------------------------------------------------- ----------------------------------------------------------------");
-                                             listNidsProblematicos.add("NID: " + packageDrugInfo.getPatientId());
-                                             listNidsProblematicos.add("NOME: " + packageDrugInfo.getPatientFirstName());
-                                             listNidsProblematicos.add("APELIDO: " + packageDrugInfo.getPatientLastName());
-                                             listNidsProblematicos.add("ERRO: " + "Paciente nao esta registado no iDART , contactar o Administrador");
-                                             rwTextFile.writeSmallTextFile(listNidsProblematicos, logFile);
-                                        }
+                                        pacientesEmTransito++;
+
+                                    } else {
+                                        contanonSend++;
+                                        List<String> listNidsProblematicos = new ArrayList<>();
+                                        listNidsProblematicos.add("---------------------------------------------------------------------- ----------------------------------------------------------------");
+                                        listNidsProblematicos.add("NID: " + packageDrugInfo.getPatientId());
+                                        listNidsProblematicos.add("NOME: " + packageDrugInfo.getPatientFirstName());
+                                        listNidsProblematicos.add("APELIDO: " + packageDrugInfo.getPatientLastName());
+                                        listNidsProblematicos.add("ERRO: " + "Paciente nao esta registado no iDART , contactar o Administrador");
+                                        rwTextFile.writeSmallTextFile(listNidsProblematicos, logFile);
+                                    }
+                                }
+
+                            } catch (NullPointerException nl) {
+                                System.out.println("Null pointer exception: " + nl.getCause().toString());
+                            } catch (Exception e) {
+                                // Podem ocorrer diferentes tipos de exceptions, coomo nao podemos prever todas vamos escreve-las
+                                //num logfile e continuar com a execucao ciclo   
+                                List<String> listNidsProblematicos = new ArrayList<>();
+                                listNidsProblematicos.add("---------------------------------------------------------------------- ----------------------------------------------------------------");
+                                listNidsProblematicos.add("NID: " + packageDrugInfo.getPatientId());
+                                listNidsProblematicos.add("NOME: " + packageDrugInfo.getPatientFirstName());
+                                listNidsProblematicos.add("APELIDO: " + packageDrugInfo.getPatientLastName());
+                                listNidsProblematicos.add("ERRO: " + e.getMessage());
+                                rwTextFile.writeSmallTextFile(listNidsProblematicos, logFile);
                             }
 
-                        } catch (NullPointerException nl) {
-                            System.out.println("Null pointer exception: " + nl.getCause().toString());
-                        } catch (Exception e) {
-                            // Podem ocorrer diferentes tipos de exceptions, coomo nao podemos prever todas vamos escreve-las
-                            //num logfile e continuar com a execucao ciclo   
-                            List<String> listNidsProblematicos = new ArrayList<>();
-                            listNidsProblematicos.add("---------------------------------------------------------------------- ----------------------------------------------------------------");
-                            listNidsProblematicos.add("NID: " + packageDrugInfo.getPatientId());
-                            listNidsProblematicos.add("NOME: " + packageDrugInfo.getPatientFirstName());
-                            listNidsProblematicos.add("APELIDO: " + packageDrugInfo.getPatientLastName());
-                            listNidsProblematicos.add("ERRO: " + e.getMessage());
-                            rwTextFile.writeSmallTextFile(listNidsProblematicos, logFile);
                         }
-
-                    }
+                //    }
                 } catch (InterruptedException ie) {
                     return "Interrupted";
                 }
                 System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                System.err.println("" +( lengthOfTask - pacientesEmTransito) + " Total de dispensas por Enviar ao OpenMRS!!!!!!");
+                System.err.println("" + (lengthOfTask - pacientesEmTransito) + " Total de dispensas por Enviar ao OpenMRS!!!!!!");
                 if (contanonSend != 0) {
                     System.err.println("" + contanonSend + " Dispensas nao actualizadas no OpenMRS!!!!!!");
                 }
@@ -287,7 +283,7 @@ class Task1
                 hibernateConection.getInstanceLocal().close();
                 hibernateConection.getInstanceRemote().close();
                 current = lengthOfTask * 2;
-            }
+    //        }
 
         } catch (Exception e) {
             System.err.println("ACONTECEU UM ERRO INESPERADO, Ligue o Servidor OpenMRS e Tente Novamente ou Contacte o Administrador \n" + e.getMessage());

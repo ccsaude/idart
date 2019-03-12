@@ -5,29 +5,31 @@
         <group>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/AdministrationManager.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/generalAdmin/GeneralAdmin.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/misc/GenericTab.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/welcome/PharmacyWelcome.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/commonobjects/iDartProperties.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/misc/PropertiesEncrypter.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/patient/MergePatients.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/entidadesHibernate/ExportDispense/PrescriptionExportService.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/swingreverse/ExportDispenses.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MissedAppointmentsReportNew.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/reports/MissedAppointmentsAPSSReport.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/login/Login.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/entidadesHibernate/ExportDao/PrescriptionExportDao.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/entidades/GlobalProperty.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reportParameters/MissedAppointmentsAPSS.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/welcome/ClinicWelcome.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/start/PharmacyApplication.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/welcome/ReportWorkerWelcome.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/database/dao/ConexaoJDBC.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/database/hibernate/Prescription.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/entidadesHibernate/ExportDispense/PackageDrugInfoExportService.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/swingreverse/ExportData.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/DeletionsManager.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/entidadesHibernate/dao/ConceptNameDao.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/entidadesHibernate/ExportDao/RegimeTerapeuticoExportDao.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/tmp/src/org/celllife/idart/gui/deletions/DeleteStockPrescriptionsPackages.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reportParameters/CohortDrugCollections.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/tmp/src/org/celllife/idart/misc/PropertiesEncrypter.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/entidadesHibernate/servicos/ConceptNameService.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/deletions/DeleteStockPrescriptionsPackages.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/messages/messages.properties</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/tmp/src/org/celllife/idart/commonobjects/iDartProperties.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/dataQuality/DataQuality.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/entidadesHibernate/ExportDao/PackageDrugInfoExportDao.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/reports/NewReports.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/patient/tabs/ClinicInfoTab.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/ccs/openmrs/migracao/swingreverse/Task1.java</file>
             <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/patientAdmin/PatientAdmin.java</file>
-            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/org/celllife/idart/gui/welcome/GenericWelcome.java</file>
+            <file>file:/C:/Users/colaco/Documents/Projectos%20CCS/Sub/idart/idart/src/model/manager/PackageManager.java</file>
         </group>
     </open-files>
 </project-private>

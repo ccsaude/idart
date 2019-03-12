@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author colaco
  */
 @Entity
-@Table(name = "global_property", catalog = "openmrs", schema = "")
+@Table(name = "global_property", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "GlobalProperty.findAll", query = "SELECT g FROM GlobalProperty g")

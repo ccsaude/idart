@@ -159,7 +159,7 @@ public class ExportData {
         org.celllife.idart.database.hibernate.Patient p = importService.findByPatientId(packageDrugInfo.getPatientId() + "");
 
         if (p != null) {
-            prescription = prescriptionExportService.findByPrescricaoId(p.getId() + "",packageDrugInfo.getPatientId());
+            prescription = prescriptionExportService.findByPrescricaoId(p.getId() + "", packageDrugInfo.getPatientId());
         }
 
         if (prescription != null) {
@@ -169,6 +169,14 @@ public class ExportData {
 
                 if (regimeTerapeutico != null) {
                     esquema = regimeTerapeutico.getRegimeesquema();
+                    esquema = esquema.replaceAll("30", "");
+                    esquema = esquema.replaceAll("50", "");
+                    esquema = esquema.replaceAll("60", "");
+                    esquema = esquema.replaceAll("200", "");
+                    esquema = esquema.replaceAll("100/25", "");
+                    esquema = esquema.replaceAll("40/10", "");
+                    esquema = esquema.replaceAll("80/20", "");
+                    esquema = esquema.replaceAll("(Baby)", "");
                 }
             }
         }
@@ -176,8 +184,10 @@ public class ExportData {
             obs = new Obs();
             DadosPaciente dadosPaciente = new DadosPaciente();
             obs.setUuid(dadosPaciente.devolveUuid());
+
         }
         obs.setObsDatetime(packageDrugInfo.getDispenseDate());
+        String linhaterapeutica = prescriptionExportService.findByLinhaId(prescription).getLinhanome();
         if (concept.getConceptId() == 5096) {
             obs.setValueDatetime(ExportData.devolveData(packageDrugInfo.getDateExpectedString()));
         }
@@ -185,18 +195,53 @@ public class ExportData {
             obs.setValueNumeric(Double.parseDouble("" + packageDrugInfo.getDispensedQty() + ""));
         }
         if (concept.getConceptId() == 1711) {
-            if (packageDrugInfo.getDispensedQty() <= 30) {
+            if (packageDrugInfo.getDispensedQty() / (packageDrugInfo.getWeeksSupply() / 4) <= 30) {
                 obs.setValueText("0-0-1");
             } else {
                 obs.setValueText("1-0-1");
             }
         }
         if (concept.getConceptId() == 1088) {
-            ConceptName conceptName = conceptNameService.findByName(esquema.trim());
-            if (conceptName == null) {
-                obs.setValueCoded(conceptService.findById("5424"));
+            ConceptName conceptName1 = null;
+            ConceptName conceptName2 = null;
+            ConceptName conceptName3 = null;
+
+            conceptName3 = conceptNameService.findByName3Line(esquema.trim());
+            conceptName2 = conceptNameService.findByName2Line(esquema.trim());
+            conceptName1 = conceptNameService.findByName(esquema.trim());
+
+            if (linhaterapeutica.contains("3")) {
+                if (conceptName3 != null) {
+                    obs.setValueCoded(conceptName3.getConceptId());
+                } else if (conceptName2 != null) {
+                    obs.setValueCoded(conceptName2.getConceptId());
+                } else if (conceptName1 != null) {
+                    obs.setValueCoded(conceptName1.getConceptId());
+                } else {
+                    obs.setValueCoded(conceptService.findById("5424"));
+                }
             } else {
-                obs.setValueCoded(conceptName.getConceptId());
+                if (linhaterapeutica.contains("2")) {
+                    if (conceptName2 != null) {
+                        obs.setValueCoded(conceptName2.getConceptId());
+                    } else if (conceptName3 != null) {
+                        obs.setValueCoded(conceptName3.getConceptId());
+                    } else if (conceptName1 != null) {
+                        obs.setValueCoded(conceptName1.getConceptId());
+                    } else {
+                        obs.setValueCoded(conceptService.findById("5424"));
+                    }
+                } else {
+                    if (conceptName1 != null) {
+                        obs.setValueCoded(conceptName1.getConceptId());
+                    } else if (conceptName2 != null) {
+                        obs.setValueCoded(conceptName2.getConceptId());
+                    } else if (conceptName3 != null) {
+                        obs.setValueCoded(conceptName3.getConceptId());
+                    } else {
+                        obs.setValueCoded(conceptService.findById("5424"));
+                    }
+                }
             }
         }
         obs.setComments("Imported by IDART");
