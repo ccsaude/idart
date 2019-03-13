@@ -173,14 +173,15 @@ public class ExportData {
                 regimeTerapeutico = regimeTerapeuticoExportService.findByRegimeId("" + prescription.getRegimeTerapeutico().getRegimeid());
                 if (regimeTerapeutico != null) {
                     esquema = regimeTerapeutico.getRegimeesquema();
-                    esquema = esquema.replaceAll("30", "");
-                    esquema = esquema.replaceAll("50", "");
-                    esquema = esquema.replaceAll("60", "");
-                    esquema = esquema.replaceAll("200", "");
-                    esquema = esquema.replaceAll("100/25", "");
-                    esquema = esquema.replaceAll("40/10", "");
-                    esquema = esquema.replaceAll("80/20", "");
-                    esquema = esquema.replaceAll("(Baby)", "");
+                    esquema = esquema.replace("30", "");
+                    esquema = esquema.replace("50", "");
+                    esquema = esquema.replace("60", "");
+                    esquema = esquema.replace("200", "");
+                    esquema = esquema.replace("100/25", "");
+                    esquema = esquema.replace("40/10", "");
+                    esquema = esquema.replace("80/20", "");
+                    esquema = esquema.replace("(Baby)", "");
+                    esquema = esquema.replace("()", "");
                 }
             }
 
