@@ -90,7 +90,7 @@ public class ConceptNameDao
     public ConceptName findByName2Line(String regime) {
 
         ConceptName conceptName = null;
-        List<ConceptName> conceptNameList = (List<ConceptName>) this.getCurrentSession().createQuery("from ConceptName cn where cn.name like '" + regime + "%2%inha'").list();
+        List<ConceptName> conceptNameList = (List<ConceptName>) this.getCurrentSession().createQuery("from ConceptName cn where cn.name like '" + regime + "%2%inha%'").list();
 
         if (!conceptNameList.isEmpty()) {
             conceptName = conceptNameList.get(0);
@@ -102,7 +102,7 @@ public class ConceptNameDao
     public ConceptName findByName3Line(String regime) {
 
         ConceptName conceptName = null;
-        List<ConceptName> conceptNameList = (List<ConceptName>) this.getCurrentSession().createQuery("from ConceptName cn where cn.name like '" + regime + "%3%inha'").list();
+        List<ConceptName> conceptNameList = (List<ConceptName>) this.getCurrentSession().createQuery("from ConceptName cn where cn.name like '" + regime + "%3%inha%'").list();
 
         if (!conceptNameList.isEmpty()) {
             conceptName = conceptNameList.get(0);

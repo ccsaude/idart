@@ -276,7 +276,7 @@ public class GeneralAdmin extends GenericAdminGui {
                 });
 
         //Desactivar add clinico para user normal
-        if (getUserPermission() != 'A') {
+        if (getUserPermission() != 'A' && getUserPermission() != 'C') {
             btnDoctorsAdd.setEnabled(false);
         }
 
@@ -298,7 +298,7 @@ public class GeneralAdmin extends GenericAdminGui {
                     }
                 });
         //Desactivar UPDATE clinico para user normal
-        if (getUserPermission() != 'A') {
+        if (getUserPermission() != 'A' && getUserPermission() != 'C') {
             btnDoctorsUpdate.setEnabled(false);
         }
     }
@@ -365,6 +365,11 @@ public class GeneralAdmin extends GenericAdminGui {
             btnDrugsAdd.setEnabled(false);
             btnDrugsUpdate.setEnabled(false);
         }
+        
+         if (getUserPermission() == 'C') {
+            btnDrugsAdd.setEnabled(true);
+            btnDrugsUpdate.setEnabled(true);
+        }
     }
 
     /**
@@ -430,7 +435,7 @@ public class GeneralAdmin extends GenericAdminGui {
                 });
 
         if (!iDartProperties.enableDrugGroupEditor) {
-            if (getUserPermission() != 'Z') {
+            if (getUserPermission() != 'C') {
                 btnRegimenAdd.setEnabled(false);
                 btnRegimenUpdate.setEnabled(false);
             }
@@ -475,11 +480,15 @@ public class GeneralAdmin extends GenericAdminGui {
 		btnRegimenUpdate.setEnabled(true);
 		
 		if(!iDartProperties.enableDrugGroupEditor) {
-		if(getUserPermission()!='A'){	
+		if(getUserPermission()!='A' && getUserPermission() != 'C'){	
                     btnRegimenAdd.setEnabled(false);
 			btnRegimenUpdate.setEnabled(false);
                 }
 		} */
+        if(getUserPermission() != 'C'){	
+                    btnRegimenAdd.setEnabled(false);
+			btnRegimenUpdate.setEnabled(false);
+                }
     }
 
     /**

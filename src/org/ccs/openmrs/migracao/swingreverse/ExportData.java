@@ -159,14 +159,18 @@ public class ExportData {
         org.celllife.idart.database.hibernate.Patient p = importService.findByPatientId(packageDrugInfo.getPatientId() + "");
 
         if (p != null) {
-            prescription = prescriptionExportService.findByPrescricaoId(p.getId() + "", packageDrugInfo.getPatientId());
-        }
+            // Carrega a ultima prescricao do paciente - Alterado por colaca 17-02-2017
+            // prescription = prescriptionExportService.findByPrescricaoId(p.getId() + "", packageDrugInfo.getPatientId());
+            // carregar a prescricao exacta da dispensa
+            prescription = packageDrugInfo.getPackagedDrug().getParentPackage().getPrescription();
 
-        if (prescription != null) {
+            //load the last prescription
+            if (prescription == null) {
+                prescription = prescriptionExportService.findByPrescricaoId(p.getId() + "", packageDrugInfo.getPatientId());
+            }
+
             if (prescription.getRegimeTerapeutico() != null) {
-
                 regimeTerapeutico = regimeTerapeuticoExportService.findByRegimeId("" + prescription.getRegimeTerapeutico().getRegimeid());
-
                 if (regimeTerapeutico != null) {
                     esquema = regimeTerapeutico.getRegimeesquema();
                     esquema = esquema.replaceAll("30", "");
@@ -179,86 +183,89 @@ public class ExportData {
                     esquema = esquema.replaceAll("(Baby)", "");
                 }
             }
-        }
-        if (temp == null) {
-            obs = new Obs();
-            DadosPaciente dadosPaciente = new DadosPaciente();
-            obs.setUuid(dadosPaciente.devolveUuid());
 
-        }
-        obs.setObsDatetime(packageDrugInfo.getDispenseDate());
-        String linhaterapeutica = prescriptionExportService.findByLinhaId(prescription).getLinhanome();
-        if (concept.getConceptId() == 5096) {
-            obs.setValueDatetime(ExportData.devolveData(packageDrugInfo.getDateExpectedString()));
-        }
-        if (concept.getConceptId() == 1715) {
-            obs.setValueNumeric(Double.parseDouble("" + packageDrugInfo.getDispensedQty() + ""));
-        }
-        if (concept.getConceptId() == 1711) {
-            if (packageDrugInfo.getDispensedQty() / (packageDrugInfo.getWeeksSupply() / 4) <= 30) {
-                obs.setValueText("0-0-1");
-            } else {
-                obs.setValueText("1-0-1");
+            if (temp == null) {
+                obs = new Obs();
+                DadosPaciente dadosPaciente = new DadosPaciente();
+                obs.setUuid(dadosPaciente.devolveUuid());
+
             }
-        }
-        if (concept.getConceptId() == 1088) {
-            ConceptName conceptName1 = null;
-            ConceptName conceptName2 = null;
-            ConceptName conceptName3 = null;
+            obs.setObsDatetime(packageDrugInfo.getDispenseDate());
+            String linhaterapeutica = prescriptionExportService.findByLinhaId(prescription).getLinhanome();
 
-            conceptName3 = conceptNameService.findByName3Line(esquema.trim());
-            conceptName2 = conceptNameService.findByName2Line(esquema.trim());
-            conceptName1 = conceptNameService.findByName(esquema.trim());
-
-            if (linhaterapeutica.contains("3")) {
-                if (conceptName3 != null) {
-                    obs.setValueCoded(conceptName3.getConceptId());
-                } else if (conceptName2 != null) {
-                    obs.setValueCoded(conceptName2.getConceptId());
-                } else if (conceptName1 != null) {
-                    obs.setValueCoded(conceptName1.getConceptId());
+            if (concept.getConceptId() == 5096) {
+                obs.setValueDatetime(ExportData.devolveData(packageDrugInfo.getDateExpectedString()));
+            }
+            if (concept.getConceptId() == 1715) {
+                obs.setValueNumeric(Double.parseDouble("" + packageDrugInfo.getDispensedQty() + ""));
+            }
+            if (concept.getConceptId() == 1711) {
+                if (packageDrugInfo.getDispensedQty() / (packageDrugInfo.getWeeksSupply() / 4) <= 30) {
+                    obs.setValueText("0-0-1");
                 } else {
-                    obs.setValueCoded(conceptService.findById("5424"));
+                    obs.setValueText("1-0-1");
                 }
-            } else {
-                if (linhaterapeutica.contains("2")) {
-                    if (conceptName2 != null) {
-                        obs.setValueCoded(conceptName2.getConceptId());
-                    } else if (conceptName3 != null) {
+            }
+            if (concept.getConceptId() == 1088) {
+                ConceptName conceptName1 = null;
+                ConceptName conceptName2 = null;
+                ConceptName conceptName3 = null;
+
+                conceptName3 = conceptNameService.findByName3Line(esquema.trim());
+                conceptName2 = conceptNameService.findByName2Line(esquema.trim());
+                conceptName1 = conceptNameService.findByName(esquema.trim());
+
+                if (linhaterapeutica.contains("3")) {
+                    if (conceptName3 != null) {
                         obs.setValueCoded(conceptName3.getConceptId());
+                    } else if (conceptName2 != null) {
+                        obs.setValueCoded(conceptName2.getConceptId());
                     } else if (conceptName1 != null) {
                         obs.setValueCoded(conceptName1.getConceptId());
                     } else {
                         obs.setValueCoded(conceptService.findById("5424"));
                     }
                 } else {
-                    if (conceptName1 != null) {
-                        obs.setValueCoded(conceptName1.getConceptId());
-                    } else if (conceptName2 != null) {
-                        obs.setValueCoded(conceptName2.getConceptId());
-                    } else if (conceptName3 != null) {
-                        obs.setValueCoded(conceptName3.getConceptId());
+                    if (linhaterapeutica.contains("2")) {
+                        if (conceptName2 != null) {
+                            obs.setValueCoded(conceptName2.getConceptId());
+                        } else if (conceptName3 != null) {
+                            obs.setValueCoded(conceptName3.getConceptId());
+                        } else if (conceptName1 != null) {
+                            obs.setValueCoded(conceptName1.getConceptId());
+                        } else {
+                            obs.setValueCoded(conceptService.findById("5424"));
+                        }
                     } else {
-                        obs.setValueCoded(conceptService.findById("5424"));
+                        if (conceptName1 != null) {
+                            obs.setValueCoded(conceptName1.getConceptId());
+                        } else if (conceptName2 != null) {
+                            obs.setValueCoded(conceptName2.getConceptId());
+                        } else if (conceptName3 != null) {
+                            obs.setValueCoded(conceptName3.getConceptId());
+                        } else {
+                            obs.setValueCoded(conceptService.findById("5424"));
+                        }
                     }
                 }
             }
-        }
-        obs.setComments("Imported by IDART");
-        obs.setDateCreated(encounter.getDateCreated());
-        obs.setVoided(false);
-        obs.setDateVoided(null);
-        obs.setVoidReason(null);
-        obs.setVoidedBy(users);
-        obs.setEncounterId(encounter);
-        obs.setCreator(users);
-        obs.setConceptId(concept);
-        obs.setLocationId(location);
-        obs.setPersonId(patient.getPerson());
-        if (temp == null) {
-            obsService.persist(obs);
-        } else {
-            obsService.update(obs);
+            obs.setComments("Imported by IDART");
+            obs.setDateCreated(encounter.getDateCreated());
+            obs.setVoided(false);
+            obs.setDateVoided(null);
+            obs.setVoidReason(null);
+            obs.setVoidedBy(users);
+            obs.setEncounterId(encounter);
+            obs.setCreator(users);
+            obs.setConceptId(concept);
+            obs.setLocationId(location);
+            obs.setPersonId(patient.getPerson());
+            if (temp == null) {
+                obsService.persist(obs);
+            } else {
+                obsService.update(obs);
+            }
+
         }
     }
 
