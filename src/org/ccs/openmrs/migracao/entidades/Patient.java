@@ -78,9 +78,9 @@ public class Patient implements Serializable {
     @JoinColumn(name = "creator", referencedColumnName = "user_id", nullable = false)
     @ManyToOne(optional = false)
     private Users creator;
-    @JoinColumn(name = "tribe", referencedColumnName = "tribe_id")
-    @ManyToOne
-    private Tribe tribe;
+//    @JoinColumn(name = "tribe", referencedColumnName = "tribe_id")
+//    @ManyToOne
+//    private Tribe tribe;
     @JoinColumn(name = "voided_by", referencedColumnName = "user_id")
     @ManyToOne
     private Users voidedBy;
@@ -189,13 +189,13 @@ public class Patient implements Serializable {
         this.creator = creator;
     }
 
-    public Tribe getTribe() {
-        return tribe;
-    }
-
-    public void setTribe(Tribe tribe) {
-        this.tribe = tribe;
-    }
+//    public Tribe getTribe() {
+//        return tribe;
+//    }
+//
+//    public void setTribe(Tribe tribe) {
+//        this.tribe = tribe;
+//    }
 
     public Users getVoidedBy() {
         return voidedBy;

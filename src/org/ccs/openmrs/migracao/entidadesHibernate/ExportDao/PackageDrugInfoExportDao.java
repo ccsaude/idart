@@ -90,13 +90,35 @@ implements PackageDrugInfoInterface<PackageDrugInfo, String> {
 
     @Override
     public List<PackageDrugInfo> findAll() {
-        List packageDrugInfos = this.getCurrentSession().createQuery("from PackageDrugInfo p where p.notes <> 'Exported' OR p.notes IS NULL ORDER BY p.dispenseDate desc ").list();
+    //  List packageDrugInfos = this.getCurrentSession().createQuery("from PackageDrugInfo p where p.notes <> 'Exported' OR p.notes IS NULL ORDER BY p.dispenseDate desc ").list();
+       
+        SQLQuery query = getCurrentSession().createSQLQuery("select * from packagedruginfotmp pdtmp " +
+                                                             "inner join patient p on p.patientid = pdtmp.patientid " +
+                                                             "inner join patientidentifier pi on pi.patient_id = p.id " +
+                                                             "inner join identifiertype it on it.id = pi.type_id " +
+                                                             "where it.name = 'NID' and (pdtmp.notes <> 'Exported' OR pdtmp.notes IS NULL) " +
+                                                             "ORDER BY pdtmp.dispenseDate desc");
+        query.addEntity(PackageDrugInfo.class);
+        List<PackageDrugInfo> packageDrugInfos = query.list();
+
         return packageDrugInfos;
     }
 
     @Override
     public List<PackageDrugInfo> findAllbyPatientID(String identifier) {
         List packageDrugInfos = this.getCurrentSession().createQuery("from PackageDrugInfo p where p.patientId = '" +identifier+"'").list();
+        return packageDrugInfos;
+    }
+    
+    
+    public List<PackageDrugInfo> findAllbyNid(String identifier, Date dataDispensa) {
+        GregorianCalendar calDispense = new GregorianCalendar();
+		calDispense.setTime(dataDispensa);
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        
+        List packageDrugInfos = this.getCurrentSession().createQuery("from PackageDrugInfo p where p.patientId = '" +identifier+"'"
+                                                                    + " and (p.notes <> 'Exported' OR p.notes IS NULL)"
+                                                                    + " and p.dispenseDate= '"+format.format(calDispense.getTime())+"'").list();
         return packageDrugInfos;
     }
     

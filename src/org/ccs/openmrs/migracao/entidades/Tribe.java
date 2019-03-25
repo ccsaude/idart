@@ -46,8 +46,8 @@ public class Tribe implements Serializable {
     @Basic(optional = false)
     @Column(name = "name", nullable = false, length = 50)
     private String name;
-    @OneToMany(mappedBy = "tribe")
-    private List<Patient> patientList;
+//    @OneToMany(mappedBy = "tribe")
+//    private List<Patient> patientList;
 
     public Tribe() {
     }
@@ -86,14 +86,14 @@ public class Tribe implements Serializable {
         this.name = name;
     }
 
-    @XmlTransient
-    public List<Patient> getPatientList() {
-        return patientList;
-    }
-
-    public void setPatientList(List<Patient> patientList) {
-        this.patientList = patientList;
-    }
+//    @XmlTransient
+//    public List<Patient> getPatientList() {
+//        return patientList;
+//    }
+//
+//    public void setPatientList(List<Patient> patientList) {
+//        this.patientList = patientList;
+//    }
 
     @Override
     public int hashCode() {

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ import org.ccs.openmrs.migracao.entidades.Provider;
 import org.ccs.openmrs.migracao.entidades.Users;
 import org.ccs.openmrs.migracao.entidades.Visit;
 import org.ccs.openmrs.migracao.entidades.VisitType;
+import org.ccs.openmrs.migracao.entidadesHibernate.ExportDispense.PackageDrugInfoExportService;
 import org.ccs.openmrs.migracao.entidadesHibernate.ExportDispense.PrescriptionExportService;
 import org.ccs.openmrs.migracao.entidadesHibernate.ExportDispense.RegimeTerapeuticoExportService;
 import org.ccs.openmrs.migracao.entidadesHibernate.importPatient.PatientImportService;
@@ -143,7 +145,7 @@ public class ExportData {
         return encounterProvider;
     }
 
-    public static void InsereObs(Patient patient, PackageDrugInfo packageDrugInfo, Location location, Concept concept, Users users, Encounter encounter, ObsService obsService) {
+    public static void InsereObs(Patient patient, PackageDrugInfo packageDrugInfo, Location location, Concept concept, Users users, Encounter encounter, ObsService obsService, PackageDrugInfoExportService packageDrugInfoExportService) {
         Obs obs;
         Obs temp = obs = obsService.findByEncounterAndConcept(encounter, concept);
         String esquema = "";
@@ -155,12 +157,14 @@ public class ExportData {
         PatientImportService importService = new PatientImportService();
         RegimeTerapeutico regimeTerapeutico;
         Prescription prescription = null;
+        ConceptName conceptName1Linha = null;
+        ConceptName conceptName2Linha = null;
+        ConceptName conceptName3Linha = null;
+        int somaDispensedQty = 0;
 
         org.celllife.idart.database.hibernate.Patient p = importService.findByPatientId(packageDrugInfo.getPatientId() + "");
 
         if (p != null) {
-            // Carrega a ultima prescricao do paciente - Alterado por colaca 17-02-2017
-            // prescription = prescriptionExportService.findByPrescricaoId(p.getId() + "", packageDrugInfo.getPatientId());
             // carregar a prescricao exacta da dispensa
             prescription = packageDrugInfo.getPackagedDrug().getParentPackage().getPrescription();
 
@@ -189,7 +193,6 @@ public class ExportData {
                 obs = new Obs();
                 DadosPaciente dadosPaciente = new DadosPaciente();
                 obs.setUuid(dadosPaciente.devolveUuid());
-
             }
             obs.setObsDatetime(packageDrugInfo.getDispenseDate());
             String linhaterapeutica = prescriptionExportService.findByLinhaId(prescription).getLinhanome();
@@ -198,6 +201,14 @@ public class ExportData {
                 obs.setValueDatetime(ExportData.devolveData(packageDrugInfo.getDateExpectedString()));
             }
             if (concept.getConceptId() == 1715) {
+                 List<PackageDrugInfo> packageDrugInfos = packageDrugInfoExportService.findAllbyNid(packageDrugInfo.getPatientId(), packageDrugInfo.getDispenseDate());
+                
+                 if(!packageDrugInfos.isEmpty()){
+                    for(PackageDrugInfo pinfo : packageDrugInfos ) 
+                        somaDispensedQty = somaDispensedQty + pinfo.getDispensedQty();
+                    
+                    obs.setValueNumeric(Double.parseDouble("" + somaDispensedQty+ ""));
+                 }else
                 obs.setValueNumeric(Double.parseDouble("" + packageDrugInfo.getDispensedQty() + ""));
             }
             if (concept.getConceptId() == 1711) {
@@ -208,42 +219,38 @@ public class ExportData {
                 }
             }
             if (concept.getConceptId() == 1088) {
-                ConceptName conceptName1 = null;
-                ConceptName conceptName2 = null;
-                ConceptName conceptName3 = null;
-
-                conceptName3 = conceptNameService.findByName3Line(esquema.trim());
-                conceptName2 = conceptNameService.findByName2Line(esquema.trim());
-                conceptName1 = conceptNameService.findByName(esquema.trim());
+                conceptName3Linha = conceptNameService.findByName3Line(esquema.trim());
+                conceptName2Linha = conceptNameService.findByName2Line(esquema.trim());
+                conceptName1Linha = conceptNameService.findByName(esquema.trim());
 
                 if (linhaterapeutica.contains("3")) {
-                    if (conceptName3 != null) {
-                        obs.setValueCoded(conceptName3.getConceptId());
-                    } else if (conceptName2 != null) {
-                        obs.setValueCoded(conceptName2.getConceptId());
-                    } else if (conceptName1 != null) {
-                        obs.setValueCoded(conceptName1.getConceptId());
+                    if (conceptName3Linha != null) {
+                        obs.setValueCoded(conceptName3Linha.getConceptId());
+                    } else if (conceptName2Linha != null) {
+                        obs.setValueCoded(conceptName2Linha.getConceptId());
+                    } else if (conceptName1Linha != null) {
+                        obs.setValueCoded(conceptName1Linha.getConceptId());
                     } else {
                         obs.setValueCoded(conceptService.findById("5424"));
                     }
                 } else {
                     if (linhaterapeutica.contains("2")) {
-                        if (conceptName2 != null) {
-                            obs.setValueCoded(conceptName2.getConceptId());
-                        } else if (conceptName3 != null) {
-                            obs.setValueCoded(conceptName3.getConceptId());
-                        } else if (conceptName1 != null) {
-                            obs.setValueCoded(conceptName1.getConceptId());
+                        if (conceptName2Linha != null) {
+                            obs.setValueCoded(conceptName2Linha.getConceptId());
+                        } else if (conceptName3Linha != null) {
+                            obs.setValueCoded(conceptName3Linha.getConceptId());
+                        } else if (conceptName1Linha != null) {
+                            obs.setValueCoded(conceptName1Linha.getConceptId());
                         } else {
                             obs.setValueCoded(conceptService.findById("5424"));
                         }
                     } else {
-                        if (conceptName1 != null) {
-                            obs.setValueCoded(conceptName1.getConceptId());
-                        } else if (conceptName2 != null) {
-                            obs.setValueCoded(conceptName2.getConceptId());
-                        } else if (conceptName3 != null) {
-                            obs.setValueCoded(conceptName3.getConceptId());
+                        if (conceptName1Linha != null) {
+                            obs.setValueCoded(conceptName1Linha.getConceptId());
+                        } else if (conceptName2Linha != null) {
+                            obs.setValueCoded(conceptName2Linha.getConceptId());
+                        } else if (conceptName3Linha != null) {
+                            obs.setValueCoded(conceptName3Linha.getConceptId());
                         } else {
                             obs.setValueCoded(conceptService.findById("5424"));
                         }
@@ -266,7 +273,6 @@ public class ExportData {
             } else {
                 obsService.update(obs);
             }
-
         }
     }
 

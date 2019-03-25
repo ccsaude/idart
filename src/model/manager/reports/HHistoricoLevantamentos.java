@@ -74,10 +74,16 @@ public class HHistoricoLevantamentos extends AbstractJasperReport {
                 
                  if (this.inicio) 
                     map.put("inicia", "Inicia");
+                 else
+                     map.put("inicia", null); 
                 if (this.manutencao) 
                     map.put("manter", "Manter");
+                else
+                    map.put("manter", null);
                 if (this.alteraccao) 
                     map.put("alterar", "Alterar");
+                else
+                    map.put("alterar", null); 
                 
                 map.put("date", theStartDate);
 		map.put("dateFormat", dateFormat.format(theStartDate));

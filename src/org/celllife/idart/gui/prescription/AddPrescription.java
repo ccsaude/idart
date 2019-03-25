@@ -627,7 +627,7 @@ public class AddPrescription extends GenericFormGui implements
         chkBtnPTV = new Button(grpPatientMDS, SWT.CHECK);
         chkBtnPTV.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, false, false, 1, 1));
         chkBtnPTV.setBounds(new Rectangle(10, 30, 40, 20));
-        chkBtnPTV.setText("PTV");
+        chkBtnPTV.setText("CPN");
         chkBtnPTV.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
         chkBtnPTV.setSelection(false);
 

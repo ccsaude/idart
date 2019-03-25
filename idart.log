@@ -1,298 +1,312 @@
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:48:15 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:49:34 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 479966
-13-03-2019 15:49:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:49:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:49:35 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:49:35 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:49:36 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:49:36 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:49:36 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:49:36 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:50:01 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:50:01 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:50:01 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:50:01 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:50:09 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
-13-03-2019 15:50:09 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 819859
-13-03-2019 15:50:09 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
-13-03-2019 15:50:09 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
-13-03-2019 15:50:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:50:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:50:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:50:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:50:09 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:50:09 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:50:09 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
-13-03-2019 15:50:09 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
-13-03-2019 15:50:09 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
-13-03-2019 15:50:10 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
-13-03-2019 15:54:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:54:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:54:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:54:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:55:13 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:56:28 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 479966
-13-03-2019 15:56:30 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
-13-03-2019 15:56:30 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:56:30 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:56:30 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:56:30 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:56:31 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:56:31 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:56:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:56:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:56:46 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:56:46 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:56:46 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:56:46 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:56:55 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
-13-03-2019 15:56:55 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 819859
-13-03-2019 15:56:55 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
-13-03-2019 15:56:55 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
-13-03-2019 15:56:55 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:56:55 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:56:56 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:56:56 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:56:56 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:56:56 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:56:56 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
-13-03-2019 15:56:56 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
-13-03-2019 15:56:56 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
-13-03-2019 15:56:56 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
-13-03-2019 15:58:23 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
-13-03-2019 15:58:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:27 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:58:27 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:58:27 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 15:58:27 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 15:58:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:30 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:30 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:30 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:30 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:30 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 15:58:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:02:36 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 479966
-13-03-2019 16:02:37 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:02:37 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:02:37 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:02:37 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:02:37 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:02:37 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:02:37 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:02:37 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:02:47 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:02:47 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:02:47 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:02:47 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:02:56 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
-13-03-2019 16:02:56 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 1121826
-13-03-2019 16:02:56 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 819857
-13-03-2019 16:02:56 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
-13-03-2019 16:02:56 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
-13-03-2019 16:02:56 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
-13-03-2019 16:02:56 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:02:56 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:02:57 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:02:57 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:02:57 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:02:57 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:02:57 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
-13-03-2019 16:02:57 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
-13-03-2019 16:02:57 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
-13-03-2019 16:02:57 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
-13-03-2019 16:03:07 [main] WARN  dart.misc.PatientBarcodeParser - Could not match patientId using regular expression.
-13-03-2019 16:03:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:31 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:03:31 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:03:31 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:03:31 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:03:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:31 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:40 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:40 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:40 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:03:40 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:03:42 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:04:21 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 479966
-13-03-2019 16:04:23 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:04:23 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:04:23 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:04:23 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:04:23 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:04:23 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:04:23 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:04:23 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:04:39 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:04:39 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:04:39 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:04:39 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:04:45 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
-13-03-2019 16:04:45 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 1121826
-13-03-2019 16:04:45 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 819857
-13-03-2019 16:04:45 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
-13-03-2019 16:04:45 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
-13-03-2019 16:04:45 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
-13-03-2019 16:04:45 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:04:45 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:04:45 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:04:45 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:04:45 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
-13-03-2019 16:04:45 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
-13-03-2019 16:04:45 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
-13-03-2019 16:04:45 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
-13-03-2019 16:04:45 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
-13-03-2019 16:04:46 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
-13-03-2019 16:05:56 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:05:56 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:05:56 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:05:56 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:08:26 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:08:26 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
-13-03-2019 16:08:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
-URL = jdbc:postgresql://localhost:5432/pharm
-13-03-2019 16:08:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:38:56 [main] DEBUG celllife.idart.misc.LoginTimer - Terminating iDART - TIMER EXPIRED
+20-03-2019 13:38:56 [main] DEBUG dart.start.PharmacyApplication - Logged out..
+20-03-2019 13:38:56 [main] DEBUG celllife.idart.gui.login.Login - Login Form Created
+20-03-2019 13:39:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:39:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:39:10 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:39:10 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:41:15 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 476168
+20-03-2019 13:41:17 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:41:17 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:41:17 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:41:17 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:41:17 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:41:27 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
+20-03-2019 13:41:27 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 474953
+20-03-2019 13:41:27 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
+20-03-2019 13:41:27 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
+20-03-2019 13:41:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:41:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:41:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:41:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:41:27 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:41:27 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:41:27 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
+20-03-2019 13:41:27 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
+20-03-2019 13:41:27 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
+20-03-2019 13:41:27 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
+20-03-2019 13:43:32 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 485849
+20-03-2019 13:43:33 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:43:33 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:43:33 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:43:33 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:43:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:43:43 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
+20-03-2019 13:43:43 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 474953
+20-03-2019 13:43:43 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
+20-03-2019 13:43:43 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
+20-03-2019 13:43:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:43:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:43:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:43:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:43:43 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:43:43 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:43:43 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
+20-03-2019 13:43:43 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
+20-03-2019 13:43:43 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
+20-03-2019 13:43:43 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
+20-03-2019 13:45:22 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 479048
+20-03-2019 13:45:23 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
+20-03-2019 13:45:23 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:45:23 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:45:24 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:45:24 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:45:24 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:45:24 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:45:32 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
+20-03-2019 13:45:33 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 474951
+20-03-2019 13:45:33 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
+20-03-2019 13:45:33 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
+20-03-2019 13:45:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:45:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:45:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:45:33 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:45:33 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:45:33 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:45:33 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
+20-03-2019 13:45:33 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
+20-03-2019 13:45:33 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
+20-03-2019 13:45:33 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
+20-03-2019 13:48:34 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 478223
+20-03-2019 13:48:35 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:48:35 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:48:35 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:48:35 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:48:35 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:48:43 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
+20-03-2019 13:48:43 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 474953
+20-03-2019 13:48:43 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
+20-03-2019 13:48:43 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
+20-03-2019 13:48:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:48:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:48:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:48:43 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:48:43 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:48:43 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:48:43 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
+20-03-2019 13:48:43 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
+20-03-2019 13:48:43 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
+20-03-2019 13:48:43 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
+20-03-2019 13:49:06 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:49:06 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:49:06 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:49:06 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:49:06 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:49:06 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:49:06 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:49:07 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:49:07 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:49:07 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:49:08 [main] WARN  dart.misc.PatientBarcodeParser - Could not match patientId using regular expression.
+20-03-2019 13:49:54 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
+20-03-2019 13:51:25 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 482372
+20-03-2019 13:51:26 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:51:27 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:51:27 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:51:27 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:51:27 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:51:41 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
+20-03-2019 13:51:41 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 474953
+20-03-2019 13:51:41 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
+20-03-2019 13:51:41 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
+20-03-2019 13:51:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:51:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:51:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:51:41 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:51:41 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:51:41 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:51:41 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
+20-03-2019 13:51:41 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
+20-03-2019 13:51:41 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
+20-03-2019 13:51:41 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
+20-03-2019 13:52:11 [main] INFO  e.idart.gui.patient.AddPatient - Tab validation failed - Provincia é Inválido
+20-03-2019 13:53:07 [main] INFO  i.prescription.AddPrescription - Saved Prescription for Patient: 488465
+20-03-2019 13:53:08 [main] INFO  t.gui.composite.PillCountTable - Creating PillCountTable
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:53:09 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:53:09 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:53:09 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:53:09 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:53:16 [main] INFO  .packaging.NewPatientPackaging - getSelectedWeekSupply() called
+20-03-2019 13:53:16 [main] INFO      model.manager.StockManager - Calculating StockLevel for stock 474953
+20-03-2019 13:53:16 [main] INFO  .packaging.NewPatientPackaging - savePackageAndPackagedDrugs() called
+20-03-2019 13:53:16 [main] INFO  anager.TemporaryRecordsManager - Saving package drug infos.
+20-03-2019 13:53:16 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:53:16 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:53:16 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:53:16 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+20-03-2019 13:53:16 [main] INFO  idart.database.dao.ConexaoODBC - A Estabelecer a conexao com MS ACESS.....
+20-03-2019 13:53:16 [main] ERROR idart.database.dao.ConexaoODBC - Não foi possivel conectar a base de dados MS ACESS.....
+20-03-2019 13:53:16 [main] ERROR idart.database.dao.ConexaoODBC - ++++++ Houve erro na Insercao de dados na tabela T_TARV do MS ACESS.....
+20-03-2019 13:53:16 [main] ERROR idart.database.dao.ConexaoODBC - java.lang.NullPointerException
+20-03-2019 13:53:16 [main] INFO  .packaging.NewPatientPackaging - submitForm() called
+20-03-2019 13:53:16 [main] INFO  .packaging.NewPatientPackaging - cmdDispenseDrugsSelected() called
+20-03-2019 13:57:41 [Report task] INFO  tabase.hibernate.util.JDBCUtil - Opening JDBC connection to jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 13:57:47 [Report task] INFO  tabase.hibernate.util.JDBCUtil - Opening JDBC connection to jdbc:postgresql://192.168.0.2:5432/pharm
+20-03-2019 14:00:25 [main] DEBUG celllife.idart.misc.LoginTimer - Terminating iDART - TIMER EXPIRED
+20-03-2019 14:00:25 [main] DEBUG dart.start.PharmacyApplication - Logged out..
+20-03-2019 14:00:25 [main] DEBUG celllife.idart.gui.login.Login - Login Form Created
+25-03-2019 16:04:50 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://localhost:5432/pharm
+25-03-2019 16:04:50 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+25-03-2019 16:04:51 [main] INFO  idart.database.dao.ConexaoJDBC - Conectando ao banco de dados
+URL = jdbc:postgresql://localhost:5432/pharm
+25-03-2019 16:04:51 [main] INFO  idart.database.dao.ConexaoJDBC - Conectado...Criando a declaração
+25-03-2019 16:05:00 [SwingWorker-pool-3-thread-1] WARN  .hibernate.cfg.SettingsFactory - Could not obtain connection metadata
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:990)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:341)
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2186)
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2219)
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2014)
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:776)
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:386)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:330)
+	at java.sql.DriverManager.getConnection(DriverManager.java:571)
+	at java.sql.DriverManager.getConnection(DriverManager.java:187)
+	at org.hibernate.connection.DriverManagerConnectionProvider.getConnection(DriverManagerConnectionProvider.java:110)
+	at org.hibernate.cfg.SettingsFactory.buildSettings(SettingsFactory.java:84)
+	at org.hibernate.cfg.Configuration.buildSettings(Configuration.java:2009)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1292)
+	at org.hibernate.cfg.AnnotationConfiguration.buildSessionFactory(AnnotationConfiguration.java:915)
+	at org.ccs.openmrs.migracao.connection.hibernateConection.<clinit>(hibernateConection.java:47)
+	at org.ccs.openmrs.migracao.entidadesHibernate.ExportDao.PackageDrugInfoExportDao.openCurrentSession(PackageDrugInfoExportDao.java:30)
+	at org.ccs.openmrs.migracao.entidadesHibernate.ExportDispense.PackageDrugInfoExportService.findAll(PackageDrugInfoExportService.java:55)
+	at org.ccs.openmrs.migracao.swingreverse.Task1.doInBackground(Task1.java:101)
+	at org.ccs.openmrs.migracao.swingreverse.Task1.doInBackground(Task1.java:56)
+	at javax.swing.SwingWorker$1.call(SwingWorker.java:296)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at javax.swing.SwingWorker.run(SwingWorker.java:335)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:579)
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:211)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:300)
+	... 30 more
+25-03-2019 16:07:18 [SwingWorker-pool-3-thread-1] WARN  ate.util.JDBCExceptionReporter - SQL Error: 0, SQLState: 08S01
+25-03-2019 16:07:18 [SwingWorker-pool-3-thread-1] ERROR ate.util.JDBCExceptionReporter - Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+25-03-2019 16:07:52 [main] DEBUG celllife.idart.misc.LoginTimer - Terminating iDART - TIMER EXPIRED
+25-03-2019 16:07:52 [main] DEBUG dart.start.PharmacyApplication - Logged out..
+25-03-2019 16:07:52 [main] DEBUG celllife.idart.gui.login.Login - Login Form Created
