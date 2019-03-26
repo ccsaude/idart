@@ -36,7 +36,14 @@ public class PersonService {
         personDao.closeCurrentSession();
         return person;
     }
-
+    
+    public String findByCellphone(int id) {
+        personDao.openCurrentSession();
+        String cellphone = personDao.findByCellphone(id);
+        personDao.closeCurrentSession();
+        return cellphone;
+    }
+    
     public void delete(String id) {
         personDao.openCurrentSessionwithTransaction();
         Person person = personDao.findById(id);

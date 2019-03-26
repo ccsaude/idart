@@ -11,16 +11,22 @@ package org.ccs.openmrs.migracao.entidadesHibernate.dao;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.ccs.openmrs.migracao.connection.hibernateConection;
 import org.ccs.openmrs.migracao.entidades.Encounter;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.EncounterDaoInterface;
+import org.celllife.idart.database.hibernate.tmp.PackageDrugInfo;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class EncounterDao
-implements EncounterDaoInterface<Encounter, String> {
+        implements EncounterDaoInterface<Encounter, String> {
+
     public Session currentSession;
     public Transaction currentTransaction;
 
@@ -62,32 +68,48 @@ implements EncounterDaoInterface<Encounter, String> {
 
     @Override
     public void persist(Encounter entity) {
-        this.getCurrentSession().save((Object)entity);
+        this.getCurrentSession().save((Object) entity);
     }
 
     @Override
     public void update(Encounter entity) {
-        this.getCurrentSession().update((Object)entity);
+        this.getCurrentSession().update((Object) entity);
     }
 
     @Override
     public Encounter findById(String id) {
-        Encounter encounter = (Encounter)this.getCurrentSession().get((Class)Encounter.class, (Serializable)((Object)id));
+        Encounter encounter = (Encounter) this.getCurrentSession().get((Class) Encounter.class, (Serializable) ((Object) id));
         return encounter;
     }
 
-    public Encounter findByVisitAndPickupDate(Integer id,Date pickupDate) {
-        Encounter encounter =null;
-        List<Encounter> listencounter = this.getCurrentSession().createQuery("from Encounter e where e.visitId = " + id+" AND e.dateCreated = '"+pickupDate+"'" ).list();
-        if(!listencounter.isEmpty()){
-        encounter= listencounter.get(0);
+    public Encounter findByVisitAndPickupDate(Integer id, Date pickupDate) {
+        Encounter encounter = null;
+
+        GregorianCalendar calDispense = new GregorianCalendar();
+        calDispense.setTime(pickupDate);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        List<Encounter> listencounter = null;
+
+        SQLQuery query = this.getCurrentSession().createSQLQuery("select * from encounter e "
+                + " where e.visit_id = " + id
+                + " and date_format(e.encounter_datetime, '%Y-%m-%d') = '" + format.format(pickupDate.getTime()) + "'");
+
+        query.addEntity(Encounter.class);
+        try {
+            listencounter = query.list();
+        } catch (HibernateException e) {
+            System.err.println(e.getMessage());
+        }
+
+        if (!listencounter.isEmpty()) {
+            encounter = listencounter.get(0);
         }
         return encounter;
     }
 
     @Override
     public void delete(Encounter entity) {
-        this.getCurrentSession().delete((Object)entity);
+        this.getCurrentSession().delete((Object) entity);
     }
 
     @Override
@@ -104,4 +126,3 @@ implements EncounterDaoInterface<Encounter, String> {
         }
     }
 }
-

@@ -15,6 +15,7 @@ import org.ccs.openmrs.migracao.connection.hibernateConection;
 import org.ccs.openmrs.migracao.entidades.Person;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.PersonDaoInterface;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -93,6 +94,15 @@ implements PersonDaoInterface<Person, String> {
         for (Person entity : entityList) {
             this.delete(entity);
         }
+    }
+    
+    public String findByCellphone(int identifier) {
+    String phonenumber = "";      
+       SQLQuery query = this.getCurrentSession().createSQLQuery("select pat.value from person_attribute pat "
+                                                             + " where person_attribute_type_id = 9 and pat.person_id = "+identifier);                                                          
+               phonenumber = query.list().get(0).toString(); 
+               
+        return phonenumber;
     }
 }
 

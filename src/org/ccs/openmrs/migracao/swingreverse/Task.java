@@ -133,8 +133,9 @@ class Task
                             PersonAddress personAddress = personAddressService.findByPersonId(patientProgram.getPatientId().getPatientId().toString());
                             PatientIdentifier patientIdentifier = patientIdentifierService.findByPatientId(patientProgram.getPatientId().getPatientId().toString());
                             Person person = personService.findById(patientProgram.getPatientId().getPatientId().toString());
-
-                            Patient patient = DadosPaciente.InserePaciente(patientIdentifier.getIdentifier(), person, personName, personAddress, clinic, patientImportService, patientProgram.getPatientId().getPatientId().toString());
+                            String numeroTelefone = personService.findByCellphone(person.getPersonId());
+                            
+                            Patient patient = DadosPaciente.InserePaciente(patientIdentifier.getIdentifier(), person, personName, personAddress, clinic, patientImportService, patientProgram.getPatientId().getPatientId().toString(),numeroTelefone);
 
                             DadosPaciente.InserePatientIdentifier(patient, identifierType, patientIdentifier.getIdentifier(), patientIdentifierImportService);
 

@@ -82,7 +82,7 @@ implements ConceptDaoInterace<Concept, String> {
 
     @Override
     public List<Concept> findAll() {
-        List concepts = this.getCurrentSession().createQuery("from Concept c where c.conceptId in (1088,1715,5096,1711)").list();
+        List concepts = this.getCurrentSession().createQuery("from Concept c where c.conceptId in (5096,1711,1715,1088) ORDER BY c.conceptId desc").list();
         return concepts;
     }
 

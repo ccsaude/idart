@@ -168,7 +168,7 @@ class Task1
                                 } else {
                                     patientIdentifierOpenmrs = identifierDao.findByPatientUuid(importedPatient.getUuid());
                                 }
-                                
+
                                 if (!patientIdentifierOpenmrs.isEmpty()) {
                                     patient = patientExportService.findById(patientIdentifierOpenmrs.get(0).getPatientId().getPatientId() + "");
 
@@ -190,20 +190,14 @@ class Task1
                                                 patientImportService.update(p);
                                             }
                                         }
-                                        
-                                        // Verifica se esta dispensa nao foi carregada - para casos em que o paciente tem mais de um frasco
-                                         Visit tipoVerifica = visitService.findByPatientAndPickupDate(patient.getPatientId(), new java.sql.Date(ExportData.devolveDataPick(packageDrugInfo.getDispenseDate()).getTime()));
-       
-                                        if (tipoVerifica != null) {
-                                            System.err.println(" INFO: Mais de 1 Pacote foi dispensado para esta Prescricao -> " + packageDrugInfo.getPackageId()+" com NID -> "+packageDrugInfo.getPatientId());
-                                        } else {
-                                            Visit visit = ExportData.InsereVisitas(patient, packageDrugInfo, visitType, location, concept, users, visitService);
-                                            Encounter encounter = ExportData.InsereEncounter(visit, packageDrugInfo, encounterType, users, location, form, patient, encounterService);
-                                            EncounterProvider encounterProvider = ExportData.InsereEncounterProvider(packageDrugInfo, encounter, users, encounterRole, provider, encounterProviderService);
+
+                                        Visit visit = ExportData.InsereVisitas(patient, packageDrugInfo, visitType, location, concept, users, visitService);
+                                        Encounter encounter = ExportData.InsereEncounter(visit, packageDrugInfo, encounterType, users, location, form, patient, encounterService);
+                                        EncounterProvider encounterProvider = ExportData.InsereEncounterProvider(packageDrugInfo, encounter, users, encounterRole, provider, encounterProviderService);
+                                       
+                                        for (Concept conceptFarmaciaForm : conceptsFarmacia) {
                                             
-                                            for (Concept concept1 : conceptsFarmacia) {
-                                                ExportData.InsereObs(patient, packageDrugInfo, location, concept1, users, encounter, obsService, packageDrugInfoExportService);
-                                            }
+                                            ExportData.InsereObs(patient, packageDrugInfo, location, conceptFarmaciaForm, users, encounter, obsService, packageDrugInfoExportService);
                                         }
 
                                         PackageDrugInfoExportService rapidSave = new PackageDrugInfoExportService();

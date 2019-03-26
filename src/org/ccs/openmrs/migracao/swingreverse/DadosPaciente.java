@@ -21,7 +21,7 @@ import org.celllife.idart.database.hibernate.PatientIdentifier;
 import org.celllife.idart.database.hibernate.tmp.PackageDrugInfo;
 
 public class DadosPaciente {
-    public static Patient InserePaciente(String patientIdentifier, Person person, PersonName personName, PersonAddress personAddress, Clinic clinic, PatientImportService patientImportService, String idPatient) {
+    public static Patient InserePaciente(String patientIdentifier, Person person, PersonName personName, PersonAddress personAddress, Clinic clinic, PatientImportService patientImportService, String idPatient, String numeroTelefone) {
 
         Patient patient = null;
         PatientIdentifierImportService patientIdentifierImportService = new PatientIdentifierImportService();
@@ -44,11 +44,11 @@ public class DadosPaciente {
         }
         patient.setAccountStatus(Boolean.FALSE);
         if (personAddress != null) {
-            patient.setAddress1(personAddress.getAddress1());
-            patient.setAddress2(personAddress.getAddress2());
-            patient.setAddress3(personAddress.getAddress3());
+            patient.setAddress1(personAddress.getAddress2()+" L.:"+personAddress.getAddress6());
+            patient.setAddress2(personAddress.getAddress1()+" C.:"+personAddress.getAddress3());
+            patient.setAddress3(personAddress.getAddress5());
         }
-        patient.setCellphone("");
+        patient.setCellphone(numeroTelefone);
         patient.setDateOfBirth(person.getBirthdate());
         patient.setClinic(clinic);
         patient.setNextOfKinName(null);

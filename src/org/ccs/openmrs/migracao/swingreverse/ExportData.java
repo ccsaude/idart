@@ -200,19 +200,21 @@ public class ExportData {
             if (concept.getConceptId() == 5096) {
                 obs.setValueDatetime(ExportData.devolveData(packageDrugInfo.getDateExpectedString()));
             }
+
             if (concept.getConceptId() == 1715) {
-                 List<PackageDrugInfo> packageDrugInfos = packageDrugInfoExportService.findAllbyNid(packageDrugInfo.getPatientId(), packageDrugInfo.getDispenseDate());
-                
-                 if(!packageDrugInfos.isEmpty()){
-                    for(PackageDrugInfo pinfo : packageDrugInfos ) 
-                        somaDispensedQty = somaDispensedQty + pinfo.getDispensedQty();
-                    
-                    obs.setValueNumeric(Double.parseDouble("" + somaDispensedQty+ ""));
-                 }else
-                obs.setValueNumeric(Double.parseDouble("" + packageDrugInfo.getDispensedQty() + ""));
+                somaDispensedQty = devolveQuantidadeAviada(packageDrugInfo.getPatientId(), packageDrugInfo.getDispenseDate(), packageDrugInfoExportService);
+                if (somaDispensedQty == 0) {
+                    somaDispensedQty = packageDrugInfo.getDispensedQty();
+                }
+                obs.setValueNumeric(Double.parseDouble("" + somaDispensedQty + ""));
             }
+
             if (concept.getConceptId() == 1711) {
-                if (packageDrugInfo.getDispensedQty() / (packageDrugInfo.getWeeksSupply() / 4) <= 30) {
+                somaDispensedQty = devolveQuantidadeAviada(packageDrugInfo.getPatientId(), packageDrugInfo.getDispenseDate(), packageDrugInfoExportService);
+                if (somaDispensedQty == 0) {
+                    somaDispensedQty = packageDrugInfo.getDispensedQty();
+                }
+                if (somaDispensedQty / (packageDrugInfo.getWeeksSupply() / 4) <= 30) {
                     obs.setValueText("0-0-1");
                 } else {
                     obs.setValueText("1-0-1");
@@ -285,6 +287,20 @@ public class ExportData {
             Logger.getLogger(ExportData.class.getName()).log(Level.SEVERE, null, ex);
         }
         return date;
+    }
+
+    public static int devolveQuantidadeAviada(String identifier, Date dataDispensa, PackageDrugInfoExportService packageDrugInfoExportService) {
+        int somaDispensedQty = 0;
+
+        List<PackageDrugInfo> packageDrugInfos = packageDrugInfoExportService.findAllbyNid(identifier, dataDispensa);
+
+        if (!packageDrugInfos.isEmpty()) {
+            for (PackageDrugInfo pinfo : packageDrugInfos) {
+                somaDispensedQty = somaDispensedQty + pinfo.getDispensedQty();
+            }
+        }
+        return somaDispensedQty;
+
     }
 
     public static Date devolveDataPick(Date data) {

@@ -145,16 +145,16 @@ public class PatientIdentifierDao
     public PatientIdentifier findByPatientId(String id) {
         PatientIdentifier patientIdentifier = null;
 
-        patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 2").uniqueResult();
+        patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 2 AND preferred = 1").uniqueResult();
 
         if (patientIdentifier == null) {
-            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 9 ").uniqueResult();
+            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 9 limit 1").uniqueResult();
         }
         if (patientIdentifier == null) {
-            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 6 ").uniqueResult();
+            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 6 limit 1").uniqueResult();
         }
         if (patientIdentifier == null) {
-            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 11 ").uniqueResult();
+            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 11 limit 1").uniqueResult();
         }
         return patientIdentifier;
     }
