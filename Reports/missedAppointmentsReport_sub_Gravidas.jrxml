@@ -60,10 +60,10 @@ case when ((pat.address3 is null)or(pat.address3 like '')) then ''
 else ',' || pat.address3
 end
 as address,
-case when (presc.ptv = 'F' and presc.tb = 'F')  then 'Sim'
+case when (presc.ptv = 'F' and presc.tb = 'F' and presc.ccr = 'F')  then 'Sim'
 else 'Nao'
 end as tarv,
-case when (presc.ptv <> 'F')  then 'Sim'
+case when (presc.ptv <> 'F' OR presc.ccr <> 'F')  then 'Sim'
 else 'Nao'
 end as ptv,
 case when (presc.tb <> 'F')  then 'Sim'
