@@ -2098,38 +2098,30 @@ somaSemanas+=rs.getInt("weekssupply");
 
 public int mesesDispensadosParaDT(String startDate, String endDate) throws SQLException{
 	
-	int meses=0;
-	double somaSemanas=0;
+	int mesesPacientes=0;
 	
 	String query=" SELECT "
-			+ " package.weekssupply, package.packageid"
+			+ " distinct pr.patient"
 			+ " FROM package "
 			+ "inner join packageddrugs on packageddrugs.parentpackage = package.id "
+                        + "inner join prescription pr on pr.id = package.prescription "                           
 			+ " WHERE packageddrugs.amount = 0 AND "
 			+ " package.pickupdate::date >= "
 			+ "\'"+startDate+"\'::date "
-					+ "AND package.pickupdate::date <="
-					+ " \'"+endDate+"\'::date GROUP BY package.packageid, package.weekssupply";
+			+ "AND package.pickupdate::date <="
+			+ " \'"+endDate+"\'::date GROUP BY pr.patient";
 	
 	ResultSet rs=st.executeQuery(query);
 	
 	if (rs != null)
     {
-       
         while (rs.next())
         {
-
-
-somaSemanas+=rs.getInt("weekssupply");
-
+            mesesPacientes = mesesPacientes + 1;
         } 
         rs.close(); //
-        
-        meses=(int) Math.round(somaSemanas/4);
     }
-	
-	
-	return meses;
+	return mesesPacientes;
 }
 
 
@@ -3853,13 +3845,13 @@ public int totalPacientesManterDispensaTrimestral(String startDate, String endDa
 public int totalPacientesManuntencaoTransporteDispensaTrimestral(String startDate, String endDate) throws ClassNotFoundException, SQLException{
 
       String query= " SELECT count(*) soma " +
-                          " FROM ( SELECT distinct pr.patient, pr.date " +
+                          " FROM ( SELECT distinct pr.patient " +
                                   " FROM prescription pr" +
                                   " inner join package pack on pack.prescription = pr.id "+
                                   " inner join packageddrugs packdrug on packdrug.parentPackage = pack.id "+
                                   " WHERE packdrug.amount = 0"+
                                   " AND pr.date::date between " + "\'"+startDate+"\' AND "+ "\'"+endDate+"\'"+
-                                  " group by  pr.patient, pr.date ) v ";
+                                  " group by  pr.patient ) v ";
      
 	int total=0;
 	conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);

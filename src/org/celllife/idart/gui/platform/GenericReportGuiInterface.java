@@ -58,5 +58,6 @@ public interface GenericReportGuiInterface {
         static String REPORT_SEGUNDA_LINHA_AVALIACAO  = Messages.getString("reports.segundaslinhasavaliacao");
         static String REPORT_LIVRO_ELETRONICO_ARV  = Messages.getString("reports.livroEletronico");
         static String REPORT_CONFIRMACA_ABANDONOS_OPENMRS  = Messages.getString("reports.confirmaabandonos");
+        static String REPORT_INDICADORES_MENSAIS  = Messages.getString("reports.indicadoresmensais");
 	
 }

@@ -3332,19 +3332,19 @@ public class NewPatientPackaging extends GenericFormGui implements
                 }
                 tx.commit();
 
-                if (iDartProperties.printDrugLabels) {
-                    // Add the qty for the summary label
-                    labelQuantities.put(ScriptSummaryLabel.KEY,
-                            rdBtnPrintSummaryLabelYes.getSelection() ? 1 : 0);
-                    //Add the qty for the next appointment
-                    labelQuantities.put(CommonObjects.NEXT_APPOINTMENT_KEY, ((rdBtnDispenseLater.getSelection() || rdBtnYesAppointmentDate.getSelection()) ? 1 : 0));
-                    // Add the qty for the package label
-                    labelQuantities.put(PackageCoverLabel.KEY,
-                            rdBtnDispenseLater.getSelection() ? 1 : 0);
-                    // print labels
-                    PackageManager.printLabels(getHSession(),
-                            allPackagedDrugsList, labelQuantities);
-                }
+//                if (iDartProperties.printDrugLabels) {
+//                    // Add the qty for the summary label
+//                    labelQuantities.put(ScriptSummaryLabel.KEY,
+//                            rdBtnPrintSummaryLabelYes.getSelection() ? 1 : 0);
+//                    //Add the qty for the next appointment
+//                    labelQuantities.put(CommonObjects.NEXT_APPOINTMENT_KEY, ((rdBtnDispenseLater.getSelection() || rdBtnYesAppointmentDate.getSelection()) ? 1 : 0));
+//                    // Add the qty for the package label
+//                    labelQuantities.put(PackageCoverLabel.KEY,
+//                            rdBtnDispenseLater.getSelection() ? 1 : 0);
+//                    // print labels
+//                    PackageManager.printLabels(getHSession(),
+//                            allPackagedDrugsList, labelQuantities);
+//                }
             }
 
             /*

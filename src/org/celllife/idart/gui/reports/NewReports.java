@@ -48,6 +48,7 @@ import org.celllife.idart.gui.reportParameters.DrugsDispensed;
 import org.celllife.idart.gui.reportParameters.EpisodeStats;
 import org.celllife.idart.gui.reportParameters.EpisodesStartedOrEndedReportGUI;
 import org.celllife.idart.gui.reportParameters.FilaGeralReport;
+import org.celllife.idart.gui.reportParameters.IndicadoresMesnsais;
 import org.celllife.idart.gui.reportParameters.LivroEletronicoDispensaARV;
 import org.celllife.idart.gui.reportParameters.LostToFollowUp;
 import org.celllife.idart.gui.reportParameters.LostToFollowUpReturned;
@@ -537,6 +538,8 @@ private void createGrpClinicManagementReports() {
 				new PepfarReportGUI(getShell(), false));
 		reportGUIs.put(GenericReportGuiInterface.REPORT_CLINIC_INDICATORS,
 				new ClinicIndicators(getShell(), false));
+                reportGUIs.put(GenericReportGuiInterface.REPORT_INDICADORES_MENSAIS,
+				new IndicadoresMesnsais(getShell(), false));
 
 		Iterator<Map.Entry<String, GenericReportGui>> reportGUIsItr = reportGUIs
 				.entrySet().iterator();

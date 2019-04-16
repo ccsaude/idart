@@ -511,8 +511,8 @@ public class GeneralAdmin extends GenericAdminGui {
         btnGenerateTemplate.setText(Messages.getString("GeneralAdmin.button.generateTemplate.title")); //$NON-NLS-1$
         btnGenerateTemplate
                 .setToolTipText(Messages.getString("GeneralAdmin.button.generateTemplate.tooltip")); //$NON-NLS-1$
-        btnGenerateTemplate.setBounds(new org.eclipse.swt.graphics.Rectangle(35, 235,
-                235, 30));
+        btnGenerateTemplate.setBounds(new org.eclipse.swt.graphics.Rectangle(35, 28,
+                235, 27));
         btnGenerateTemplate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
         btnGenerateTemplate
                 .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -522,14 +522,14 @@ public class GeneralAdmin extends GenericAdminGui {
                         cmd_generateTemplate();
                     }
                 });
-
+        btnGenerateTemplate.setEnabled(true);
         //  
         Button btnImportPatients = new Button(grpImport, SWT.NONE);
         btnImportPatients.setText(Messages.getString("GeneralAdmin.button.importPatients.title")); //$NON-NLS-1$
         btnImportPatients
                 .setToolTipText(Messages.getString("GeneralAdmin.button.importPatients.tooltip")); //$NON-NLS-1$
         btnImportPatients.setBounds(new org.eclipse.swt.graphics.Rectangle(35,
-                35, 235, 30));
+                58, 235, 27));
         btnImportPatients.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
         btnImportPatients
                 .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -546,7 +546,7 @@ public class GeneralAdmin extends GenericAdminGui {
         btnImportPatientsOpenMRS
                 .setToolTipText(Messages.getString("GeneralAdmin.button.openmrs.importPatients.tooltip")); //$NON-NLS-1$
         btnImportPatientsOpenMRS.setBounds(new org.eclipse.swt.graphics.Rectangle(35,
-                70, 235, 30));
+                88, 235, 27));
         btnImportPatientsOpenMRS.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
         btnImportPatientsOpenMRS
                 .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -585,7 +585,7 @@ public class GeneralAdmin extends GenericAdminGui {
         btnOptimizeNids
                 .setToolTipText(Messages.getString("GeneralAdmin.button.optimizeNids.tooltip")); //$NON-NLS-1$
         btnOptimizeNids.setBounds(new org.eclipse.swt.graphics.Rectangle(35,
-                110, 235, 30));
+                118, 235, 27));
         btnOptimizeNids.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
         btnOptimizeNids
                 .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
