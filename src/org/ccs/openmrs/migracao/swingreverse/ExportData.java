@@ -258,6 +258,9 @@ public class ExportData {
                         }
                     }
                 }
+                
+                if(conceptName1Linha == null && conceptName2Linha == null && conceptName3Linha == null)
+                    obs.setValueCoded(conceptService.findById("5424"));
             }
             obs.setComments("Imported by IDART");
             obs.setDateCreated(encounter.getDateCreated());

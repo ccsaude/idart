@@ -16,6 +16,7 @@ import org.ccs.openmrs.migracao.connection.hibernateConection;
 import org.ccs.openmrs.migracao.entidades.PatientIdentifier;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.PatientIdentifierDaoInterface;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -88,23 +89,23 @@ public class PatientIdentifierDao
     public List<PatientIdentifier> findAllByNidLikeAndNameLikeAndSurnameLike(String nid, String name, String surname) {
         List<PatientIdentifier> patientIdentifiers = this.getCurrentSession().createQuery("from PatientIdentifier pa where pa.patientIdentifierId in (select p.patientIdentifierId "
                 + "from PatientIdentifier p,PersonName pn "
-                + "where p.identifier like '%" + nid+"' "
+                + "where p.identifier like '%" + nid + "' "
                 + // "AND pn.givenName like '%"+name+"%' "+
                 "AND LOWER(TRIM(pn.familyName)) like '%" + surname.trim().toLowerCase(Locale.ENGLISH) + "%' "
                 + "AND p.patientId = pn.personId)").list();
 
         return patientIdentifiers;
     }
-    
-    
-        public List<PatientIdentifier> findAllByNid(String nid) {
+
+    public List<PatientIdentifier> findAllByNid(String nid) {
         List<PatientIdentifier> patientIdentifiers = this.getCurrentSession().createQuery("from PatientIdentifier pa where pa.patientIdentifierId in (select p.patientIdentifierId "
                 + "from PatientIdentifier p,PersonName pn "
-                + "where p.identifier like '%" + nid+"')").list();
+                + "where p.identifier like '%" + nid + "')").list();
 
         return patientIdentifiers;
     }
-  /*
+
+    /*
     Modified by  Agnaldo 5/2017 
     // "AND pn.givenName like '%"+name+"%' "+
     Esta linha esta a causar problemas de concordancia de nomes entre                                                                          
@@ -117,12 +118,12 @@ public class PatientIdentifierDao
                 + "from PatientIdentifier p,PersonName pn "
                 + "where p.identifier = '" + nid.trim() + "' "
                 + //     "AND pn.givenName like '%"+name+"%' "+
-            "AND LOWER(TRIM(pn.familyName)) like '%" + surname.trim().toLowerCase(Locale.ENGLISH) + "%' "
+                "AND LOWER(TRIM(pn.familyName)) like '%" + surname.trim().toLowerCase(Locale.ENGLISH) + "%' "
                 + "AND p.patientId = pn.personId)").list();
         return patientIdentifiers;
     }
 
-     /*
+    /*
     Modified by  Colaco 20/2018 
     Vamos usar um identificador unico Uuid dos pacientes
     para evitar a busca do paciente pelo Nid e apelido
@@ -134,7 +135,7 @@ public class PatientIdentifierDao
                 + "AND pi.patientId = pe.personId)").list();
         return patientIdentifiers;
     }
-    
+
     @Override
     public List<PatientIdentifier> findByAllIdentifierLike(String id) {
         List<PatientIdentifier> patientIdentifiers = this.getCurrentSession().createQuery("from PatientIdentifier p where p.identifier like '%" + id + "%'").list();
@@ -145,17 +146,68 @@ public class PatientIdentifierDao
     public PatientIdentifier findByPatientId(String id) {
         PatientIdentifier patientIdentifier = null;
 
-        patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 2 AND preferred = 1").uniqueResult();
+        SQLQuery query = getCurrentSession().createSQLQuery("select * from patient_identifier p where p.preferred = 1 AND p.identifier_type = 2 AND p.patient_id = " + Integer.parseInt(id));
+        query.addEntity(PatientIdentifier.class);
+        List<PatientIdentifier> patientIdentifiers = query.list();
 
+        if (!patientIdentifiers.isEmpty()) {
+            patientIdentifier = patientIdentifiers.get(0);
+        }
+        //patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 2 AND preferred = 1 ").list().get(0);
+ 
         if (patientIdentifier == null) {
-            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 9 limit 1").uniqueResult();
+            query = getCurrentSession().createSQLQuery("select * from patient_identifier p where p.identifier_type = 2 AND p.patient_id = " + Integer.parseInt(id));
+            query.addEntity(PatientIdentifier.class);
+            patientIdentifiers = query.list();
+
+            if (!patientIdentifiers.isEmpty()) {
+                patientIdentifier = patientIdentifiers.get(0);
+            }
+        }
+        
+        if (patientIdentifier == null) {
+            query = getCurrentSession().createSQLQuery("select * from patient_identifier p where p.identifier_type = 9 AND p.patient_id = " + Integer.parseInt(id));
+            query.addEntity(PatientIdentifier.class);
+            patientIdentifiers = query.list();
+
+            if (!patientIdentifiers.isEmpty()) {
+                patientIdentifier = patientIdentifiers.get(0);
+            }
+            //patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 9 ").list().get(0);
         }
         if (patientIdentifier == null) {
-            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 6 limit 1").uniqueResult();
+            query = getCurrentSession().createSQLQuery("select * from patient_identifier p where p.identifier_type = 6 AND p.patient_id = " + Integer.parseInt(id));
+            query.addEntity(PatientIdentifier.class);
+            patientIdentifiers = query.list();
+
+            if (!patientIdentifiers.isEmpty()) {
+                patientIdentifier = patientIdentifiers.get(0);
+            }
+//            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 6 ").list().get(0);
         }
         if (patientIdentifier == null) {
-            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 11 limit 1").uniqueResult();
+            query = getCurrentSession().createSQLQuery("select * from patient_identifier p where p.identifier_type = 11 AND p.patient_id = " + Integer.parseInt(id));
+            query.addEntity(PatientIdentifier.class);
+            patientIdentifiers = query.list();
+
+            if (!patientIdentifiers.isEmpty()) {
+                patientIdentifier = patientIdentifiers.get(0);
+            }
+//            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 11 ").list().get(0);
         }
+        
+         if (patientIdentifier == null) {
+            query = getCurrentSession().createSQLQuery("select * from patient_identifier p where p.patient_id = " + Integer.parseInt(id));
+            query.addEntity(PatientIdentifier.class);
+            patientIdentifiers = query.list();
+
+            if (!patientIdentifiers.isEmpty()) {
+                patientIdentifier = patientIdentifiers.get(0);
+            }
+//            patientIdentifier = (PatientIdentifier) this.getCurrentSession().createQuery("from PatientIdentifier p where p.patientId = " + Integer.parseInt(id) + " AND p.identifierType = 11 ").list().get(0);
+        }
+        
+        
         return patientIdentifier;
     }
 

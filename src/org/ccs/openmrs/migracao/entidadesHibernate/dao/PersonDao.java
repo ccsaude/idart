@@ -20,7 +20,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class PersonDao
-implements PersonDaoInterface<Person, String> {
+        implements PersonDaoInterface<Person, String> {
+
     public Session currentSession;
     public Transaction currentTransaction;
 
@@ -62,24 +63,24 @@ implements PersonDaoInterface<Person, String> {
 
     @Override
     public void persist(Person entity) {
-        this.getCurrentSession().save((Object)entity);
+        this.getCurrentSession().save((Object) entity);
     }
 
     @Override
     public void update(Person entity) {
-        this.getCurrentSession().update((Object)entity);
+        this.getCurrentSession().update((Object) entity);
     }
 
     @Override
     public Person findById(String id) {
-        Person person = (Person)this.getCurrentSession().get((Class)Person.class, (Serializable)Integer.parseInt(id));
-      //  Person person = (Person)this.getCurrentSession().createQuery("from Person p where p.personId = " + Integer.parseInt(id) ).uniqueResult();
+        Person person = (Person) this.getCurrentSession().get((Class) Person.class, (Serializable) Integer.parseInt(id));
+        //  Person person = (Person)this.getCurrentSession().createQuery("from Person p where p.personId = " + Integer.parseInt(id) ).uniqueResult();
         return person;
     }
 
     @Override
     public void delete(Person entity) {
-        this.getCurrentSession().delete((Object)entity);
+        this.getCurrentSession().delete((Object) entity);
     }
 
     @Override
@@ -95,14 +96,19 @@ implements PersonDaoInterface<Person, String> {
             this.delete(entity);
         }
     }
-    
+
     public String findByCellphone(int identifier) {
-    String phonenumber = "";      
-       SQLQuery query = this.getCurrentSession().createSQLQuery("select pat.value from person_attribute pat "
-                                                             + " where person_attribute_type_id = 9 and pat.person_id = "+identifier);                                                          
-               phonenumber = query.list().get(0).toString(); 
-               
+        String phonenumber = "";
+        List phonenumbers = null;
+        SQLQuery query = this.getCurrentSession().createSQLQuery("select pat.value from person_attribute pat "
+                + " where person_attribute_type_id = 9 and pat.person_id = " + identifier);
+
+        phonenumbers = query.list();
+
+        if (phonenumbers.size() != 0) {
+            phonenumber = phonenumbers.get(0).toString();
+        }
+
         return phonenumber;
     }
 }
-

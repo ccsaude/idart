@@ -15,6 +15,7 @@ import org.ccs.openmrs.migracao.connection.hibernateConection;
 import org.ccs.openmrs.migracao.entidades.PersonName;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.PersonNameDaoInterface;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -77,10 +78,20 @@ implements PersonNameDaoInterface<PersonName, String> {
 
     @Override
     public PersonName findByPersonId(String id) {
-        PersonName personName = (PersonName)this.getCurrentSession().createQuery("from PersonName p where p.preferred = 1 AND p.personId = " + Integer.parseInt(id)).uniqueResult();
-        if (personName == null) {
-            personName = (PersonName)this.getCurrentSession().createQuery("from PersonName p where p.personId = " + Integer.parseInt(id)).list().get(0);
-        }
+        PersonName personName = null;     
+        
+        if(id.contains("="))
+        id = id.substring(29).replace(']', ' ').trim();
+          
+        SQLQuery query = getCurrentSession().createSQLQuery("select * from person_name p where p.preferred = 1 AND p.person_id = " + Integer.parseInt(id));
+        query.addEntity(PersonName.class);
+        List<PersonName> personNameList = query.list();
+
+        if (personNameList == null) {
+            personName = (PersonName) this.getCurrentSession().createQuery("from PersonName p where p.personId = " + Integer.parseInt(id)).list().get(0);
+        }else
+            personName = personNameList.get(0);
+        
         return personName;
     }
 

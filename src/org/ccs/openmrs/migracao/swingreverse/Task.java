@@ -111,6 +111,7 @@ class Task
 
             int current = 0;
             int lengthOfTask = patientProgramlist.size();
+            String personId = null;
             System.err.println("PROCESSANDO ....");
             while (current <= lengthOfTask && !this.isCancelled()) {
                 try {
@@ -126,10 +127,11 @@ class Task
 
                             ++current;
                             String dataTarv = null;
+                            personId = patientProgram.getPatientId().getPatientId().toString();
                             // if (patientImportService.findByPatientId(patientProgram.getPatientId().getPatientId().toString()) != null && (patientImportService.findByPatientId(patientProgram.getPatientId().getPatientId().toString()) == null))
                             //     continue;
                             this.setProgress(100 * current / lengthOfTask);
-                            PersonName personName = personNameService.findByPersonId(patientProgram.getPatientId().getPatientId().toString());
+                            PersonName personName = personNameService.findByPersonId(personId);
                             PersonAddress personAddress = personAddressService.findByPersonId(patientProgram.getPatientId().getPatientId().toString());
                             PatientIdentifier patientIdentifier = patientIdentifierService.findByPatientId(patientProgram.getPatientId().getPatientId().toString());
                             Person person = personService.findById(patientProgram.getPatientId().getPatientId().toString());
