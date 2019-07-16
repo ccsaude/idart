@@ -30,7 +30,7 @@
 	</style>
 	<parameter name="path" class="java.lang.String">
 		<parameterDescription><![CDATA[Path for the report files]]></parameterDescription>
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\colaco\\Documents\\Projectos CCS\\Sub\\idart\\idart\\Reports"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="date" class="java.util.Date">
 		<parameterDescription><![CDATA[Date for Report]]></parameterDescription>

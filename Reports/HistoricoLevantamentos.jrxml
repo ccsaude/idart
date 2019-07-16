@@ -60,8 +60,8 @@
 	<parameter name="manter" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="altera" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	<parameter name="alterar" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Alterar"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select distinct CASE
@@ -84,8 +84,26 @@ pr.dispensatrimestral,
 SUM(packdrug.amount)::text AS dispensedqty,
 pack.pickupdate as dispensedate,
 pack.weekssupply,
-to_date(pdit.dateexpectedstring, 'DD-Mon-YYYY'):: text as dateexpectedstring
-from Patient as p inner join clinic c on c.id = p.clinic
+to_date(
+CASE
+WHEN pdit.dateexpectedstring LIKE '%Jan%' THEN REPLACE(pdit.dateexpectedstring,'Jan','Jan')
+WHEN pdit.dateexpectedstring LIKE '%Fev%' THEN REPLACE(pdit.dateexpectedstring,'Fev','Feb')
+WHEN pdit.dateexpectedstring LIKE '%Mar%' THEN REPLACE(pdit.dateexpectedstring,'Mar','Mar')
+WHEN pdit.dateexpectedstring LIKE '%Abr%' THEN REPLACE(pdit.dateexpectedstring,'Abr','Apr')
+WHEN pdit.dateexpectedstring LIKE '%Mai%' THEN REPLACE(pdit.dateexpectedstring,'Mai','May')
+WHEN pdit.dateexpectedstring LIKE '%Jun%' THEN REPLACE(pdit.dateexpectedstring,'Jun','Jun')
+WHEN pdit.dateexpectedstring LIKE '%Jul%' THEN REPLACE(pdit.dateexpectedstring,'Jul','Jul')
+WHEN pdit.dateexpectedstring LIKE '%Ago%' THEN REPLACE(pdit.dateexpectedstring,'Ago','Aug')
+WHEN pdit.dateexpectedstring LIKE '%Set%' THEN REPLACE(pdit.dateexpectedstring,'Set','Sep')
+WHEN pdit.dateexpectedstring LIKE '%Out%' THEN REPLACE(pdit.dateexpectedstring,'Out','Oct')
+WHEN pdit.dateexpectedstring LIKE '%Nov%' THEN REPLACE(pdit.dateexpectedstring,'Nov','Nov')
+WHEN pdit.dateexpectedstring LIKE '%Dez%' THEN REPLACE(pdit.dateexpectedstring,'Dez','Dec')
+ELSE
+pdit.dateexpectedstring
+END
+, 'DD-Mon-YYYY'):: text as dateexpectedstring
+from Patient as p
+inner join clinic c on c.id = p.clinic
 inner join prescription pr on pr.patient = p.id
 inner join package pack on pack.prescription = pr.id
 inner join packageddrugs packdrug on packdrug.parentPackage = pack.id
@@ -95,7 +113,8 @@ inner join packagedruginfotmp pdit on pdit.packageddrug = packdrug.id
 where pack.pickupdate >= $P{date}
 AND pack.pickupdate < ($P{dateEnd}::date + INTERVAL '1 day')
 AND pdit.dispensedate = pack.pickupdate
-AND (pr.reasonforupdate = $P{inicia} OR  pr.reasonforupdate = $P{manter}  OR pr.reasonforupdate = $P{altera})
+AND packdrug.amount >=0
+AND (pr.reasonforupdate = $P{inicia} OR  pr.reasonforupdate = $P{manter}  OR pr.reasonforupdate = $P{alterar})
 group by 1,2,3,4,5,6,7,8,10,11,12
 order by pack.pickupdate asc]]>
 	</queryString>
@@ -645,7 +664,7 @@ order by pack.pickupdate asc]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{dispensedate})]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format($F{dispensedate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="611" y="2" width="58" height="20"/>
