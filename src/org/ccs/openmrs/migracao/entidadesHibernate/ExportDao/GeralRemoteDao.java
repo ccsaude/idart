@@ -85,7 +85,7 @@ public class GeralRemoteDao implements GlobalPropertyDaoInterface<String, String
                             "		from 	patient p  " +
                             "				inner join encounter e on e.patient_id=p.patient_id " +
                             "		where 	p.voided=0 and e.voided=0 and e.encounter_type=18 and  " +
-                            "				e.location_id="+locationId+" and e.encounter_datetime<='" +format1.format(calFinal.getTime())+"'"+
+                            "		e.encounter_datetime<='" +format1.format(calFinal.getTime())+"'"+
                             "		group by p.patient_id " +
                             "	) max_frida  " +
                             "	inner join obs o on o.person_id=max_frida.patient_id " +
@@ -102,7 +102,7 @@ public class GeralRemoteDao implements GlobalPropertyDaoInterface<String, String
                             "		where pid1.patient_id=pid2.patient_id and pid1.patient_identifier_id=pid2.id " +
                             "	) pid on pid.patient_id=max_frida.patient_id " +
                             "where max_frida.encounter_datetime=o.obs_datetime  " +
-                            "and o.voided=0 and o.concept_id=5096 and o.location_id="+locationId+" and  " +
+                            "and o.voided=0 and o.concept_id=5096 and " +
                             "max_frida.patient_id not in  " +
                             "( " +
                             "	select 	pg.patient_id " +
@@ -111,7 +111,7 @@ public class GeralRemoteDao implements GlobalPropertyDaoInterface<String, String
                             "			inner join patient_state ps on pg.patient_program_id=ps.patient_program_id " +
                             "	where 	pg.voided=0 and ps.voided=0 and p.voided=0 and  " +
                             "			pg.program_id=2 and ps.state in (7,8,10) and ps.end_date is null and  " +
-                            "			ps.start_date<='"+format1.format(calFinal.getTime())+"' and location_id="+locationId+") " +
+                            "			ps.start_date<='"+format1.format(calFinal.getTime())+"') " +
                             "and datediff('"+format1.format(calFinal.getTime())+"',o.value_datetime)>60 " +
                             ") abandonos " +
                             "group by 1";
@@ -119,6 +119,7 @@ public class GeralRemoteDao implements GlobalPropertyDaoInterface<String, String
         SQLQuery sqlquery = getCurrentSession().createSQLQuery(queryOpenmrs);
     //    query.addEntity(List.class);
         List lostfollowupList = sqlquery.list();
+        
         System.out.println(lostfollowupList);
         return lostfollowupList;
     }

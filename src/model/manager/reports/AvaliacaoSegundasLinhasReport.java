@@ -1,5 +1,6 @@
 package model.manager.reports;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import model.manager.AdministrationManager;
@@ -35,45 +36,46 @@ public class AvaliacaoSegundasLinhasReport extends AbstractJasperReport {
 	@Override
 	protected Map<String, Object> getParameterMap() throws ReportException {
 		int MonthInt = 0;
-		if (month.equals("Janeiro")) {
+		if (month.startsWith("Jan")) {
 			MonthInt = 1;
-		} else if (month.equals("Fevereiro")) {
+		} else if (month.startsWith("Fe")) {
 			MonthInt = 2;
-		} else if (month.equals("Março")) {
+		} else if (month.startsWith("Mar")) {
 			MonthInt = 3;
-		} else if (month.equals("Abril")) {
+		} else if (month.startsWith("Ab") || month.startsWith("Ap")) {
 			MonthInt = 4;
-		} else if (month.equals("Maio")) {
+		} else if (month.startsWith("Mai") || month.startsWith("May")) {
 			MonthInt = 5;
-		} else if (month.equals("Junho")) {
+		} else if (month.startsWith("Jun")) {
 			MonthInt = 6;
-		} else if (month.equals("Julho")) {
+		} else if (month.startsWith("Jul")) {
 			MonthInt = 7;
-		} else if (month.equals("Agosto")) {
+		} else if (month.startsWith("Ag") || month.startsWith("Au")) {
 			MonthInt = 8;
-		} else if (month.equals("Setembro")) {
+		} else if (month.startsWith("Se")) {
 			MonthInt = 9;
-		} else if (month.equals("Outubro")) {
+		} else if (month.startsWith("O")) {
 			MonthInt = 10;
-		} else if (month.equals("Novembro")) {
+		} else if (month.startsWith("Nov")) {
 			MonthInt = 11;
-		} else if (month.equals("Dezembro")) {
+		} else if (month.startsWith("De")) {
 			MonthInt = 12;
 		}
 		String startDayStr;
 		if (MonthInt > 9) {
-			startDayStr = year + "-" + MonthInt + "-20 00:00:00";
+			startDayStr = year + "-" + MonthInt + "-20";
 		} else {
-			startDayStr = year + "-0" + MonthInt + "-20 00:00:00";
+			startDayStr = year + "-0" + MonthInt + "-20";
 		}
-
-		java.sql.Timestamp theDate = java.sql.Timestamp.valueOf(startDayStr);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		java.sql.Date theDate = java.sql.Date.valueOf(startDayStr);
+                
                 Clinic c = AdministrationManager.getClinic(hSession, clinicName);
 		// Set the parameters for the report
 		Map<String, Object> map = new HashMap<String, Object>();
                 map.put("path", getReportPath());
 		map.put("clinic", clinicName);
-		map.put("clinicid", c.getId());
+//		map.put("clinicid", c.getId());
 		map.put("stockCenterId", stockCenter.getId());
 		map.put("stockCenterName", stockCenter.getStockCenterName());
 		map.put("date", theDate);

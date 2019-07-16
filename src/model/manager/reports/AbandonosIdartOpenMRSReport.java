@@ -55,7 +55,7 @@ public class AbandonosIdartOpenMRSReport extends AbstractJasperReport {
                 Location location = locationService.findById(globalProperty.getPropertyValue());
         
                 List listaAbandonos = geralRemoteService.findAllAbandonos(startDate, endDate,location.getLocationId());
-            //    System.out.println(listaAbandonos.toString().replace('[', '{').replace(']', '}'));
+                System.out.println(listaAbandonos.toString().trim().replace('[','{').replace(']','}'));
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map.put("path", getReportPath());
@@ -64,7 +64,7 @@ public class AbandonosIdartOpenMRSReport extends AbstractJasperReport {
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
 		map.put("showPatientNames", true);
-                map.put("openmrsAbandonos", listaAbandonos.toString().replace('[', '{').replace(']', '}'));
+                map.put("openmrsAbandonos", listaAbandonos.toString().trim().replace('[','{').replace(']','}'));
 		map.put("facilityName", LocalObjects.pharmacy.getPharmacyName());
 		map.put("pharmacist", LocalObjects.pharmacy.getPharmacist());
 		map.put("pharmacist2", LocalObjects.pharmacy.getAssistantPharmacist());

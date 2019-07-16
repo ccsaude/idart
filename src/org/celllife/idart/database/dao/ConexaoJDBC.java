@@ -3645,87 +3645,96 @@ public boolean jaTemFilaInicio(String nid)
 {
 boolean jatemFilaInicio=false;
 
-	String query= " SELECT DISTINCT dispensas_e_prescricoes.nid  "
-			+ " FROM  "
-			+ "   " 
-+" (SELECT "
-			+ "	 dispensa_packege.nid "
-
-+ " FROM "
-+ " (  "
-+ "   SELECT  "
-
- 	 + " 	prescription.id, "
- + " package.packageid ,prescription.reasonforupdate as tipotarv "
-
-	+ " 	 FROM  "
-		 + " "
- + " 	 prescription,  "
- 	+ " 	 	package "
-
- + " 	 WHERE   "
-
- + " 	 prescription.id = package.prescription  "
- 			+ " "
- + " 	 AND  "
- + " 	 prescription.ppe=\'F\' "
-  
-+ " 	 AND   "
-
- + " 	 prescription.reasonforupdate IN ('Inicia')"
- + "  )as prescription_package,  "
-
- 	+ "  (  "
- 	+ " 			 SELECT  "
- 				+ " "
-
- 	 + " packagedruginfotmp.patientid as nid,  "
- 	+ " packagedruginfotmp.packageid,"
- 	 + " packagedruginfotmp.dispensedate as datalevantamento "
- 	  
- 	 + " FROM "
- 	 	+ "  package, packagedruginfotmp  "
-
-  	+ "  WHERE  "
-
-		+ "  package.packageid=packagedruginfotmp.packageid  "
-		+ " ) as dispensa_packege,"
-     + "  ( "
-    		  + "  select packagedruginfotmp.patientid,  "
- 	 
-      + "  max(packagedruginfotmp.dispensedate) as lastdispense "
- 
-	 
- 	 + "  FROM "
- 	+ "  package, packagedruginfotmp " 
-
- 	+ "  WHERE  "
-
-  	+ "  package.packageid=packagedruginfotmp.packageid " 
-
-  
-				 + " group by packagedruginfotmp.patientid "
-
-  + "  ) as ultimadatahora  "
-
-      + " WHERE  "
- 	+ " dispensa_packege.packageid=prescription_package.packageid  "
- 	 
- 			+ "  and "
- 	+ "  dispensa_packege.datalevantamento=ultimadatahora.lastdispense "
-   + "   ) as dispensas_e_prescricoes ,"
-    
-   + "      patient "
-        
-       + "  where "
-   
-   + " dispensas_e_prescricoes.nid=patient.patientid AND dispensas_e_prescricoes.nid=\'"+nid+"\'";
+//	String query= " SELECT DISTINCT dispensas_e_prescricoes.nid  "
+//			+ " FROM  "
+//			+ "   " 
+//+" (SELECT "
+//			+ "	 dispensa_packege.nid "
+//
+//+ " FROM "
+//+ " (  "
+//+ "   SELECT  "
+//
+// 	 + " 	prescription.id, "
+// + " package.packageid ,prescription.reasonforupdate as tipotarv "
+//
+//	+ " 	 FROM  "
+//		 + " "
+// + " 	 prescription,  "
+// 	+ " 	 	package "
+//
+// + " 	 WHERE   "
+//
+// + " 	 prescription.id = package.prescription  "
+// 			+ " "
+// + " 	 AND  "
+// + " 	 prescription.ppe=\'F\' "
+//  
+//+ " 	 AND   "
+//
+// + " 	 prescription.reasonforupdate IN ('Inicia')"
+// + "  )as prescription_package,  "
+//
+// 	+ "  (  "
+// 	+ " 			 SELECT  "
+// 				+ " "
+//
+// 	 + " packagedruginfotmp.patientid as nid,  "
+// 	+ " packagedruginfotmp.packageid,"
+// 	 + " packagedruginfotmp.dispensedate as datalevantamento "
+// 	  
+// 	 + " FROM "
+// 	 	+ "  package, packagedruginfotmp  "
+//
+//  	+ "  WHERE  "
+//
+//		+ "  package.packageid=packagedruginfotmp.packageid  "
+//		+ " ) as dispensa_packege,"
+//     + "  ( "
+//    		  + "  select packagedruginfotmp.patientid,  "
+// 	 
+//      + "  max(packagedruginfotmp.dispensedate) as lastdispense "
+// 
+//	 
+// 	 + "  FROM "
+// 	+ "  package, packagedruginfotmp " 
+//
+// 	+ "  WHERE  "
+//
+//  	+ "  package.packageid=packagedruginfotmp.packageid " 
+//
+//  
+//				 + " group by packagedruginfotmp.patientid "
+//
+//  + "  ) as ultimadatahora  "
+//
+//      + " WHERE  "
+// 	+ " dispensa_packege.packageid=prescription_package.packageid  "
+// 	 
+// 			+ "  and "
+// 	+ "  dispensa_packege.datalevantamento=ultimadatahora.lastdispense "
+//   + "   ) as dispensas_e_prescricoes ,"
+//    
+//   + "      patient "
+//        
+//       + "  where "
+//   
+//   + " dispensas_e_prescricoes.nid=patient.patientid AND dispensas_e_prescricoes.nid=\'"+nid+"\'";
 	
-	
-	
-	
-	
-	
+String query = " SELECT  "
+             + " prescription.id, "
+             + " package.packageid ,"
+             + " prescription.reasonforupdate as tipotarv, "
+             + " patient.patientid "
+             + " FROM  "
+             + " prescription  "
+             + " inner join package on prescription.id = package.prescription "
+             + " inner join patient on patient.id = prescription.patient"
+             + " WHERE   "
+             + " prescription.ppe=\'F\' "
+             + " AND   "
+             + " prescription.reasonforupdate IN ('Inicia') "
+             + " AND patient.patientid = \'"+nid+"\'";
 	 try {
 		conecta(iDartProperties.hibernateUsername, iDartProperties.hibernatePassword);
 	} catch (ClassNotFoundException e) {
@@ -3736,32 +3745,20 @@ boolean jatemFilaInicio=false;
 		e.printStackTrace();
 	}
 	 
-
- 
-			 try {
-				 ResultSet rs=st.executeQuery(query);
-					
-				 
-				 
-				 
-				 while (rs.next()){
-						
-					
-						if(rs.getString("nid").equals(nid)) 
-							{
-							jatemFilaInicio=true;
-							
-							break;
-							
-							}
-						
-						System.out.println("/*/*//*///*/*//*/*/    "+rs.getString("nid"));
-					}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				
+            try {
+                    ResultSet rs=st.executeQuery(query); 
+                    while (rs.next()){				
+                           if(rs.getString("patientid").equals(nid)) 
+                               {
+                                   jatemFilaInicio=true;
+                                   break;
+                               }
+                           System.out.println("/*/*//*///*/*//*/*/"+rs.getString("nid"));
+                   }
+           } catch (SQLException e) {
+                   // TODO Auto-generated catch block
+                   e.printStackTrace();
+           }	
 	return jatemFilaInicio;
 	
 }

@@ -2862,10 +2862,11 @@ public class NewPatientPackaging extends GenericFormGui implements
             tx = getHSession().beginTransaction();
             Calendar theCal = Calendar.getInstance();
             theCal.setTime(allPackagedDrugsList.get(0).getDispenseDate());
-            theCal.add(Calendar.DATE, (4 * i * 7) + (i * 2));
+          //  theCal.add(Calendar.DATE, (4 * i * 7) + (i * 2));
+            theCal.add(Calendar.DATE, i * 30);
 
             Prescription prescription = getPrescritionQty0(localPatient.getCurrentPrescription(), i, numMeses);
-//fazer find prescricao
+            //fazer find prescricao
             java.util.List<PackageDrugInfo> allPackagedDrugsListTemp = new ArrayList<PackageDrugInfo>();
 
             for (int a = 0; a < allPackagedDrugsList.size(); a++) {

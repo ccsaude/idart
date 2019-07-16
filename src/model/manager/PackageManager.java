@@ -906,8 +906,8 @@ public class PackageManager {
 		Prescription pre = packageToSave.getPrescription();
 
 		if (pre != null) {
-			packageToSave.setPrescription(pre);
-			pre.getPackages().add(packageToSave);
+                    packageToSave.setPrescription(pre);
+                    pre.getPackages().add(packageToSave);
 		}
 
 		sess.save(packageToSave);

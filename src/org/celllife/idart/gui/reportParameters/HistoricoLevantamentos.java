@@ -156,7 +156,7 @@ public class HistoricoLevantamentos extends GenericReportGui {
 
 		else {
 			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Date theStartDate = calendarStart.getCalendar().getTime(); 
 				Date theEndDate=  calendarEnd.getCalendar().getTime(); 
 				HHistoricoLevantamentos report = new HHistoricoLevantamentos(
