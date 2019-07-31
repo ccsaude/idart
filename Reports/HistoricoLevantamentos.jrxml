@@ -72,6 +72,7 @@
     WHEN pr.ccr = 'T' THEN ' SMI - ' ||p.patientId
     WHEN pr.saaj = 'T' THEN ' SAAJ - ' ||p.patientId
     WHEN pr.tb = 'T' THEN ' TB - ' ||p.patientId
+    WHEN pr.dispensatrimestral = 1 THEN ' DT - ' ||p.patientId
     ELSE p.patientId
   END as nid,
 p.firstnames ||' '||p.lastname as nome,
@@ -112,7 +113,6 @@ inner join linhat lt on lt.linhaid = pr.linhaid
 inner join packagedruginfotmp pdit on pdit.packageddrug = packdrug.id
 where pack.pickupdate >= $P{date}
 AND pack.pickupdate < ($P{dateEnd}::date + INTERVAL '1 day')
-AND pdit.dispensedate = pack.pickupdate
 AND packdrug.amount >=0
 AND (pr.reasonforupdate = $P{inicia} OR  pr.reasonforupdate = $P{manter}  OR pr.reasonforupdate = $P{alterar})
 group by 1,2,3,4,5,6,7,8,10,11,12
