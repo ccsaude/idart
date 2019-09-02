@@ -64,7 +64,7 @@ public class Task4 extends SwingWorker<String, Void> {
         try {
 
             PasswordProtectedZip pzip = new PasswordProtectedZip();
-            JFileChooser jfc = new JFileChooser(System.getProperty("user.home") + File.separator + "Dropbox" + File.separator + "FARMAC" + File.separator, FileSystemView.getFileSystemView());
+            JFileChooser jfc = new JFileChooser(System.getProperty("user.home") + File.separator + "Dropbox" + File.separator + "FARMAC" + File.separator+ "REFERENCIAS" + File.separator, FileSystemView.getFileSystemView());
             jfc.setDialogTitle("Seleccione o ficheiro: ");
             jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             jfc.setAcceptAllFileFilterUsed(true);

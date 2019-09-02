@@ -33,52 +33,6 @@ public class Task3 extends SwingWorker<String, Void> {
     Task3() {
     }
 
-    public String convertIntegerToMonth(int month) {
-
-        String srtMonth = "";
-        switch (month) {
-            case 1:
-                srtMonth = "Jan";
-                break;
-            case 2:
-                srtMonth = "Feb";
-                break;
-            case 3:
-                srtMonth = "Mar";
-                break;
-            case 4:
-                srtMonth = "Apr";
-                break;
-            case 5:
-                srtMonth = "May";
-                break;
-            case 6:
-                srtMonth = "Jun";
-                break;
-            case 7:
-                srtMonth = "jul";
-                break;
-            case 8:
-                srtMonth = "Aug";
-                break;
-            case 9:
-                srtMonth = "Sep";
-                break;
-            case 10:
-                srtMonth = "Oct";
-                break;
-            case 11:
-                srtMonth = "Nov";
-                break;
-            case 12:
-                srtMonth = "Dec";
-                break;
-            default:
-                break;
-        }
-        return srtMonth;
-    }
-
     @Override
     public String doInBackground() {
         System.err.println("AGUARDE UM MOMENTO ....");
@@ -90,7 +44,7 @@ public class Task3 extends SwingWorker<String, Void> {
             JBackupController backup = new JBackupController();
             // to backup
             PasswordProtectedZip pzip = new PasswordProtectedZip();
-            File backupFilePath = new File(System.getProperty("user.home") + File.separator + "Dropbox" + File.separator + "FARMAC" + File.separator + "backup_" + sdf.format(new Date()) + "_" + unidadeSanitaria);
+            File backupFilePath = new File(System.getProperty("user.home") + File.separator + "Dropbox" + File.separator + "FARMAC" + File.separator + "REFERENCIAS"+ File.separator + "backup_" + sdf.format(new Date()) + "_" + unidadeSanitaria);
 
             System.err.println("PROCESSANDO ....");
 
