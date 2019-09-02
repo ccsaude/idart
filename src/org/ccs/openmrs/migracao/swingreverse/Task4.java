@@ -29,12 +29,15 @@ import org.ccs.openmrs.migracao.connection.hibernateConection;
 
 import org.ccs.openmrs.migracao.entidadesHibernate.importPatient.PatientImportService;
 import org.celllife.idart.commonobjects.iDartProperties;
+import org.celllife.idart.database.dao.ConexaoJDBC;
 import org.celllife.idart.database.hibernate.AttributeType;
 import org.celllife.idart.database.hibernate.Clinic;
 import org.celllife.idart.database.hibernate.IdentifierType;
 import org.celllife.idart.database.hibernate.Patient;
 import org.celllife.idart.database.hibernate.SyncTempPatient;
 import org.celllife.idart.database.hibernate.util.HibernateUtil;
+import org.celllife.idart.gui.platform.GenericGui;
+import org.celllife.idart.gui.platform.GenericReportGui;
 import org.hibernate.Session;
 
 /**
@@ -44,7 +47,8 @@ import org.hibernate.Session;
 public class Task4 extends SwingWorker<String, Void> {
 
     private final Random rnd = new Random();
-
+      GenericGui conn;
+      
     Task4() {
     }
 

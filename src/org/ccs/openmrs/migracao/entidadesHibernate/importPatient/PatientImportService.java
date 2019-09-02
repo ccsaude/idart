@@ -8,11 +8,9 @@ package org.ccs.openmrs.migracao.entidadesHibernate.importPatient;
 
 import java.util.List;
 import org.ccs.openmrs.migracao.entidadesHibernate.ImportDao.PatientImportDao;
-import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
 import org.celllife.idart.database.hibernate.Patient;
 import org.celllife.idart.database.hibernate.SyncTempDispense;
 import org.celllife.idart.database.hibernate.SyncTempPatient;
-import org.hibernate.Session;
 
 public class PatientImportService {
 

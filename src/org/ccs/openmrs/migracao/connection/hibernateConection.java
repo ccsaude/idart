@@ -35,7 +35,6 @@ public class hibernateConection {
 
     static {
         threadLocal = new ThreadLocal();
-        threadRemote = new ThreadLocal();
         try {
             sessionFactoryLocal = new AnnotationConfiguration().configure("org/ccs/openmrs/migracao/connection/hibernate.cfg.xml").buildSessionFactory();
         }
@@ -43,6 +42,11 @@ public class hibernateConection {
             System.err.println("Failed to create sessionFactory object." + e);
             throw new ExceptionInInitializerError(e);
         }
+       
+    }
+    
+     static {
+        threadRemote = new ThreadLocal();
         try {
             sessionFactoryRemote = new AnnotationConfiguration().configure("org/ccs/openmrs/migracao/connection/hibernateRemote.cfg.xml").buildSessionFactory();
         }
