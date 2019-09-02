@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.celllife.idart.misc.iDARTUtil;
 
 /**
@@ -18,6 +19,7 @@ import org.celllife.idart.misc.iDARTUtil;
  * @author colaco
  */
 @Entity
+@XmlRootElement
 @Table(name = "sync_temp_patients")
 public class SyncTempPatient {
 
