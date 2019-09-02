@@ -37,6 +37,7 @@ import org.celllife.idart.gui.reportParameters.ARVDrugUsage;
 import org.celllife.idart.gui.reportParameters.AbandonosIdartOpenMRS;
 import org.celllife.idart.gui.reportParameters.AvaliacaoSegundasLinhas;
 import org.celllife.idart.gui.reportParameters.ClinicIndicators;
+import org.celllife.idart.gui.reportParameters.CohortDispensaTrimestral;
 import org.celllife.idart.gui.reportParameters.CohortDrugCollections;
 import org.celllife.idart.gui.reportParameters.CotrimoxazolReport;
 import org.celllife.idart.gui.reportParameters.HistoricoLevantamentos;
@@ -68,6 +69,7 @@ import org.celllife.idart.gui.reportParameters.PatientsExpected;
 import org.celllife.idart.gui.reportParameters.PepfarReportGUI;
 import org.celllife.idart.gui.reportParameters.PrescribingDoctors;
 import org.celllife.idart.gui.reportParameters.MmiaReport;
+import org.celllife.idart.gui.reportParameters.PacientesSemDT;
 import org.celllife.idart.gui.reportParameters.RegimeTerapeuticoReport;
 import org.celllife.idart.gui.reportParameters.RegisteredIdart;
 import org.celllife.idart.gui.reportParameters.SecondLineReport;
@@ -450,6 +452,10 @@ private void createGrpClinicManagementReports() {
 				new SecondLineReport(getShell(), false));
                  reportGUIs.put(GenericReportGuiInterface.REPORT_SEGUNDA_LINHA_AVALIACAO,
 				new AvaliacaoSegundasLinhas(getShell(), false));
+                  reportGUIs.put(GenericReportGuiInterface.REPORT_LISTA_PACIENTES_SEMDT,
+				new PacientesSemDT(getShell(), false));
+                  reportGUIs.put(GenericReportGuiInterface.REPORT_COHORT_DISPENSA_TRIMESTRAL,
+				new CohortDispensaTrimestral(getShell(), false));
 
 		// Patient Reports
 		reportGUIs.put(GenericReportGuiInterface.REPORT_PATIENT_HISTORY,

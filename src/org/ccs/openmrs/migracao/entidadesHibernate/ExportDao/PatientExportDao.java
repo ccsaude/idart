@@ -14,6 +14,10 @@ import org.ccs.openmrs.migracao.connection.hibernateConection;
 import org.ccs.openmrs.migracao.entidades.Patient;
 import org.ccs.openmrs.migracao.entidades.PatientIdentifier;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.PatientDaoInterface;
+import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
+import org.celllife.idart.database.hibernate.SyncTempDispense;
+import org.celllife.idart.database.hibernate.SyncTempPatient;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -91,7 +95,7 @@ implements PatientDaoInterface<Patient, String> {
         Patient patient = (Patient)this.getCurrentSession().get((Class)Patient.class, (Serializable)((Object)Integer.parseInt(id)));
         return patient;
     }
-
+    
     @Override
     public void delete(Patient entity) {
         this.getCurrentSession().delete((Object)entity);
@@ -102,13 +106,23 @@ implements PatientDaoInterface<Patient, String> {
         List patients = this.getCurrentSession().createQuery("from Patient").list();
         return patients;
     }
-
+    
     @Override
     public void deleteAll() {
         List<Patient> entityList = this.findAll();
         for (Patient entity : entityList) {
             this.delete(entity);
         }
+    }
+
+    @Override
+    public List<SyncTempPatient> findAllImport() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<SyncTempDispense> findAllExported() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

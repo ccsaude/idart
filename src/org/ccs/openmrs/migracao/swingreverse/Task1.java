@@ -68,13 +68,14 @@ class Task1
 
     Task1() {
 
-        logFileLocations.add("C:\\iDART_V2017");
-        logFileLocations.add("C:\\Program Files\\idart");
-        logFileLocations.add("C:\\Program Files (x86)\\idart");
-        logFileLocations.add("C:\\idart");
-        logFileLocations.add("C:\\Idart");
-        logFileLocations.add("C:\\IDART");
-
+//        Alterado para carregar o directorio do Projecto para qualquer Sistema Operacional
+//        logFileLocations.add("C:\\iDART_V2017");
+//        logFileLocations.add("C:\\Program Files\\idart");
+//        logFileLocations.add("C:\\Program Files (x86)\\idart");
+//        logFileLocations.add("C:\\idart");
+//        logFileLocations.add("C:\\Idart");
+        logFileLocations.add(System.getProperty("user.dir"));
+        System.out.println(System.getProperty("user.dir"));
     }
 
     @Override

@@ -25,6 +25,7 @@ import model.manager.excel.reports.in.PatientSheet;
 
 import org.apache.log4j.Logger;
 import org.ccs.openmrs.migracao.swingreverse.MainPanel;
+import org.ccs.openmrs.migracao.swingreverse.RestorePatientFarmac;
 import org.ccs.openmrs.migracao.swingreverse.UnirNids;
 import org.celllife.idart.commonobjects.LocalObjects;
 import org.celllife.idart.commonobjects.iDartProperties;
@@ -69,6 +70,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.hibernate.Session;
 import org.celllife.idart.gui.gaac.addGaac;
+
 /**
  */
 public class GeneralAdmin extends GenericAdminGui {
@@ -109,22 +111,22 @@ public class GeneralAdmin extends GenericAdminGui {
         // create the 4 groups
         createGrpPharmacy();
         createGrpImport();
-        //createGrpClinic();
+        createGrpClinic();
         createGrpDrug();
         createGrpDoctor();
         createGrpDrugGroup();
-        createGrpGaac();
+        //createGrpGaac();
     }
 
     @Override
     protected void setLogger() {
         setLog(Logger.getLogger(this.getClass()));
     }
-    
-       /**
+
+    /**
      * This method initializes grpGaac
      */
-     private void createGrpGaac() {
+    private void createGrpGaac() {
 
         // grpGaac
         Group grpGaac = new Group(getCompOptions(), SWT.NONE);
@@ -176,69 +178,68 @@ public class GeneralAdmin extends GenericAdminGui {
         btnGaacUpdate.setEnabled(true);
     }
 
-         
-    public void cmd_gaacAdd(){
-             // AddGaac(true) to ADD new gaac
+    public void cmd_gaacAdd() {
+        // AddGaac(true) to ADD new gaac
         addGaac.addInitialisationOption(GenericFormGui.OPTION_isAddNotUpdate,
                 true);
-        new addGaac(getShell(),true);
+        new addGaac(getShell(), true);
     }
-
 
     /**
      * This method initializes grpClinics
-     
+     */
     private void createGrpClinic() {
 
-        // grpClinics
         Group grpClinics = new Group(getCompOptions(), SWT.NONE);
         grpClinics.setBounds(new Rectangle(495, 13, 305, 150));
-        grpClinics.setText(Messages.getString("GeneralAdmin.group.title")); //$NON-NLS-1$
+        grpClinics.setText(Messages.getString("GeneralAdmin.group.title"));
         grpClinics.setFont(ResourceUtils.getFont(iDartFont.VERASANS_12));
 
-        // lblPicClinics
         Label lblPicClinics = new Label(grpClinics, SWT.NONE);
-        lblPicClinics.setBounds(new org.eclipse.swt.graphics.Rectangle(6, 0,
-                50, 43));
+        lblPicClinics.setBounds(new org.eclipse.swt.graphics.Rectangle(6, 0, 50, 43));
         lblPicClinics.setText(EMPTY);
         lblPicClinics.setImage(ResourceUtils.getImage(iDartImage.CLINIC));
 
-        // btnClinicsAdd
         Button btnClinicsAdd = new Button(grpClinics, SWT.NONE);
-        btnClinicsAdd.setBounds(new org.eclipse.swt.graphics.Rectangle(35, 55,
-                235, 30));
-        btnClinicsAdd
-                .setToolTipText(Messages.getString("GeneralAdmin.button.tooltip")); //$NON-NLS-1$
-        btnClinicsAdd.setText(Messages.getString("GeneralAdmin.button.title")); //$NON-NLS-1$
-        btnClinicsAdd.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-        btnClinicsAdd
-                .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-                    @Override
-                    public void widgetSelected(
-                            org.eclipse.swt.events.SelectionEvent e) {
-                        cmd_clinicsAdd();
-                    }
-                });
-        btnClinicsAdd.setEnabled(false);
-        // btnClinicsUpdate
-        Button btnClinicsUpdate = new Button(grpClinics, SWT.NONE);
-        btnClinicsUpdate.setBounds(new org.eclipse.swt.graphics.Rectangle(35,
-                100, 235, 30));
-        btnClinicsUpdate
-                .setToolTipText(Messages.getString("GeneralAdmin.clinic.button.tooltip")); //$NON-NLS-1$
+        btnClinicsAdd.setBounds(new org.eclipse.swt.graphics.Rectangle(35, 55, 235, 30));
+        btnClinicsAdd.setToolTipText(Messages.getString("GeneralAdmin.button.tooltip"));
 
-        btnClinicsUpdate.setText(Messages.getString("GeneralAdmin.clinic.button.title")); //$NON-NLS-1$
+        btnClinicsAdd.setText(Messages.getString("GeneralAdmin.button.title"));
+
+        btnClinicsAdd.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+        btnClinicsAdd.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(
+                    org.eclipse.swt.events.SelectionEvent e) {
+                cmd_clinicsAdd();
+            }
+        });
+        if (getUserPermission() != 'C') {
+            btnClinicsAdd.setEnabled(false);
+        } else {
+            btnClinicsAdd.setEnabled(true);
+        }
+
+        Button btnClinicsUpdate = new Button(grpClinics, SWT.NONE);
+        btnClinicsUpdate.setBounds(new org.eclipse.swt.graphics.Rectangle(35, 100, 235, 30));
+        btnClinicsUpdate.setToolTipText(Messages.getString("GeneralAdmin.clinic.button.tooltip"));
+        btnClinicsUpdate.setText(Messages.getString("GeneralAdmin.clinic.button.title"));
+
         btnClinicsUpdate.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-        btnClinicsUpdate
-                .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-                    @Override
-                    public void widgetSelected(
-                            org.eclipse.swt.events.SelectionEvent e) {
-                        cmd_clinicsUpdate();
-                    }
-                });
-        btnClinicsUpdate.setEnabled(false);
-    }   */
+        btnClinicsUpdate.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+            @Override
+            public void widgetSelected(
+                    org.eclipse.swt.events.SelectionEvent e) {
+                cmd_clinicsUpdate();
+            }
+        });
+        if (getUserPermission() != 'C') {
+            btnClinicsUpdate.setEnabled(false);
+        } else {
+            btnClinicsUpdate.setEnabled(true);
+        }
+    }
 
     /**
      * This method initializes grpDoctors
@@ -365,8 +366,8 @@ public class GeneralAdmin extends GenericAdminGui {
             btnDrugsAdd.setEnabled(false);
             btnDrugsUpdate.setEnabled(false);
         }
-        
-         if (getUserPermission() == 'C') {
+
+        if (getUserPermission() == 'C') {
             btnDrugsAdd.setEnabled(true);
             btnDrugsUpdate.setEnabled(true);
         }
@@ -485,10 +486,10 @@ public class GeneralAdmin extends GenericAdminGui {
 			btnRegimenUpdate.setEnabled(false);
                 }
 		} */
-        if(getUserPermission() != 'C'){	
-                    btnRegimenAdd.setEnabled(false);
-			btnRegimenUpdate.setEnabled(false);
-                }
+        if (getUserPermission() != 'C') {
+            btnRegimenAdd.setEnabled(false);
+            btnRegimenUpdate.setEnabled(false);
+        }
     }
 
     /**
@@ -522,7 +523,11 @@ public class GeneralAdmin extends GenericAdminGui {
                         cmd_generateTemplate();
                     }
                 });
-        btnGenerateTemplate.setEnabled(true);
+        if (iDartProperties.FARMAC) {
+            btnGenerateTemplate.setEnabled(false);
+        } else {
+            btnGenerateTemplate.setEnabled(true);
+        }
         //  
         Button btnImportPatients = new Button(grpImport, SWT.NONE);
         btnImportPatients.setText(Messages.getString("GeneralAdmin.button.importPatients.title")); //$NON-NLS-1$
@@ -539,26 +544,47 @@ public class GeneralAdmin extends GenericAdminGui {
                         cmd_importPatients();
                     }
                 });
-
-        // Importar Pacientes do OpenMRS  : Alterado Colaco 06-07-2016
-        Button btnImportPatientsOpenMRS = new Button(grpImport, SWT.NONE);
-        btnImportPatientsOpenMRS.setText(Messages.getString("GeneralAdmin.button.openmrs.importPatients.title")); //$NON-NLS-1$
-        btnImportPatientsOpenMRS
-                .setToolTipText(Messages.getString("GeneralAdmin.button.openmrs.importPatients.tooltip")); //$NON-NLS-1$
-        btnImportPatientsOpenMRS.setBounds(new org.eclipse.swt.graphics.Rectangle(35,
-                88, 235, 27));
-        btnImportPatientsOpenMRS.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-        btnImportPatientsOpenMRS
-                .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-                    @Override
-                    public void widgetSelected(
-                            org.eclipse.swt.events.SelectionEvent e) {
-                        MainPanel importPatients = new MainPanel();
-                        importPatients.createAndShowGUI();
-                    }
-                });
-        btnImportPatientsOpenMRS.setEnabled(true);
-
+        btnImportPatients.setEnabled(false);
+        // Importar Pacientes : Alterado Colaco 14-08-2018
+        if (iDartProperties.FARMAC) {
+            // Importar Pacientes do ficheiro  : Alterado Colaco 14-08-2018
+            Button btnImportPatientsOpenMRS = new Button(grpImport, SWT.NONE);
+            btnImportPatientsOpenMRS.setText("Importar Pacientes da Unidade Sanitaria"); //$NON-NLS-1$
+            btnImportPatientsOpenMRS
+                    .setToolTipText("Importar Pacientes da Unidade Sanitaria"); //$NON-NLS-1$
+            btnImportPatientsOpenMRS.setBounds(new org.eclipse.swt.graphics.Rectangle(35,
+                    88, 235, 27));
+            btnImportPatientsOpenMRS.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+            btnImportPatientsOpenMRS
+                    .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+                        @Override
+                        public void widgetSelected(
+                                org.eclipse.swt.events.SelectionEvent e) {
+                            RestorePatientFarmac restorePatientFarmac = new RestorePatientFarmac();
+                            restorePatientFarmac.createAndShowGUI();
+                        }
+                    });
+            btnImportPatientsOpenMRS.setEnabled(true);
+        } else {
+            // Importar Pacientes do OpenMRS  : Alterado Colaco 06-07-2016
+            Button btnImportPatientsOpenMRS = new Button(grpImport, SWT.NONE);
+            btnImportPatientsOpenMRS.setText(Messages.getString("GeneralAdmin.button.openmrs.importPatients.title")); //$NON-NLS-1$
+            btnImportPatientsOpenMRS
+                    .setToolTipText(Messages.getString("GeneralAdmin.button.openmrs.importPatients.tooltip")); //$NON-NLS-1$
+            btnImportPatientsOpenMRS.setBounds(new org.eclipse.swt.graphics.Rectangle(35,
+                    88, 235, 27));
+            btnImportPatientsOpenMRS.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+            btnImportPatientsOpenMRS
+                    .addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+                        @Override
+                        public void widgetSelected(
+                                org.eclipse.swt.events.SelectionEvent e) {
+                            MainPanel importPatients = new MainPanel();
+                            importPatients.createAndShowGUI();
+                        }
+                    });
+            btnImportPatientsOpenMRS.setEnabled(true);
+        }
         // btnImportPatientsSESP - Alterado por Colaco 17-02-2017
 //                Button btnImportPatientsSESP = new Button(grpImport, SWT.NONE);
 //                btnImportPatientsSESP.setText(Messages.getString("GeneralAdmin.button.importPatients.title2")); //$NON-NLS-1$
@@ -597,8 +623,11 @@ public class GeneralAdmin extends GenericAdminGui {
                         unirNids.createAndShowGUI();
                     }
                 });
-
-        btnOptimizeNids.setEnabled(true);
+        if (iDartProperties.FARMAC) {
+            btnOptimizeNids.setEnabled(false);
+        } else {
+            btnOptimizeNids.setEnabled(true);
+        }
 
     }
 
@@ -656,7 +685,7 @@ public class GeneralAdmin extends GenericAdminGui {
                         cmd_pharmUsersUpdate();
                     }
                 });
-        btnPharmDetailsUpdate.setEnabled(false);
+        btnPharmDetailsUpdate.setEnabled(true);
     }
 
     /*

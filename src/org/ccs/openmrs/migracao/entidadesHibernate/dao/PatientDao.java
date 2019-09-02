@@ -14,7 +14,10 @@ import java.util.List;
 import org.ccs.openmrs.migracao.connection.hibernateConection;
 import org.ccs.openmrs.migracao.entidades.Patient;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.PatientDaoInterface;
+import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
+import org.celllife.idart.database.hibernate.SyncTempDispense;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -86,12 +89,26 @@ implements PatientDaoInterface<Patient, String> {
         return patients;
     }
 
+      @Override
+    public List findAllImport() {
+         SQLQuery query = getCurrentSession().createSQLQuery("select * from sync_temp_patients ");
+       
+        List syncPatientImport = query.list();
+
+        return syncPatientImport;
+    }
+    
     @Override
     public void deleteAll() {
         List<Patient> entityList = this.findAll();
         for (Patient entity : entityList) {
             this.delete(entity);
         }
+    }
+
+    @Override
+    public List<SyncTempDispense> findAllExported() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

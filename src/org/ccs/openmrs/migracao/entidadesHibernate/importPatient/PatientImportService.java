@@ -8,10 +8,14 @@ package org.ccs.openmrs.migracao.entidadesHibernate.importPatient;
 
 import java.util.List;
 import org.ccs.openmrs.migracao.entidadesHibernate.ImportDao.PatientImportDao;
+import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
 import org.celllife.idart.database.hibernate.Patient;
+import org.celllife.idart.database.hibernate.SyncTempDispense;
+import org.celllife.idart.database.hibernate.SyncTempPatient;
 import org.hibernate.Session;
 
 public class PatientImportService {
+
     private static PatientImportDao patientImportDao;
 
     public PatientImportService() {
@@ -30,8 +34,8 @@ public class PatientImportService {
         Raising Null exception- 04/04/2017 Agnaldo - colaco       */
         //patientImportDao.openCurrentSession();
         patientImportDao.update(entity);
-       //patientImportDao.closeCurrentSession();
-       patientImportDao.closeCurrentSessionwithTransaction();
+        //patientImportDao.closeCurrentSession();
+        patientImportDao.closeCurrentSessionwithTransaction();
     }
 
     public Patient findById(Integer id) {
@@ -62,6 +66,20 @@ public class PatientImportService {
         return patients;
     }
 
+    public List<SyncTempPatient> findAllImport() {
+        patientImportDao.openCurrentSession();
+        List<SyncTempPatient> patients = patientImportDao.findAllImport();
+        patientImportDao.closeCurrentSession();
+        return patients;
+    }
+
+    public List<SyncTempDispense> findAllExported() {
+        patientImportDao.openCurrentSession();
+        List<SyncTempDispense> patients = patientImportDao.findAllExported();
+        patientImportDao.closeCurrentSession();
+        return patients;
+    }
+
     public void deleteAll() {
         patientImportDao.openCurrentSessionwithTransaction();
         patientImportDao.deleteAll();
@@ -72,4 +90,3 @@ public class PatientImportService {
         return patientImportDao;
     }
 }
-

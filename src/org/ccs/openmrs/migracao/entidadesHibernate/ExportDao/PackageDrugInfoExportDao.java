@@ -98,7 +98,7 @@ implements PackageDrugInfoInterface<PackageDrugInfo, String> {
                                                              "inner join patientidentifier pi on pi.patient_id = p.id " +
                                                              "inner join identifiertype it on it.id = pi.type_id " +
                                                              "where it.name = 'NID' and (pdtmp.notes <> 'Exported' OR pdtmp.notes IS NULL) " +
-                                                             "ORDER BY pdtmp.dispenseDate desc");
+                                                             "ORDER BY pdtmp.dispenseDate asc");
         query.addEntity(PackageDrugInfo.class);
         List<PackageDrugInfo> packageDrugInfos = query.list();
 

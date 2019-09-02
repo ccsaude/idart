@@ -32,8 +32,7 @@ import org.celllife.idart.database.hibernate.Clinic;
 import org.celllife.idart.database.hibernate.IdentifierType;
 import org.celllife.idart.database.hibernate.Patient;
 
-class Task
-        extends SwingWorker<String, Void> {
+class Task extends SwingWorker<String, Void> {
 
     private final Random rnd = new Random();
 

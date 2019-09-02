@@ -41,5 +41,7 @@
     <mapping class="org.celllife.idart.database.hibernate.RegimeTerapeutico"/>
     <mapping class="org.celllife.idart.database.hibernate.RegimeTerapeuticoDrugs"/>
     <mapping class="org.celllife.idart.database.hibernate.AlternatePatientIdentifier"/>
+    <mapping class="org.celllife.idart.database.hibernate.SyncTempPatient"/>
+    
   </session-factory>
 </hibernate-configuration>

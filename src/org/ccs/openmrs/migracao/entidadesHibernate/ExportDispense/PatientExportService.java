@@ -9,6 +9,7 @@ package org.ccs.openmrs.migracao.entidadesHibernate.ExportDispense;
 import java.util.List;
 import org.ccs.openmrs.migracao.entidades.Patient;
 import org.ccs.openmrs.migracao.entidadesHibernate.ExportDao.PatientExportDao;
+import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
 
 public class PatientExportService {
     private static PatientExportDao patientExportDao;
@@ -57,6 +58,8 @@ public class PatientExportService {
         return patients;
     }
 
+
+    
     public void deleteAll() {
         patientExportDao.openCurrentSessionwithTransaction();
         patientExportDao.deleteAll();

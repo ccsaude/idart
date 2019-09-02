@@ -105,7 +105,6 @@ public class MiaReportMISAU extends AbstractJasperReport {
 		map.put("dateFormat", dateFormat.format(theStartDate));
 		map.put("monthStart", dateFormat.format(theStartDate));
 		
-		
 		//calStart.add(Calendar.MONTH, 1);
 		
 	User localUser = LocalObjects.getUser(getHSession());

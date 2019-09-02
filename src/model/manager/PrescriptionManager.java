@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.celllife.idart.database.hibernate.Doctor;
 
 import org.celllife.idart.database.hibernate.Drug;
 import org.celllife.idart.database.hibernate.Episode;
@@ -178,5 +179,22 @@ public class PrescriptionManager {
 				episode.getStopDate()).setMaxResults(1).uniqueResult();
 
 	}
+        
+        
+        @SuppressWarnings("unchecked")
+	public static Doctor getProvider(Session session) throws HibernateException {
+		Doctor id = null;
+		List<Doctor> doc = null;
+		doc = session.createQuery(
+				"select doctor from Doctor as doctor "
+						+ "where doctor.firstname = 'Provider'").list();
+
+		Iterator<Doctor> iter = doc.iterator();
+		if (iter.hasNext()) {
+			id = iter.next();
+		}
+		return id;
+	}
+        
 
 }

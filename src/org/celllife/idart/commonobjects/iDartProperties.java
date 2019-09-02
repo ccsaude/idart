@@ -17,6 +17,10 @@ public class iDartProperties {
 	public static final String SWTBOT_KEY = "org.eclipse.swtbot.widget.key";
 
 	public static final String FILE = "idart.properties";
+        
+        public static final String ZIPFILEPASSWORD = "!cc54ud3";
+        
+        public static final boolean FARMAC = true;
 
 	public final static String OFFLINE_DOWNREFERRAL_MODE = "offline";
 
@@ -32,12 +36,18 @@ public class iDartProperties {
 
 	public static String roundUpForms = "";
 
-	public static String hibernateConnectionUrl = "http://localhost:5432/idart";
+	public static String hibernateConnectionUrl = "jdbc:postgresql://localhost:5432/pharm";
 
-	public static String hibernatePassword = "";
+	public static String hibernatePassword = "root";
 
-	public static String hibernateUsername = "";
+	public static String hibernateUsername = "postgres";
+        
+        public static String hibernateDatabase = "pharm";
 
+        public static String hibernateTableImport = "sync_temp_patients";
+        
+        public static String hibernateTableExport = "sync_temp_dispense";
+        
 	public static String hibernateDriver = "org.postgresql.Driver";
 	
 	public static String hibernateDialect = "org.hibernate.dialect.PostgreSQLDialect";

@@ -42,8 +42,7 @@ public interface GenerateExcelReportInterface {
 	public abstract void writeDataCell(int columnIndex, int rowIndex,
 			Object data);
 
-	public abstract void writeExtraColumns(DataExportFunctions functions,
-			int num);
+	public abstract void writeExtraColumns(DataExportFunctions functions,int num);
 
 	public void writeFooter();
 }

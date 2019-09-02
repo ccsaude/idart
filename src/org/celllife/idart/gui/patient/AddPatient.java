@@ -381,12 +381,10 @@ public class AddPatient extends GenericFormGui implements iDARTChangeListener {
 
         if (isAddnotUpdate) {
             btnSearch.setText(Messages.getString("patient.button.editid")); //$NON-NLS-1$
-            btnSearch
-                    .setToolTipText(Messages.getString("patient.button.editid.tooltip")); //$NON-NLS-1$
+            btnSearch.setToolTipText(Messages.getString("patient.button.editid.tooltip")); //$NON-NLS-1$           
         } else {
             btnSearch.setText(Messages.getString("patient.button.search")); //$NON-NLS-1$
-            btnSearch
-                    .setToolTipText(Messages.getString("patient.button.search.tooltip")); //$NON-NLS-1$
+            btnSearch.setToolTipText(Messages.getString("patient.button.search.tooltip")); //$NON-NLS-1$
         }
 
         btnSearch.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
@@ -759,6 +757,7 @@ public class AddPatient extends GenericFormGui implements iDARTChangeListener {
                                 .getDefaultClinicName(getHSession());
                     }
                     cmbClinic.setText(clinicName);
+                  
                 }
             }
         });
@@ -1091,12 +1090,13 @@ public class AddPatient extends GenericFormGui implements iDARTChangeListener {
             message = Messages.getString("patient.error.episodeStopBeforeStart"); //$NON-NLS-1$
             btnEpisodeStopDate.setFocus();
             result = false;
-        } /*
+        }
+        /*
 		 * check that the ID is not too long max length is determined by the
 		 * longest possible barcode length the longest barcode including the
 		 * patientID is the package cover label, so the length of a possible
 		 * package cover label for this patient must be checked.
-         */ 
+         */
 //        else if (!patIdLengthOk()) {
 //            title = Messages.getString("patient.error.patientIdTooLong.title"); //$NON-NLS-1$
 //            message = MessageFormat.format(Messages.getString("patient.error.patientIdTooLong"), //$NON-NLS-1$
@@ -1225,8 +1225,9 @@ public class AddPatient extends GenericFormGui implements iDARTChangeListener {
                 ((TreatmentHistoryTab) groupTabs[3]).enable(true, ResourceUtils
                         .getColor(iDartColor.WIDGET_BACKGROUND)); // ARV
             }
-
-            editPatientIdentifiers();
+            if (!iDartProperties.FARMAC) {
+                editPatientIdentifiers();
+            }
         } else if (localPatient == null) {
             PatientSearch search = new PatientSearch(getShell(), getHSession());
             search.setShowInactive(true);
@@ -1243,7 +1244,9 @@ public class AddPatient extends GenericFormGui implements iDARTChangeListener {
             }
             // txtPatientId.setFocus();
         } else {
-            editPatientIdentifiers();
+             if (!iDartProperties.FARMAC) {
+                editPatientIdentifiers();
+            }
         }
     }
 
@@ -1311,22 +1314,21 @@ public class AddPatient extends GenericFormGui implements iDARTChangeListener {
             oPatient = PatientManager.getPatient(sess, localPatient
                     .getId());
             PatientManager.savePatient(getHSession(), localPatient);
-            
-              // update Packagedruginfos : Unsubmitted  records(Packagedruginfotmp) to openmrs  due to patientid mismatch
-              // se for paciente em transito  ignora
-              if( !(oPatient == null)){
-                  
-                     List<PackageDrugInfo> pdiList = TemporaryRecordsManager.getOpenmrsUnsubmittedPackageDrugInfos(getHSession(), oPatient);
-                        if(!pdiList.isEmpty()){
-                            TemporaryRecordsManager.updateOpenmrsUnsubmittedPackageDrugInfos(getHSession(), pdiList, localPatient);
-                        }                 
-                        else{
-                         // No records to update in PackagedruginfoTmp
-                         // Do nothing
-                        }          
-              
-              }
-                     
+
+            // update Packagedruginfos : Unsubmitted  records(Packagedruginfotmp) to openmrs  due to patientid mismatch
+            // se for paciente em transito  ignora
+            if (!(oPatient == null)) {
+
+                List<PackageDrugInfo> pdiList = TemporaryRecordsManager.getOpenmrsUnsubmittedPackageDrugInfos(getHSession(), oPatient);
+                if (!pdiList.isEmpty()) {
+                    TemporaryRecordsManager.updateOpenmrsUnsubmittedPackageDrugInfos(getHSession(), pdiList, localPatient);
+                } else {
+                    // No records to update in PackagedruginfoTmp
+                    // Do nothing
+                }
+
+            }
+
             getHSession().flush();
             tx.commit();
 
@@ -1743,6 +1745,7 @@ public class AddPatient extends GenericFormGui implements iDARTChangeListener {
         // Account Information fields
         Episode e = localPatient != null ? localPatient.getMostRecentEpisode() : null;
         cmbClinic.setEnabled(e != null && e.isOpen());
+        //cmbClinic.setEnabled(false);
         cmbClinic.setBackground(myColour);
 
         if (LocalObjects.getUser(getHSession()).getRole() == null
