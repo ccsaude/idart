@@ -20,7 +20,7 @@ public class iDartProperties {
         
         public static final String ZIPFILEPASSWORD = "!cc54ud3";
         
-        public static final boolean FARMAC = false;
+        public static final boolean FARMAC = true;
 
 	public final static String OFFLINE_DOWNREFERRAL_MODE = "offline";
 

@@ -13,6 +13,7 @@ import javax.swing.SwingWorker;
 import model.manager.AdministrationManager;
 import model.manager.PatientManager;
 import org.ccs.openmrs.migracao.connection.hibernateConection;
+import org.ccs.openmrs.migracao.connection.hibernateConectionRemote;
 import org.ccs.openmrs.migracao.entidades.Concept;
 import org.ccs.openmrs.migracao.entidades.Encounter;
 import org.ccs.openmrs.migracao.entidades.EncounterProvider;
@@ -293,7 +294,7 @@ class Task1
                 System.err.println("" + (lengthOfTask - contanonSend - pacientesEmTransito) + " Dispensas Actualizadas no OpenMRS com Sucesso!!!!!!");
             }
             hibernateConection.getInstanceLocal().close();
-            hibernateConection.getInstanceRemote().close();
+            hibernateConectionRemote.getInstanceRemote().close();
             current = lengthOfTask * 2;
             //        }
 

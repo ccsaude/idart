@@ -11,7 +11,7 @@ package org.ccs.openmrs.migracao.entidadesHibernate.dao;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.List;
-import org.ccs.openmrs.migracao.connection.hibernateConection;
+import org.ccs.openmrs.migracao.connection.hibernateConectionRemote;
 import org.ccs.openmrs.migracao.entidades.Patient;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.PatientDaoInterface;
 import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
@@ -27,12 +27,12 @@ implements PatientDaoInterface<Patient, String> {
     public Transaction currentTransaction;
 
     public Session openCurrentSession() {
-        this.currentSession = hibernateConection.getInstanceRemote();
+        this.currentSession = hibernateConectionRemote.getInstanceRemote();
         return this.currentSession;
     }
 
     public Session openCurrentSessionwithTransaction() {
-        this.currentSession = hibernateConection.getInstanceRemote();
+        this.currentSession = hibernateConectionRemote.getInstanceRemote();
         this.currentTransaction = this.currentSession.beginTransaction();
         return this.currentSession;
     }

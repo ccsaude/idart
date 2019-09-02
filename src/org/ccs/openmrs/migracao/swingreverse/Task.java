@@ -12,6 +12,7 @@ import javax.swing.SwingWorker;
 import model.manager.AdministrationManager;
 import model.manager.PatientManager;
 import org.ccs.openmrs.migracao.connection.hibernateConection;
+import org.ccs.openmrs.migracao.connection.hibernateConectionRemote;
 import org.ccs.openmrs.migracao.entidades.PatientIdentifier;
 import org.ccs.openmrs.migracao.entidades.PatientProgram;
 import org.ccs.openmrs.migracao.entidades.Person;
@@ -173,7 +174,7 @@ class Task extends SwingWorker<String, Void> {
                 System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 System.err.println("" + lengthOfTask + " Pacientes Importados do OpenMRS para o IDART com sucesso!!!!!!");
                 hibernateConection.getInstanceLocal().close();
-                hibernateConection.getInstanceRemote().close();
+                hibernateConectionRemote.getInstanceRemote().close();
                 current = lengthOfTask * 2;
             }
         } catch (Exception e) {

@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
-import org.ccs.openmrs.migracao.connection.hibernateConection;
+import org.ccs.openmrs.migracao.connection.hibernateConectionRemote;
 import org.ccs.openmrs.migracao.entidades.Visit;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.VisitDaoInterface;
 import org.hibernate.Query;
@@ -25,12 +25,12 @@ implements VisitDaoInterface<Visit, String> {
     public Transaction currentTransaction;
 
     public Session openCurrentSession() {
-        this.currentSession = hibernateConection.getInstanceRemote();
+        this.currentSession = hibernateConectionRemote.getInstanceRemote();
         return this.currentSession;
     }
 
     public Session openCurrentSessionwithTransaction() {
-        this.currentSession = hibernateConection.getInstanceRemote();
+        this.currentSession = hibernateConectionRemote.getInstanceRemote();
         this.currentTransaction = this.currentSession.beginTransaction();
         return this.currentSession;
     }

@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
-import org.ccs.openmrs.migracao.connection.hibernateConection;
+import org.ccs.openmrs.migracao.connection.hibernateConectionRemote;
 import org.ccs.openmrs.migracao.entidades.Encounter;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.EncounterDaoInterface;
 import org.celllife.idart.database.hibernate.tmp.PackageDrugInfo;
@@ -31,12 +31,12 @@ public class EncounterDao
     public Transaction currentTransaction;
 
     public Session openCurrentSession() {
-        this.currentSession = hibernateConection.getInstanceRemote();
+        this.currentSession = hibernateConectionRemote.getInstanceRemote();
         return this.currentSession;
     }
 
     public Session openCurrentSessionwithTransaction() {
-        this.currentSession = hibernateConection.getInstanceRemote();
+        this.currentSession = hibernateConectionRemote.getInstanceRemote();
         this.currentTransaction = this.currentSession.beginTransaction();
         return this.currentSession;
     }

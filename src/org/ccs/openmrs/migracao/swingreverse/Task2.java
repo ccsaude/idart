@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.SwingWorker;
 import org.ccs.openmrs.migracao.connection.hibernateConection;
+import org.ccs.openmrs.migracao.connection.hibernateConectionRemote;
 import org.ccs.openmrs.migracao.entidades.Person;
 import org.ccs.openmrs.migracao.entidadesHibernate.importPatient.PatientIdentifierImportService;
 import org.ccs.openmrs.migracao.entidadesHibernate.importPatient.PatientImportService;
@@ -186,7 +187,7 @@ class Task2
                 System.err.println("" + (lengthOfTask - descont) + " Total de Pacientes Unidos do OpenMRS para o IDART com sucesso!!!!!!");
                 System.err.println("" + descont + " Total de Pacientes Noao encontrados no OpenMRS!!!!!!");
                 hibernateConection.getInstanceLocal().close();
-                hibernateConection.getInstanceRemote().close();
+                hibernateConectionRemote.getInstanceRemote().close();
                 current = lengthOfTask * 2;
             }
 

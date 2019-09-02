@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import org.ccs.openmrs.migracao.connection.hibernateConection;
+import org.ccs.openmrs.migracao.connection.hibernateConectionRemote;
 import org.ccs.openmrs.migracao.entidades.GlobalProperty;
 import org.ccs.openmrs.migracao.entidades.Location;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.GlobalPropertyDaoInterface;
@@ -31,12 +31,12 @@ public class GeralRemoteDao implements GlobalPropertyDaoInterface<String, String
     public Transaction currentTransaction;
 
     public Session openCurrentSession() {
-        this.currentSession = hibernateConection.getInstanceRemote();
+        this.currentSession = hibernateConectionRemote.getInstanceRemote();
         return this.currentSession;
     }
 
     public Session openCurrentSessionwithTransaction() {
-        this.currentSession = hibernateConection.getInstanceRemote();
+        this.currentSession = hibernateConectionRemote.getInstanceRemote();
         this.currentTransaction = this.currentSession.beginTransaction();
         return this.currentSession;
     }
