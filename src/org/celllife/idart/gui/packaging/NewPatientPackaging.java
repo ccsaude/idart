@@ -3007,19 +3007,11 @@ public class NewPatientPackaging extends GenericFormGui implements
 
         Calendar theCal = Calendar.getInstance();
         theCal.setTime(mainPrescription.getDate());
-        if (i < totalMeses) {
-            theCal.add(Calendar.DATE, ((4 * i) * 7) + (i * 2));
-        } else {
-            theCal.add(Calendar.DATE, (4 * i) * 7);
-        }
+            theCal.add(Calendar.DATE, i * 30);
 
         Calendar theCalEnd = Calendar.getInstance();
         theCalEnd.setTime(theCal.getTime());
-        if (i < totalMeses) {
-            theCalEnd.add(Calendar.DATE, ((4 * i) * 7) + (i * 2));
-        } else {
-            theCalEnd.add(Calendar.DATE, (4 * i) * 7);
-        }
+            theCalEnd.add(Calendar.DATE, i * 30);
 
         String prescriptionId = PackageManager.getNewPrescriptionId(getHSession(), mainPrescription.getPatient(), theCal.getTime());
 
@@ -3050,9 +3042,36 @@ public class NewPatientPackaging extends GenericFormGui implements
         prescription.setTpc(mainPrescription.getTpc());
         prescription.setTpi(mainPrescription.getTpi());
         prescription.setDrugTypes(mainPrescription.getDrugTypes());
+    //    prescription.setPrescribedDrugs(mainPrescription.getPrescribedDrugs());
+//        prescription.setPackages(mainPrescription.getPackages());
+        prescription.setWeight(mainPrescription.getWeight());
+        prescription.setDispensaTrimestral(mainPrescription.getDispensaTrimestral());
+        if(mainPrescription.getDispensaTrimestral() == 1)
+        prescription.setTipoDT("Manuntencao");
 
         PackageManager.saveNewPrescription(getHSession(), prescription, true);
 
+//         List<PrescribedDrugs> prescribedDrugsList = new ArrayList<PrescribedDrugs>();
+//
+//        // Save the Prescription Drugs
+//        for (int i = 0; i < tblDrugs.getItemCount(); i++) {
+//
+//            TableItem tmpItem = tblDrugs.getItem(i);
+//
+//            PrescribedDrugs oldPD = (PrescribedDrugs) tmpItem.getData();
+//            if (oldPD != null) {
+//                PrescribedDrugs newPD = new PrescribedDrugs();
+//                newPD.setAmtPerTime(oldPD.getAmtPerTime());
+//                newPD.setDrug(oldPD.getDrug());
+//                newPD.setModified(oldPD.getModified());
+//                newPD.setPrescription(localPrescription);
+//                newPD.setTimesPerDay(oldPD.getTimesPerDay());
+//                prescribedDrugsList.add(newPD);
+//            }
+//        }
+        
+        
+        
         return prescription;
 
     }

@@ -278,7 +278,11 @@ public class PackageManager {
 		}
 		sess.save(preToBeSaved);
                // add dispense more than 1 month
+               try{
                 sess.flush();
+               }catch(Exception e){
+                   System.out.println(e.getMessage());
+               }
 	}
 
 	/**

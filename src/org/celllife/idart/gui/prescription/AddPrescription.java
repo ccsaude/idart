@@ -297,8 +297,7 @@ public class AddPrescription extends GenericFormGui implements
                 if (isInitialPrescription) {
                     setFormToInitialPrescription();
                 } else {
-                    Prescription script = thePatient
-                            .getMostRecentPrescription();
+                    Prescription script = thePatient.getMostRecentPrescription();
                     if (script != null) {
                         localPrescription = script;
                         loadPrescriptionDetails();
@@ -2037,8 +2036,7 @@ public class AddPrescription extends GenericFormGui implements
             MessageBox noDrugsAdded = new MessageBox(getShell(), SWT.ICON_ERROR
                     | SWT.OK);
             noDrugsAdded.setText("Sem medicamentos na prescrição");
-            noDrugsAdded
-                    .setMessage("Nenhum medicamento foi adicionado nesta prescrição.");
+            noDrugsAdded.setMessage("Nenhum medicamento foi adicionado nesta prescrição.");
             noDrugsAdded.open();
             drugsAdded = false;
         }
@@ -2107,11 +2105,8 @@ public class AddPrescription extends GenericFormGui implements
                                     .getPatient().getCurrentPrescription();
                             // Check if any packages have been created for the
                             // prescription
-                            if ((oldPrescription != null)
-                                    && PackageManager.getPackagesForPrescription(
-                                            getHSession(), oldPrescription).size() == 0) {
-                                List<PrescribedDrugs> prescribedDrugs = oldPrescription
-                                        .getPrescribedDrugs();
+                            if ((oldPrescription != null) && PackageManager.getPackagesForPrescription(getHSession(), oldPrescription).size() == 0) {
+                                List<PrescribedDrugs> prescribedDrugs = oldPrescription.getPrescribedDrugs();
                                 String drugs = "";
                                 if (prescribedDrugs.size() == 0) {
                                     drugs = "\nNão há medicamentos nesta prescrição!";
@@ -2173,8 +2168,7 @@ public class AddPrescription extends GenericFormGui implements
                                 localPrescription.setDrugTypes("ARV");
                             }
 
-                            PackageManager.saveNewPrescription(getHSession(),
-                                    localPrescription, deletedPrescription);
+                            PackageManager.saveNewPrescription(getHSession(),localPrescription, deletedPrescription);
                             getHSession().flush();
                             tx.commit();
 
@@ -2248,11 +2242,8 @@ public class AddPrescription extends GenericFormGui implements
                                     .getPatient().getCurrentPrescription();
                             // Check if any packages have been created for the
                             // prescription
-                            if ((oldPrescription != null)
-                                    && PackageManager.getPackagesForPrescription(
-                                            getHSession(), oldPrescription).size() == 0) {
-                                List<PrescribedDrugs> prescribedDrugs = oldPrescription
-                                        .getPrescribedDrugs();
+                            if ((oldPrescription != null) && PackageManager.getPackagesForPrescription(getHSession(), oldPrescription).size() == 0) {
+                                List<PrescribedDrugs> prescribedDrugs = oldPrescription.getPrescribedDrugs();
                                 String drugs = "";
                                 if (prescribedDrugs.size() == 0) {
                                     drugs = "\nNão há medicamentos nesta prescrição!";

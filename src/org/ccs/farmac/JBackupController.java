@@ -90,9 +90,9 @@ public class JBackupController {
         switch (type) {
             case "backup":
                 if (isWindows()) {
-                    commands.add("C:\\Program Files\\PostgreSQL\\9.3\\bin\\pg_dump");
+                    commands.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_dump");
                 } else {
-                    commands.add("pg_dump");
+                    commands.add("/opt/PostgreSQL/9.6/bin/pg_dump");
                 }
                 commands.add("-h"); //database server host
                 commands.add("localhost");

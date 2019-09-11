@@ -69,6 +69,7 @@ import org.celllife.idart.gui.reportParameters.PatientsExpected;
 import org.celllife.idart.gui.reportParameters.PepfarReportGUI;
 import org.celllife.idart.gui.reportParameters.PrescribingDoctors;
 import org.celllife.idart.gui.reportParameters.MmiaReport;
+import org.celllife.idart.gui.reportParameters.PacientesReferidos;
 import org.celllife.idart.gui.reportParameters.PacientesSemDT;
 import org.celllife.idart.gui.reportParameters.RegimeTerapeuticoReport;
 import org.celllife.idart.gui.reportParameters.RegisteredIdart;
@@ -467,6 +468,8 @@ private void createGrpClinicManagementReports() {
 				new PackageTracking(getShell(), false));
                 reportGUIs.put(GenericReportGuiInterface.REPORT_FILA_GERAL,
 				new FilaGeralReport(getShell(), false));
+                reportGUIs.put(GenericReportGuiInterface.REPORT_PACIENTES_REFERIDOS,
+				new PacientesReferidos(getShell(), false));
 
 		// Stock Reports
 		reportGUIs.put(GenericReportGuiInterface.REPORT_MONTHLY_STOCK_RECEIPTS,
