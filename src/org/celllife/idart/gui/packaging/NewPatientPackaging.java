@@ -3515,6 +3515,13 @@ public class NewPatientPackaging extends GenericFormGui implements
 
         tblPrescriptionInfo.clearAll();
         pillCountTable.clearTable();
+
+        //Para farmac Insere dispensas para US
+        if (iDartProperties.FARMAC) {
+            TemporaryRecordsManager.savePackageDrugInfosFarmac(getHSession(), allPackagedDrugsList);
+            getHSession().flush();
+        }
+
     }
 
     /**
@@ -3725,7 +3732,7 @@ public class NewPatientPackaging extends GenericFormGui implements
             prescription.setPatient(importedPatientIdentifier.getPatient());
             prescription.setPrescriptionId(prescriptionId);
             prescription.setReasonForUpdate(syncTempDispense.getReasonforupdate());
-            prescription.setNotes("FARMAC: "+syncTempDispense.getNotes());
+            prescription.setNotes("FARMAC: " + syncTempDispense.getNotes());
             prescription.setRegimeTerapeutico(regimeTerapeutico);
             prescription.setLinha(linhat);
             prescription.setDatainicionoutroservico(syncTempDispense.getDatainicionoutroservico());

@@ -1430,7 +1430,7 @@ public class PackageManager {
         SyncTempDispense id = null;
         List<SyncTempDispense> presc = null;
         presc = session.createQuery(
-                "select farmac_dispense.id from sync_temp_dispense as farmac_dispense "
+                "select farmac_dispense from sync_temp_dispense as farmac_dispense "
                 + "where farmac_dispense.pickupdate = '" + pdi.getPickupDate()
                 + "' AND farmac_dispense.drugname = " + pdi.getDrugName()
                 + " AND farmac_dispense.patientid = " + patient.getId()
