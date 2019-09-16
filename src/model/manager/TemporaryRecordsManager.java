@@ -32,16 +32,14 @@ public class TemporaryRecordsManager {
      * @return boolean
      * @throws HibernateException
      */
-    public static boolean savePackageDrugInfosToDB(Session s,
-            List<PackageDrugInfo> pdList) throws HibernateException {
+    public static boolean savePackageDrugInfosToDB(Session s,List<PackageDrugInfo> pdList) throws HibernateException {
         log.info("Saving package drug infos.");
         for (PackageDrugInfo pdi : pdList) {
             s.save(pdi);
             
-            if (iDartProperties.FARMAC && pdi.getId() > 0 ) {
+            if (PackageManager.getDispenseFarmac(s, pdi.getPackagedDrug().getParentPackage().getPrescription().getPatient(),pdi)== null && iDartProperties.FARMAC) {
                 Session sess = HibernateUtil.getNewSession();
                 SyncTempDispense dispenseFarmac = new SyncTempDispense();
-                dispenseFarmac.setId(pdi.getId());
                 dispenseFarmac.setDate(pdi.getPackagedDrug().getParentPackage().getPrescription().getDate());
                 dispenseFarmac.setClinicalstage(pdi.getPackagedDrug().getParentPackage().getPrescription().getClinicalStage());
                 dispenseFarmac.setCurrent(pdi.getPackagedDrug().getParentPackage().getPrescription().getCurrent());

@@ -1422,4 +1422,25 @@ public class PackageManager {
             return true;
         }
     }
+    
+    
+        @SuppressWarnings("unchecked")
+    public static SyncTempDispense getDispenseFarmac(Session session,
+            Patient patient,PackageDrugInfo pdi) throws HibernateException {
+        SyncTempDispense id = null;
+        List<SyncTempDispense> presc = null;
+        presc = session.createQuery(
+                "select farmac_dispense.id from sync_temp_dispense as farmac_dispense "
+                + "where farmac_dispense.pickupdate = '" + pdi.getPickupDate()
+                + "' AND farmac_dispense.drugname = " + pdi.getDrugName()
+                + " AND farmac_dispense.patientid = " + patient.getId()
+                ).list();
+
+        Iterator<SyncTempDispense> iter = presc.iterator();
+        if (iter.hasNext()) {
+            id = iter.next();
+        }
+        return id;
+    }
+    
 }
