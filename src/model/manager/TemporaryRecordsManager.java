@@ -38,9 +38,10 @@ public class TemporaryRecordsManager {
         for (PackageDrugInfo pdi : pdList) {
             s.save(pdi);
             
-            if (iDartProperties.FARMAC) {
+            if (iDartProperties.FARMAC && pdi.getId() > 0 ) {
                 Session sess = HibernateUtil.getNewSession();
                 SyncTempDispense dispenseFarmac = new SyncTempDispense();
+                dispenseFarmac.setId(pdi.getId());
                 dispenseFarmac.setDate(pdi.getPackagedDrug().getParentPackage().getPrescription().getDate());
                 dispenseFarmac.setClinicalstage(pdi.getPackagedDrug().getParentPackage().getPrescription().getClinicalStage());
                 dispenseFarmac.setCurrent(pdi.getPackagedDrug().getParentPackage().getPrescription().getCurrent());
