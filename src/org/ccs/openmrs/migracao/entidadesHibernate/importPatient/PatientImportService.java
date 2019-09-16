@@ -71,9 +71,9 @@ public class PatientImportService {
         return patients;
     }
 
-    public List<SyncTempDispense> findAllExported() {
+    public List<SyncTempDispense> findAllExported(String clinicName) {
         patientImportDao.openCurrentSession();
-        List<SyncTempDispense> patients = patientImportDao.findAllExported();
+        List<SyncTempDispense> patients = patientImportDao.findAllExported(clinicName);
         patientImportDao.closeCurrentSession();
         return patients;
     }

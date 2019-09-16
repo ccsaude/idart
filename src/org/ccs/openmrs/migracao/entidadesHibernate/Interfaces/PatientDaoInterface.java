@@ -22,7 +22,7 @@ public interface PatientDaoInterface<T, Id extends Serializable> {
     
     public List<SyncTempPatient> findAllImport();
     
-    List<SyncTempDispense> findAllExported();
+    List<SyncTempDispense> findAllExported(String T);
 
     public void deleteAll();
 }

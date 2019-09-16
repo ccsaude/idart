@@ -108,7 +108,7 @@ public class Task6 extends SwingWorker<String, Void> {
             IdentifierType identifierType = AdministrationManager.getNationalIdentifierType(patientImportService.patientImportDao().openCurrentSessionwithTransaction());
             AttributeType attributeType = PatientManager.getAttributeTypeObject(patientImportService.patientImportDao().openCurrentSessionwithTransaction(), "ARV Start Date");
             User user = AdministrationManager.getUserByName(patientImportService.patientImportDao().openCurrentSessionwithTransaction(), "Admin");
-            List<SyncTempDispense> dispensasFarmacs = patientImportService.findAllExported();
+            List<SyncTempDispense> dispensasFarmacs = patientImportService.findAllExported(clinic.getClinicName());
             
             System.err.println("PROCESSANDO ....");
             
