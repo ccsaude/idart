@@ -176,11 +176,10 @@ public class HibernateUtil {
 		ac.addAnnotatedClass(Motivomudanca.class);
 		ac.addAnnotatedClass(LinhaT.class);
                   /*
-                * Adicionei a classe SyncTempDispense e SyncTempPatient
+                * Add a classe SyncTempDispense e SyncTempPatient
                 * Modified by : Colaco
                 * Modifica date: 16/09/2019
                 */  
-                
                 ac.addAnnotatedClass(SyncTempDispense.class);
                 ac.addAnnotatedClass(SyncTempPatient.class);
                 /*

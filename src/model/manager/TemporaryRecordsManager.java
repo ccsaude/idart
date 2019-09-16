@@ -1,5 +1,6 @@
 package model.manager;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -19,7 +20,7 @@ import org.hibernate.Session;
 /**
  */
 public class TemporaryRecordsManager {
-
+    
     private static Log log = LogFactory.getLog(TemporaryRecordsManager.class);
 
     /**
@@ -35,10 +36,10 @@ public class TemporaryRecordsManager {
         log.info("Saving package drug infos.");
         for (PackageDrugInfo pdi : pdList) {
             s.save(pdi);
-
+            
             if (iDartProperties.FARMAC) {
                 SyncTempDispense dispenseFarmac = new SyncTempDispense();
-                 dispenseFarmac.setId(pdi.getId());
+                dispenseFarmac.setId(pdi.getId());
                 dispenseFarmac.setDate(pdi.getPackagedDrug().getParentPackage().getPrescription().getDate());
                 dispenseFarmac.setClinicalstage(pdi.getPackagedDrug().getParentPackage().getPrescription().getClinicalStage());
                 dispenseFarmac.setCurrent(pdi.getPackagedDrug().getParentPackage().getPrescription().getCurrent());
@@ -82,13 +83,18 @@ public class TemporaryRecordsManager {
                 dispenseFarmac.setDateexpectedstring(pdi.getDateExpectedString());
                 dispenseFarmac.setDrugname(pdi.getDrugName());
                 dispenseFarmac.setDispensedate(pdi.getDispenseDate());
-                s.save(dispenseFarmac);
+               try{
+                     s.save(dispenseFarmac);
+               }catch(Exception e){
+                   System.err.println("Erro ao gravar "+e.getMessage());
+               }
+              
             }
-
+            
         }
-
+        
         return true;
-
+        
     }
 
     /**
@@ -105,9 +111,9 @@ public class TemporaryRecordsManager {
         for (int i = 0; i < adList.size(); i++) {
             s.save(adList.get(i));
         }
-
+        
         return true;
-
+        
     }
 
     /**
@@ -123,7 +129,7 @@ public class TemporaryRecordsManager {
         for (int i = 0; i < dList.size(); i++) {
             s.save(dList.get(i));
         }
-
+        
     }
 
     /**
@@ -135,18 +141,18 @@ public class TemporaryRecordsManager {
      */
     public static boolean hasUnsubmittedRecords(Session s)
             throws HibernateException {
-
+        
         long numPdis = (Long) s.createQuery(
                 "select count (pd.id) from PackageDrugInfo as pd where pd.sentToEkapa = false")
                 .uniqueResult();
-
+        
         long numAdh = (Long) s.createQuery(
                 "select count (ad.id) from AdherenceRecord as ad")
                 .uniqueResult();
-
+        
         long numDel = (Long) s.createQuery(
                 "select count (del.id) from DeletedItem as del").uniqueResult();
-
+        
         return (numPdis > 0) || (numAdh > 0) || (numDel > 0);
     }
 
@@ -167,7 +173,7 @@ public class TemporaryRecordsManager {
                         + "and pd.pickupDate is not null "
                         + "order by pd.id asc")
                 .setMaxResults(10).list();
-
+        
         return pdiList;
     }
 
@@ -185,7 +191,7 @@ public class TemporaryRecordsManager {
                 .createQuery(
                         "from AdherenceRecord as ad where order by ad.id asc")
                 .setMaxResults(10).list();
-
+        
         return adhList;
     }
 
@@ -203,7 +209,7 @@ public class TemporaryRecordsManager {
                 .createQuery(
                         "from DeletedItem as del where order by del.id asc")
                 .setMaxResults(10).list();
-
+        
         return delList;
     }
 
@@ -231,15 +237,15 @@ public class TemporaryRecordsManager {
      */
     public static void deleteSubmittedAdherenceRecords(Session s,
             List<AdherenceRecord> adList) throws HibernateException {
-
+        
         String adDelete = "delete AdherenceRecord where id = :adId";
-
+        
         for (int i = 0; i < adList.size(); i++) {
-
+            
             s.createQuery(adDelete).setInteger("adId", adList.get(i).getId())
                     .executeUpdate();
         }
-
+        
     }
 
     /**
@@ -251,16 +257,16 @@ public class TemporaryRecordsManager {
      */
     public static void deleteSubmittedDeletedItems(Session s,
             List<DeletedItem> delList) throws HibernateException {
-
+        
         String delDelete = "delete DeletedItem where id = :delId";
-
+        
         for (int i = 0; i < delList.size(); i++) {
-
+            
             s.createQuery(delDelete)
                     .setInteger("delId", delList.get(i).getId())
                     .executeUpdate();
         }
-
+        
     }
 
     /**
@@ -274,13 +280,13 @@ public class TemporaryRecordsManager {
     public static PackageDrugInfo getPDIforPackagedDrug(Session s,
             PackagedDrugs pd) throws HibernateException {
         PackageDrugInfo pdi = null;
-
+        
         pdi = (PackageDrugInfo) s.createQuery(
                 "from PackageDrugInfo as pdi where pdi.packagedDrug.id =:pdId")
                 .setInteger("pdId", pd.getId()).setMaxResults(1).uniqueResult();
-
+        
         return pdi;
-
+        
     }
 
     /**
@@ -298,7 +304,7 @@ public class TemporaryRecordsManager {
                 .createQuery(
                         "from PackageDrugInfo as pd where pd.packagedDrug.parentPackage.id =:packId")
                 .setInteger("packId", p.getId()).list();
-
+        
         return pdiList;
     }
 
@@ -313,14 +319,14 @@ public class TemporaryRecordsManager {
     public static AdherenceRecord getAdherenceRecordsForPillCount(Session s,
             PillCount pc) throws HibernateException {
         AdherenceRecord adh = null;
-
+        
         adh = (AdherenceRecord) s.createQuery(
                 "from AdherenceRecord as ad where ad.pillCountId =:pcId")
                 .setInteger("pcId", pc.getId()).setMaxResults(1).uniqueResult();
-
+        
         return adh;
     }
-
+    
     public static void deletePackageDrugInfosForPackage(Session session, Packages pack) {
         session.createQuery("delete PackageDrugInfo where packageId = :id")
                 .setString("id", pack.getPackageId())
@@ -340,7 +346,7 @@ public class TemporaryRecordsManager {
             Session sess, Patient pat) throws HibernateException {
         String query = "from PackageDrugInfo as pd where pd.notes = ''  "
                 + "and pd.patientId = '" + pat.getPatientId() + "'";
-
+        
         List<PackageDrugInfo> pdiList = sess
                 .createQuery(query).list();
         return pdiList;
@@ -355,16 +361,15 @@ public class TemporaryRecordsManager {
      * @return List<PackageDrugInfo>
      * @throws HibernateException
      */
-
     public static void updateOpenmrsUnsubmittedPackageDrugInfos(Session s,
             List<PackageDrugInfo> pdList, Patient pat) throws HibernateException {
-
+        
         for (PackageDrugInfo pdi : pdList) {
             log.info("Updating  PackageDrugInfo for patient: " + pdi.getPatientId());
             pdi.setPatientId(pat.getPatientId());
             pdi.setPatientLastName(pat.getLastname());
             pdi.setPatientFirstName(pat.getFirstNames());
-
+            
         }
     }
 }
