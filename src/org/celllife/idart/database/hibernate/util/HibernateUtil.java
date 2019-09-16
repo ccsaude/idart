@@ -21,6 +21,8 @@ package org.celllife.idart.database.hibernate.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
+import org.ccs.openmrs.migracao.swingreverse.SyncPacientesFarmac;
 import org.celllife.idart.commonobjects.iDartProperties;
 import org.celllife.idart.database.hibernate.AccumulatedDrugs;
 import org.celllife.idart.database.hibernate.Alerts;
@@ -69,6 +71,8 @@ import org.celllife.idart.database.hibernate.StockLevel;
 import org.celllife.idart.database.hibernate.StockTake;
 import org.celllife.idart.database.hibernate.Study;
 import org.celllife.idart.database.hibernate.StudyParticipant;
+import org.celllife.idart.database.hibernate.SyncTempDispense;
+import org.celllife.idart.database.hibernate.SyncTempPatient;
 import org.celllife.idart.database.hibernate.User;
 import org.celllife.idart.database.hibernate.tmp.AdherenceRecord;
 import org.celllife.idart.database.hibernate.tmp.DeletedItem;
@@ -173,6 +177,14 @@ public class HibernateUtil {
 		ac.addAnnotatedClass(RegimeTerapeutico.class);
 		ac.addAnnotatedClass(Motivomudanca.class);
 		ac.addAnnotatedClass(LinhaT.class);
+                  /*
+                * Adicionei a classe SyncTempDispense e SyncTempPatient
+                * Modified by : Colaco
+                * Modifica date: 16/09/2019
+                */  
+                
+                ac.addAnnotatedClass(SyncTempDispense.class);
+                ac.addAnnotatedClass(SyncTempPatient.class);
                 /*
                 * Adicionei a classe RegimeTerapeuticoDrugs
                 * Modified by : Agnaldo Samuel
