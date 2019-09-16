@@ -21,8 +21,6 @@ package org.celllife.idart.database.hibernate.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
-import org.ccs.openmrs.migracao.swingreverse.SyncPacientesFarmac;
 import org.celllife.idart.commonobjects.iDartProperties;
 import org.celllife.idart.database.hibernate.AccumulatedDrugs;
 import org.celllife.idart.database.hibernate.Alerts;

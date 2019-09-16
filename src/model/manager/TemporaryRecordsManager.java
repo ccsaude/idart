@@ -38,6 +38,7 @@ public class TemporaryRecordsManager {
 
             if (iDartProperties.FARMAC) {
                 SyncTempDispense dispenseFarmac = new SyncTempDispense();
+                 dispenseFarmac.setId(pdi.getId());
                 dispenseFarmac.setDate(pdi.getPackagedDrug().getParentPackage().getPrescription().getDate());
                 dispenseFarmac.setClinicalstage(pdi.getPackagedDrug().getParentPackage().getPrescription().getClinicalStage());
                 dispenseFarmac.setCurrent(pdi.getPackagedDrug().getParentPackage().getPrescription().getCurrent());
