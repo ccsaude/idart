@@ -3007,11 +3007,11 @@ public class NewPatientPackaging extends GenericFormGui implements
 
         Calendar theCal = Calendar.getInstance();
         theCal.setTime(mainPrescription.getDate());
-            theCal.add(Calendar.DATE, i * 30);
+        theCal.add(Calendar.DATE, i * 30);
 
         Calendar theCalEnd = Calendar.getInstance();
         theCalEnd.setTime(theCal.getTime());
-            theCalEnd.add(Calendar.DATE, i * 30);
+        theCalEnd.add(Calendar.DATE, i * 30);
 
         String prescriptionId = PackageManager.getNewPrescriptionId(getHSession(), mainPrescription.getPatient(), theCal.getTime());
 
@@ -3042,12 +3042,13 @@ public class NewPatientPackaging extends GenericFormGui implements
         prescription.setTpc(mainPrescription.getTpc());
         prescription.setTpi(mainPrescription.getTpi());
         prescription.setDrugTypes(mainPrescription.getDrugTypes());
-    //    prescription.setPrescribedDrugs(mainPrescription.getPrescribedDrugs());
+        //    prescription.setPrescribedDrugs(mainPrescription.getPrescribedDrugs());
 //        prescription.setPackages(mainPrescription.getPackages());
         prescription.setWeight(mainPrescription.getWeight());
         prescription.setDispensaTrimestral(mainPrescription.getDispensaTrimestral());
-        if(mainPrescription.getDispensaTrimestral() == 1)
-        prescription.setTipoDT("Manuntencao");
+        if (mainPrescription.getDispensaTrimestral() == 1) {
+            prescription.setTipoDT("Manuntencao");
+        }
 
         PackageManager.saveNewPrescription(getHSession(), prescription, true);
 
@@ -3069,9 +3070,6 @@ public class NewPatientPackaging extends GenericFormGui implements
 //                prescribedDrugsList.add(newPD);
 //            }
 //        }
-        
-        
-        
         return prescription;
 
     }
@@ -3672,7 +3670,7 @@ public class NewPatientPackaging extends GenericFormGui implements
             pditemp.setNumberOfLabels(0);
             pditemp.setCluser(user);
             pditemp.setDispenseDate(theCal.getTime());
-            pditemp.setWeeksSupply(4);
+            pditemp.setWeeksSupply(syncTempDispense.getWeekssupply());
             pditemp.setQtyInHand(syncTempDispense.getQtyinhand());
             pditemp.setSummaryQtyInHand(syncTempDispense.getSummaryqtyinhand());
             pditemp.setQtyInLastBatch(syncTempDispense.getQtyinlastbatch());
@@ -3716,7 +3714,7 @@ public class NewPatientPackaging extends GenericFormGui implements
             Doctor doctorProvider = PrescriptionManager.getProvider(getHSession());
             LinhaT linhat = AdministrationManager.getLinha(getHSession(), syncTempDispense.getLinhaid());
             RegimeTerapeutico regimeTerapeutico = AdministrationManager.getRegimeTerapeutico(getHSession(), syncTempDispense.getRegimeid());
-                    
+
             prescription.setClinicalStage(0);
             prescription.setCurrent('T');
             prescription.setDate(syncTempDispense.getDate());
@@ -3727,7 +3725,7 @@ public class NewPatientPackaging extends GenericFormGui implements
             prescription.setPatient(importedPatientIdentifier.getPatient());
             prescription.setPrescriptionId(prescriptionId);
             prescription.setReasonForUpdate(syncTempDispense.getReasonforupdate());
-            prescription.setNotes(syncTempDispense.getNotes());
+            prescription.setNotes("FARMAC: "+syncTempDispense.getNotes());
             prescription.setRegimeTerapeutico(regimeTerapeutico);
             prescription.setLinha(linhat);
             prescription.setDatainicionoutroservico(syncTempDispense.getDatainicionoutroservico());

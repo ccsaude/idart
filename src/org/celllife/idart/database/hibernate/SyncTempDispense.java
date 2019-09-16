@@ -168,7 +168,7 @@ public class SyncTempDispense implements Serializable {
     private String dateexpectedstring;
     @Column(name = "pickupdate")
     @Temporal(TemporalType.TIMESTAMP)
-    private DateTime pickupdate;
+    private Date pickupdate;
     @Column(name = "timesperday")
     private Integer timesperday;
     @Column(name = "weekssupply")
@@ -505,11 +505,11 @@ public class SyncTempDispense implements Serializable {
         this.dateexpectedstring = dateexpectedstring;
     }
 
-    public DateTime getPickupdate() {
+    public Date getPickupdate() {
         return pickupdate;
     }
 
-    public void setPickupdate(DateTime pickupdate) {
+    public void setPickupdate(Date pickupdate) {
         this.pickupdate = pickupdate;
     }
 

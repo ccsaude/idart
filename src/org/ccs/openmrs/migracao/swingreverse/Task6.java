@@ -124,7 +124,7 @@ public class Task6 extends SwingWorker<String, Void> {
                 Thread.sleep(this.rnd.nextInt(50) + 1);
                 if (lengthOfTask == 0) {
                     System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                    System.err.println("#### Sem Dispensas Listadas para a Migracao ####");
+                    System.err.println("#### Sem Dispensas Listadas ####");
                     return "Done";
                 }
                 //   Users users = usersService.findById("1");
