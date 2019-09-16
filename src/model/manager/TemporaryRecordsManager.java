@@ -14,6 +14,7 @@ import org.celllife.idart.database.hibernate.SyncTempDispense;
 import org.celllife.idart.database.hibernate.tmp.AdherenceRecord;
 import org.celllife.idart.database.hibernate.tmp.DeletedItem;
 import org.celllife.idart.database.hibernate.tmp.PackageDrugInfo;
+import org.celllife.idart.database.hibernate.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -38,6 +39,7 @@ public class TemporaryRecordsManager {
             s.save(pdi);
             
             if (iDartProperties.FARMAC) {
+                Session sess = HibernateUtil.getNewSession();
                 SyncTempDispense dispenseFarmac = new SyncTempDispense();
                 dispenseFarmac.setDate(pdi.getPackagedDrug().getParentPackage().getPrescription().getDate());
                 dispenseFarmac.setClinicalstage(pdi.getPackagedDrug().getParentPackage().getPrescription().getClinicalStage());
@@ -83,7 +85,8 @@ public class TemporaryRecordsManager {
                 dispenseFarmac.setDrugname(pdi.getDrugName());
                 dispenseFarmac.setDispensedate(pdi.getDispenseDate());
                try{
-                     s.save(dispenseFarmac);
+                     sess.save(dispenseFarmac);
+                     sess.flush();
                }catch(Exception e){
                    System.err.println("Erro ao gravar "+e.getMessage());
                }
