@@ -3352,6 +3352,8 @@ public class NewPatientPackaging extends GenericFormGui implements
                         // before printing the labels, save pdi List
                         TemporaryRecordsManager.savePackageDrugInfosToDB(
                                 getHSession(), allPackagedDrugsList);
+                       
+
                         getHSession().flush();
 
                     }
@@ -3515,12 +3517,6 @@ public class NewPatientPackaging extends GenericFormGui implements
 
         tblPrescriptionInfo.clearAll();
         pillCountTable.clearTable();
-
-        //Para farmac Insere dispensas para US
-        if (iDartProperties.FARMAC) {
-            TemporaryRecordsManager.savePackageDrugInfosFarmac(allPackagedDrugsList);
-            getHSession().flush();
-        }
 
     }
 
