@@ -3518,7 +3518,7 @@ public class NewPatientPackaging extends GenericFormGui implements
 
         //Para farmac Insere dispensas para US
         if (iDartProperties.FARMAC) {
-            TemporaryRecordsManager.savePackageDrugInfosFarmac(getHSession(), allPackagedDrugsList);
+            TemporaryRecordsManager.savePackageDrugInfosFarmac(allPackagedDrugsList);
             getHSession().flush();
         }
 

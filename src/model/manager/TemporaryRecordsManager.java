@@ -40,10 +40,9 @@ public class TemporaryRecordsManager {
         return true;
     }
 
-    public static boolean savePackageDrugInfosFarmac(Session s, List<PackageDrugInfo> pdList) throws HibernateException {
+    public static boolean savePackageDrugInfosFarmac(List<PackageDrugInfo> pdList) throws HibernateException {
         log.info("Saving package drug infos FARMAC");
         for (PackageDrugInfo pdi : pdList) {
-            if (PackageManager.getDispenseFarmac(s, pdi.getPackagedDrug().getParentPackage().getPrescription().getPatient(), pdi) == null) {
                 Session sess = HibernateUtil.getNewSession();
                 SyncTempDispense dispenseFarmac = new SyncTempDispense();
                 dispenseFarmac.setDate(pdi.getPackagedDrug().getParentPackage().getPrescription().getDate());
@@ -96,8 +95,6 @@ public class TemporaryRecordsManager {
                     System.err.println("Erro ao gravar " + e.getMessage());
                 }
             }
-
-        }
 
         return true;
 
