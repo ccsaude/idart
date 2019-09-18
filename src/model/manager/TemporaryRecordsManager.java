@@ -36,7 +36,11 @@ public class TemporaryRecordsManager {
         log.info("Saving package drug infos.");
         for (PackageDrugInfo pdi : pdList) {
             if (pdi.getId() == 0) {
+                try{
                 s.save(pdi);
+                }catch(Exception e){
+                    System.out.println("Erro 1: "+e.getMessage());
+                }
                 //Para farmac Insere dispensas para US
                 if (iDartProperties.FARMAC) {
                     savePackageDrugInfosFarmac(s, pdi);

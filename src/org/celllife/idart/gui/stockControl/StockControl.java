@@ -283,82 +283,81 @@ public class StockControl extends GenericAdminGui {
         }
 
         // Enviar Dispensas para OpenMRS : Alterado Colaco 06-07-2016
-        
-    if (iDartProperties.downReferralMode.equalsIgnoreCase(iDartProperties.ONLINE_DOWNREFERRAL_MODE) && !iDartProperties.FARMAC) {
-        lblDispenseToOpenmrs = new Label(compOptions, SWT.NONE);
-        lblDispenseToOpenmrs.setBounds(new Rectangle(50, 180, 50, 43));
-        lblDispenseToOpenmrs.setImage(ResourceUtils.getImage(iDartImage.PACKAGERETURN));
+        if (iDartProperties.downReferralMode.equalsIgnoreCase(iDartProperties.ONLINE_DOWNREFERRAL_MODE) && !iDartProperties.FARMAC) {
+            lblDispenseToOpenmrs = new Label(compOptions, SWT.NONE);
+            lblDispenseToOpenmrs.setBounds(new Rectangle(50, 180, 50, 43));
+            lblDispenseToOpenmrs.setImage(ResourceUtils.getImage(iDartImage.PACKAGERETURN));
 
-        lblDispenseToOpenmrs.addMouseListener(new MouseListener() {
+            lblDispenseToOpenmrs.addMouseListener(new MouseListener() {
 
-            @Override
-            public void mouseUp(MouseEvent mu) {
-                ExportDispenses exportDispenses = new ExportDispenses();
-                exportDispenses.createAndShowGUIExport();
-            }
+                @Override
+                public void mouseUp(MouseEvent mu) {
+                    ExportDispenses exportDispenses = new ExportDispenses();
+                    exportDispenses.createAndShowGUIExport();
+                }
 
-            @Override
-            public void mouseDown(MouseEvent md) {
-            }
+                @Override
+                public void mouseDown(MouseEvent md) {
+                }
 
-            @Override
-            public void mouseDoubleClick(MouseEvent dc) {
-            }
-        });
+                @Override
+                public void mouseDoubleClick(MouseEvent dc) {
+                }
+            });
 
-        btnDispenseToOpenmrs = new Button(compOptions, SWT.NONE);
-        btnDispenseToOpenmrs.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-        btnDispenseToOpenmrs.setBounds(new Rectangle(105, 182, 260, 40));
-        btnDispenseToOpenmrs.setText("Enviar Dispensas para OpenMRS"); //$NON-NLS-1$
-        btnDispenseToOpenmrs.setToolTipText(Messages.getString("Clique este menu para enviar as dispensas do iDART para OpenMRS")); //$NON-NLS-1$
-        btnDispenseToOpenmrs.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-            @Override
-            public void widgetSelected(
-                    org.eclipse.swt.events.SelectionEvent e) {
-                ExportDispenses exportDispenses = new ExportDispenses();
-                exportDispenses.createAndShowGUIExport();
-            }
-        });
+            btnDispenseToOpenmrs = new Button(compOptions, SWT.NONE);
+            btnDispenseToOpenmrs.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+            btnDispenseToOpenmrs.setBounds(new Rectangle(105, 182, 260, 40));
+            btnDispenseToOpenmrs.setText("Enviar Dispensas para OpenMRS"); //$NON-NLS-1$
+            btnDispenseToOpenmrs.setToolTipText(Messages.getString("Clique este menu para enviar as dispensas do iDART para OpenMRS")); //$NON-NLS-1$
+            btnDispenseToOpenmrs.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+                @Override
+                public void widgetSelected(
+                        org.eclipse.swt.events.SelectionEvent e) {
+                    ExportDispenses exportDispenses = new ExportDispenses();
+                    exportDispenses.createAndShowGUIExport();
+                }
+            });
 
-        btnDispenseToOpenmrs.setEnabled(true);
-    }else{
-        lblDispenseToOpenmrs = new Label(compOptions, SWT.NONE);
-        lblDispenseToOpenmrs.setBounds(new Rectangle(50, 180, 50, 43));
-        lblDispenseToOpenmrs.setImage(ResourceUtils.getImage(iDartImage.PACKAGERETURN));
+            btnDispenseToOpenmrs.setEnabled(true);
+        } else {
+            lblDispenseToOpenmrs = new Label(compOptions, SWT.NONE);
+            lblDispenseToOpenmrs.setBounds(new Rectangle(50, 180, 50, 43));
+            lblDispenseToOpenmrs.setImage(ResourceUtils.getImage(iDartImage.PACKAGERETURN));
 
-        lblDispenseToOpenmrs.addMouseListener(new MouseListener() {
+            lblDispenseToOpenmrs.addMouseListener(new MouseListener() {
 
-            @Override
-            public void mouseUp(MouseEvent mu) {
-                SyncDispensasFarmac syncDispensasFarmac = new SyncDispensasFarmac();
-                syncDispensasFarmac.createAndShowGUI();
-            }
+                @Override
+                public void mouseUp(MouseEvent mu) {
+                    SyncDispensasFarmac syncDispensasFarmac = new SyncDispensasFarmac();
+                    syncDispensasFarmac.createAndShowGUI();
+                }
 
-            @Override
-            public void mouseDown(MouseEvent md) {
-            }
+                @Override
+                public void mouseDown(MouseEvent md) {
+                }
 
-            @Override
-            public void mouseDoubleClick(MouseEvent dc) {
-            }
-        });
+                @Override
+                public void mouseDoubleClick(MouseEvent dc) {
+                }
+            });
 
-        btnDispenseToOpenmrs = new Button(compOptions, SWT.NONE);
-        btnDispenseToOpenmrs.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
-        btnDispenseToOpenmrs.setBounds(new Rectangle(105, 182, 260, 40));
-        btnDispenseToOpenmrs.setText("Exportar Dispensas para US"); //$NON-NLS-1$
-        btnDispenseToOpenmrs.setToolTipText(Messages.getString("Clique este menu para enviar as dispensas do iDART a Unidade Sanotaria")); //$NON-NLS-1$
-        btnDispenseToOpenmrs.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-            @Override
-            public void widgetSelected(
-                    org.eclipse.swt.events.SelectionEvent e) {
-               SyncDispensasFarmac syncDispensasFarmac = new SyncDispensasFarmac();
-                syncDispensasFarmac.createAndShowGUI();
-            }
-        });
+            btnDispenseToOpenmrs = new Button(compOptions, SWT.NONE);
+            btnDispenseToOpenmrs.setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
+            btnDispenseToOpenmrs.setBounds(new Rectangle(105, 182, 260, 40));
+            btnDispenseToOpenmrs.setText("Exportar Dispensas para US"); //$NON-NLS-1$
+            btnDispenseToOpenmrs.setToolTipText(Messages.getString("Clique este menu para enviar as dispensas do iDART a Unidade Sanotaria")); //$NON-NLS-1$
+            btnDispenseToOpenmrs.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+                @Override
+                public void widgetSelected(
+                        org.eclipse.swt.events.SelectionEvent e) {
+                    SyncDispensasFarmac syncDispensasFarmac = new SyncDispensasFarmac();
+                    syncDispensasFarmac.createAndShowGUI();
+                }
+            });
 
-        btnDispenseToOpenmrs.setEnabled(true);
-    }
+            btnDispenseToOpenmrs.setEnabled(true);
+        }
         if (iDartProperties.downReferralMode.equalsIgnoreCase(iDartProperties.ONLINE_DOWNREFERRAL_MODE) && !iDartProperties.FARMAC) {
             // Return Uncollected Packages
             lblSync = new Label(compOptions, SWT.NONE);
@@ -376,7 +375,7 @@ public class StockControl extends GenericAdminGui {
                 public void mouseUp(MouseEvent mu) {
 
                     ImportarDispensasFarmac importarDispensasFarmac = new ImportarDispensasFarmac();
-                importarDispensasFarmac.createAndShowGUIExport();
+                    importarDispensasFarmac.createAndShowGUIExport();
                 }
 
                 @Override
@@ -400,8 +399,8 @@ public class StockControl extends GenericAdminGui {
                 @Override
                 public void mouseUp(MouseEvent mu) {
 
-                 ImportarDispensasFarmac importarDispensasFarmac = new ImportarDispensasFarmac();
-                importarDispensasFarmac.createAndShowGUIExport();
+                    ImportarDispensasFarmac importarDispensasFarmac = new ImportarDispensasFarmac();
+                    importarDispensasFarmac.createAndShowGUIExport();
                 }
 
                 @Override

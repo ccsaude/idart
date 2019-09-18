@@ -120,7 +120,7 @@ public class ImportarDispensasFarmac extends JPanel implements Runnable{
         }
         JFrame frame = new JFrame("Importar Dispensas da FARMAC");
         frame.setDefaultCloseOperation(1);
-        frame.getContentPane().add(new ExportDispenses());
+        frame.getContentPane().add(new ImportarDispensasFarmac());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

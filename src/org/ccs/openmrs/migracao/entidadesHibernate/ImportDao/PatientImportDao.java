@@ -130,7 +130,7 @@ public class PatientImportDao
     public List<SyncTempDispense> findAllExported(String clinicName) {
          List syncDispenseExport = null;
     try{
-         syncDispenseExport = this.getCurrentSession().createQuery("from SyncTempDispense where syncTempDispenseid = "+clinicName).list();
+         syncDispenseExport = this.getCurrentSession().createQuery("from SyncTempDispense where syncTempDispenseid = '"+clinicName+"'").list();
     }catch(Exception e){
     System.out.println(e.getMessage());
     }

@@ -99,7 +99,7 @@ public class JRestoreController {
         switch (type) {
             case "restore":
                 if (isWindows()) {
-                    commands.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_restore");
+                    commands.add("C:\\Program Files\\PostgreSQL\\9.3\\bin\\pg_restore");
                 } else {
                     commands.add("/opt/PostgreSQL/9.6/bin/pg_restore");
                 }
@@ -121,5 +121,4 @@ public class JRestoreController {
         }
         return commands;
     }
-
 }

@@ -133,12 +133,15 @@ public class PackageManager {
             Date theDate) throws HibernateException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
         List<Prescription> scriptList = new ArrayList<Prescription>();
-        for (Prescription pre : pat.getPrescriptions()) {
-            if (sdf.format(pre.getDate()).equals(sdf.format(theDate))) {
-                scriptList.add(pre);
+        if (!pat.getPrescriptions().isEmpty()) {
+            for (Prescription pre : pat.getPrescriptions()) {
+                if (sdf.format(pre.getDate()).equals(sdf.format(theDate))) {
+                    scriptList.add(pre);
+                }
             }
         }
-        return scriptList;
+            return scriptList;
+        
     }
 
     /**
@@ -191,7 +194,8 @@ public class PackageManager {
         presc = session.createQuery(
                 "select prescription from Prescription as prescription "
                 + "where prescription.date = '"
-                + datePickup + "' AND patient = " + patient.getId()).list();
+                + datePickup + "' AND patient = " + patient.getId()
+        ).list();
 
         Iterator<Prescription> iter = presc.iterator();
         if (iter.hasNext()) {
@@ -240,7 +244,7 @@ public class PackageManager {
     public static void saveNewPrescription(Session sess,
             Prescription preToBeSaved, boolean previousPrescriptionDeleted)
             throws HibernateException, IllegalArgumentException {
-
+            
         if (!previousPrescriptionDeleted) {
             List<Prescription> updatedPrescriptions = sess
                     .createQuery(
@@ -266,10 +270,12 @@ public class PackageManager {
             }
 
         }
-        sess.save(preToBeSaved);
+      
         // add dispense more than 1 month
         try {
-            sess.flush();
+              sess.save(preToBeSaved);
+   //         sess.flush();
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -906,7 +912,7 @@ public class PackageManager {
         }
 
         sess.save(packageToSave);
-        sess.flush();
+     //   sess.flush();
 
     }
 
@@ -1422,11 +1428,10 @@ public class PackageManager {
             return true;
         }
     }
-    
-    
-        @SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     public static SyncTempDispense getDispenseFarmac(Session session,
-            Patient patient,PackageDrugInfo pdi) throws HibernateException {
+            Patient patient, PackageDrugInfo pdi) throws HibernateException {
         SyncTempDispense id = null;
         List<SyncTempDispense> presc = null;
         presc = session.createQuery(
@@ -1434,7 +1439,7 @@ public class PackageManager {
                 + "where farmac_dispense.pickupdate = '" + pdi.getPickupDate()
                 + "' AND farmac_dispense.drugname = " + pdi.getDrugName()
                 + " AND farmac_dispense.patientid = " + patient.getId()
-                ).list();
+        ).list();
 
         Iterator<SyncTempDispense> iter = presc.iterator();
         if (iter.hasNext()) {
@@ -1442,5 +1447,5 @@ public class PackageManager {
         }
         return id;
     }
-    
+
 }
