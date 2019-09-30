@@ -283,7 +283,7 @@ public class StockControl extends GenericAdminGui {
         }
 
         // Enviar Dispensas para OpenMRS : Alterado Colaco 06-07-2016
-        if (iDartProperties.downReferralMode.equalsIgnoreCase(iDartProperties.ONLINE_DOWNREFERRAL_MODE) && !iDartProperties.FARMAC) {
+        if (!iDartProperties.downReferralMode.equalsIgnoreCase(iDartProperties.ONLINE_DOWNREFERRAL_MODE) || !iDartProperties.FARMAC) {
             lblDispenseToOpenmrs = new Label(compOptions, SWT.NONE);
             lblDispenseToOpenmrs.setBounds(new Rectangle(50, 180, 50, 43));
             lblDispenseToOpenmrs.setImage(ResourceUtils.getImage(iDartImage.PACKAGERETURN));

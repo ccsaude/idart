@@ -24,15 +24,17 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class ExportDispenses extends JPanel implements Runnable{
+public class ExportDispenses extends JPanel implements Runnable {
+
     private final JProgressBar progress1;
     private final JProgressBar progress2;
     private static Boolean stop = false;
-    
- final ExecutorService executor = Executors.newFixedThreadPool(1);
+
+    final ExecutorService executor = Executors.newFixedThreadPool(1);
+
     public ExportDispenses() {
         super(new BorderLayout());
-        this.progress1 = new JProgressBar(){
+        this.progress1 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -41,7 +43,7 @@ public class ExportDispenses extends JPanel implements Runnable{
                 this.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
             }
         };
-        this.progress2 = new JProgressBar(){
+        this.progress2 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -50,7 +52,7 @@ public class ExportDispenses extends JPanel implements Runnable{
                 this.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
             }
         };
-        
+
         this.progress1.setForeground(new Color(-1426085206));
         this.progress2.setStringPainted(true);
         this.progress2.setFont(this.progress2.getFont().deriveFont(24.0f));
@@ -62,27 +64,31 @@ public class ExportDispenses extends JPanel implements Runnable{
         PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
         PrintStream standardOut = System.out;
         System.setErr(printStream);
-        this.add((Component)new JButton(new AbstractAction("Exportar Dispensas"){
+        this.add((Component) new JButton(new AbstractAction("Exportar Dispensas") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                final JButton b = (JButton)e.getSource();
+                final JButton b = (JButton) e.getSource();
                 b.setEnabled(false);
-                Task1 worker = new Task1(){
 
-                    @Override
-                    public void done() {
-                        if (b.isDisplayable()) {
-                            b.setEnabled(true);
-                            b.setLabel("Fechar");
-                        }
-                    }
-                };
-                worker.addPropertyChangeListener(new ProgressListener(ExportDispenses.this.progress2));
-                worker.execute();
                 if (b.getLabel().equalsIgnoreCase("Fechar")) {
-                     ExportDispenses.this.setStop(true);
+                    ExportDispenses.this.setStop(true);
                     ExportDispenses.this.setVisible(false);
+                } else {
+
+                    Task1 worker = new Task1() {
+
+                        @Override
+                        public void done() {
+                            if (b.isDisplayable()) {
+                                b.setEnabled(true);
+                                b.setLabel("Fechar");
+                            }
+                        }
+                    };
+                    worker.addPropertyChangeListener(new ProgressListener(ExportDispenses.this.progress2));
+                    worker.execute();
+
                 }
             }
 
@@ -94,7 +100,7 @@ public class ExportDispenses extends JPanel implements Runnable{
         this.setPreferredSize(new Dimension(920, 440));
     }
 
-    public static void main(String ... args) {
+    public static void main(String... args) {
         ExportDispenses exportDispenses = new ExportDispenses();
         exportDispenses.run();
 //        EventQueue.invokeLater(
@@ -108,8 +114,7 @@ public class ExportDispenses extends JPanel implements Runnable{
     public static void createAndShowGUIExport() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
         JFrame frame = new JFrame("Export Dispenses to OpenMRS");
@@ -122,20 +127,19 @@ public class ExportDispenses extends JPanel implements Runnable{
 
     @Override
     public void run() {
-         while(!stop){
+        while (!stop) {
             ExportDispenses.createAndShowGUIExport();
-             ExportDispenses.this.setStop(true);
-         }
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            ExportDispenses.this.setStop(true);
+        }
+        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-     public Boolean getStop() {
-                return stop;
-               }
+    public Boolean getStop() {
+        return stop;
+    }
 
-              public void setStop(Boolean stop) {
-                this.stop = stop;
-              }  
-    
+    public void setStop(Boolean stop) {
+        this.stop = stop;
+    }
+
 }
-

@@ -29,10 +29,11 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author colaco
  */
-public class SyncPacientesFarmac extends JPanel {
+public class SyncPacientesFarmac extends JPanel implements Runnable {
 
     private final JProgressBar progress1;
     private final JProgressBar progress2;
+    private static Boolean stop = false;
 
     public SyncPacientesFarmac() {
         super(new BorderLayout());
@@ -97,13 +98,16 @@ public class SyncPacientesFarmac extends JPanel {
     }
 
     public static /* varargs */ void main(String ... args) {
-        EventQueue.invokeLater(new Runnable(){
-
-            @Override
-            public void run() {
-                SyncPacientesFarmac.createAndShowGUI();
-            }
-        });
+        
+         SyncPacientesFarmac syncPacientFarmac = new SyncPacientesFarmac();
+        syncPacientFarmac.run();
+//        EventQueue.invokeLater(new Runnable(){
+//
+//            @Override
+//            public void run() {
+//                SyncPacientesFarmac.createAndShowGUI();
+//            }
+//        });
     }
 
     public static void createAndShowGUI() {
@@ -120,6 +124,26 @@ public class SyncPacientesFarmac extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+     public Boolean getStop() {
+        return stop;
+    }
+
+    public void setStop(Boolean stop) {
+        this.stop = stop;
+    }
+
+    @Override
+    public void run() {
+            while (!stop) {
+            SyncPacientesFarmac.createAndShowGUI();
+            SyncPacientesFarmac.this.setStop(true);
+        }
+//        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
+    
+    }
+
 
 }
 

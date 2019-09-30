@@ -30,15 +30,17 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author colaco
  */
-public class ImportarDispensasFarmac extends JPanel implements Runnable{
+public class ImportarDispensasFarmac extends JPanel implements Runnable {
+
     private final JProgressBar progress1;
     private final JProgressBar progress2;
     private static Boolean stop = false;
-    
- final ExecutorService executor = Executors.newFixedThreadPool(1);
+
+    final ExecutorService executor = Executors.newFixedThreadPool(1);
+
     public ImportarDispensasFarmac() {
         super(new BorderLayout());
-        this.progress1 = new JProgressBar(){
+        this.progress1 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -47,7 +49,7 @@ public class ImportarDispensasFarmac extends JPanel implements Runnable{
                 this.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
             }
         };
-        this.progress2 = new JProgressBar(){
+        this.progress2 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -56,7 +58,7 @@ public class ImportarDispensasFarmac extends JPanel implements Runnable{
                 this.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
             }
         };
-        
+
         this.progress1.setForeground(new Color(-1426085206));
         this.progress2.setStringPainted(true);
         this.progress2.setFont(this.progress2.getFont().deriveFont(24.0f));
@@ -68,27 +70,30 @@ public class ImportarDispensasFarmac extends JPanel implements Runnable{
         PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
         PrintStream standardOut = System.out;
         System.setErr(printStream);
-        this.add((Component)new JButton(new AbstractAction("Importar Dispensas FARMAC"){
+        this.add((Component) new JButton(new AbstractAction("Importar Dispensas FARMAC") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                final JButton b = (JButton)e.getSource();
+                final JButton b = (JButton) e.getSource();
                 b.setEnabled(false);
-                Task6 worker = new Task6(){
 
-                    @Override
-                    public void done() {
-                        if (b.isDisplayable()) {
-                            b.setEnabled(true);
-                            b.setLabel("Fechar");
-                        }
-                    }
-                };
-                worker.addPropertyChangeListener(new ProgressListener(ImportarDispensasFarmac.this.progress2));
-                worker.execute();
                 if (b.getLabel().equalsIgnoreCase("Fechar")) {
-                     ImportarDispensasFarmac.this.setStop(true);
+                    ImportarDispensasFarmac.this.setStop(true);
                     ImportarDispensasFarmac.this.setVisible(false);
+                } else {
+                    Task6 worker = new Task6() {
+
+                        @Override
+                        public void done() {
+                            if (b.isDisplayable()) {
+                                b.setEnabled(true);
+                                b.setLabel("Fechar");
+                            }
+                        }
+                    };
+                    worker.addPropertyChangeListener(new ProgressListener(ImportarDispensasFarmac.this.progress2));
+                    worker.execute();
+
                 }
             }
 
@@ -100,7 +105,7 @@ public class ImportarDispensasFarmac extends JPanel implements Runnable{
         this.setPreferredSize(new Dimension(920, 440));
     }
 
-    public static void main(String ... args) {
+    public static void main(String... args) {
         ImportarDispensasFarmac dispensasFarmac = new ImportarDispensasFarmac();
         dispensasFarmac.run();
 //        EventQueue.invokeLater(
@@ -114,8 +119,7 @@ public class ImportarDispensasFarmac extends JPanel implements Runnable{
     public static void createAndShowGUIExport() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
         JFrame frame = new JFrame("Importar Dispensas da FARMAC");
@@ -128,20 +132,19 @@ public class ImportarDispensasFarmac extends JPanel implements Runnable{
 
     @Override
     public void run() {
-         while(!stop){
+        while (!stop) {
             ImportarDispensasFarmac.createAndShowGUIExport();
-             ImportarDispensasFarmac.this.setStop(true);
-         }
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            ImportarDispensasFarmac.this.setStop(true);
+        }
+        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-     public Boolean getStop() {
-                return stop;
-               }
+    public Boolean getStop() {
+        return stop;
+    }
 
-              public void setStop(Boolean stop) {
-                this.stop = stop;
-              }  
-    
+    public void setStop(Boolean stop) {
+        this.stop = stop;
+    }
+
 }
-

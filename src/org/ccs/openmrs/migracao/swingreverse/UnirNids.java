@@ -29,13 +29,15 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author ColacoVM
  */
-public class UnirNids extends JPanel {
+public class UnirNids extends JPanel implements Runnable {
+
     private final JProgressBar progress1;
     private final JProgressBar progress2;
+    private static Boolean stop = false;
 
     public UnirNids() {
         super(new BorderLayout());
-        this.progress1 = new JProgressBar(){
+        this.progress1 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -44,7 +46,7 @@ public class UnirNids extends JPanel {
                 this.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
             }
         };
-        this.progress2 = new JProgressBar(){
+        this.progress2 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -64,26 +66,30 @@ public class UnirNids extends JPanel {
         PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
         PrintStream standardOut = System.out;
         System.setErr(printStream);
-        this.add((Component)new JButton(new AbstractAction("Unir NIDS dos Pacientes do OpenMRS para o IDART"){
+        this.add((Component) new JButton(new AbstractAction("Unir NIDS dos Pacientes do OpenMRS para o IDART") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                final JButton b = (JButton)e.getSource();
+                final JButton b = (JButton) e.getSource();
                 b.setEnabled(false);
-                Task2 worker = new Task2(){
 
-                    @Override
-                    public void done() {
-                        if (b.isDisplayable()) {
-                            b.setEnabled(true);
-                            b.setLabel("Fechar");
-                        }
-                    }
-                };
-                worker.addPropertyChangeListener(new ProgressListener(UnirNids.this.progress2));
-                worker.execute();
                 if (b.getLabel().equalsIgnoreCase("Fechar")) {
+                    UnirNids.this.setStop(false);
                     UnirNids.this.setVisible(false);
+                } else {
+                    Task2 worker = new Task2() {
+
+                        @Override
+                        public void done() {
+                            if (b.isDisplayable()) {
+                                b.setEnabled(true);
+                                b.setLabel("Fechar");
+                            }
+                        }
+                    };
+                    worker.addPropertyChangeListener(new ProgressListener(UnirNids.this.progress2));
+                    worker.execute();
+
                 }
             }
 
@@ -95,21 +101,22 @@ public class UnirNids extends JPanel {
         this.setPreferredSize(new Dimension(920, 440));
     }
 
-    public static /* varargs */ void main(String ... args) {
-        EventQueue.invokeLater(new Runnable(){
-
-            @Override
-            public void run() {
-                UnirNids.createAndShowGUI();
-            }
-        });
+    public static /* varargs */ void main(String... args) {
+        UnirNids unirNids = new UnirNids();
+        unirNids.run();
+//        EventQueue.invokeLater(new Runnable(){
+//
+//            @Override
+//            public void run() {
+//                UnirNids.createAndShowGUI();
+//            }
+//        });
     }
 
     public static void createAndShowGUI() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
         JFrame frame = new JFrame("Unir NIDS dos Pacientes do OpenMRS para o IDART");
@@ -120,5 +127,21 @@ public class UnirNids extends JPanel {
         frame.setVisible(true);
     }
 
-}
+    @Override
+    public void run() {
+        while (!stop) {
+            UnirNids.createAndShowGUI();
+            UnirNids.this.setStop(true);
+        }
+        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    public Boolean getStop() {
+        return stop;
+    }
+
+    public void setStop(Boolean stop) {
+        this.stop = stop;
+    }
+
+}

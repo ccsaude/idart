@@ -20,7 +20,7 @@ public class iDartProperties {
         
         public static final String ZIPFILEPASSWORD = "!cc54ud3";
         
-        public static final boolean FARMAC = false;
+        public static final boolean FARMAC = true;
 
 	public final static String OFFLINE_DOWNREFERRAL_MODE = "offline";
 
@@ -30,7 +30,7 @@ public class iDartProperties {
 
 	public static boolean allowMultipleUncollectedPackages = false;
 
-	public static String downReferralMode = "offline";
+	public static String downReferralMode = "online";
 
 	public static boolean showDownReferButton = false;
 
@@ -38,7 +38,7 @@ public class iDartProperties {
 
 	public static String hibernateConnectionUrl = "jdbc:postgresql://localhost:5432/pharm";
 
-	public static String hibernatePassword = "root";
+	public static String hibernatePassword = "postgres";
 
 	public static String hibernateUsername = "postgres";
         

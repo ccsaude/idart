@@ -362,10 +362,10 @@ public class GeneralAdmin extends GenericAdminGui {
         //Desactivar a actualizar DRUG
         btnDrugsUpdate.setEnabled(false);
 
-        if (!iDartProperties.enableDrugEditor) {
-            btnDrugsAdd.setEnabled(false);
-            btnDrugsUpdate.setEnabled(false);
-        }
+//        if (!iDartProperties.enableDrugEditor) {
+//            btnDrugsAdd.setEnabled(false);
+//            btnDrugsUpdate.setEnabled(false);
+//        }
 
         if (getUserPermission() == 'C') {
             btnDrugsAdd.setEnabled(true);

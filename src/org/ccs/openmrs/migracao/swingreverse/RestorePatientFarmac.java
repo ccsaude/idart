@@ -13,6 +13,7 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.PrintStream;
+import java.util.Locale;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -29,14 +30,16 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author colaco
  */
-public class RestorePatientFarmac extends JPanel {
+public class RestorePatientFarmac extends JPanel implements Runnable {
 
     private final JProgressBar progress1;
     private final JProgressBar progress2;
+    private static Boolean stop = false;
 
     public RestorePatientFarmac() {
         super(new BorderLayout());
-        this.progress1 = new JProgressBar(){
+       
+        this.progress1 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -45,7 +48,7 @@ public class RestorePatientFarmac extends JPanel {
                 this.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
             }
         };
-        this.progress2 = new JProgressBar(){
+        this.progress2 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -65,52 +68,56 @@ public class RestorePatientFarmac extends JPanel {
         PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
         PrintStream standardOut = System.out;
         System.setErr(printStream);
-        this.add((Component)new JButton(new AbstractAction("Carregar Pacientes da Unidade Sanitaria"){
+        this.add((Component) new JButton(new AbstractAction("Carregar Pacientes da Unidade Sanitaria") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                final JButton b = (JButton)e.getSource();
+                final JButton b = (JButton) e.getSource();
                 b.setEnabled(false);
-                Task4 worker = new Task4(){
 
-                    @Override
-                    public void done() {
-                        if (b.isDisplayable()) {
-                            b.setEnabled(true);
-                            b.setLabel("Fechar");
-                        }
-                    }
-                };
-                worker.addPropertyChangeListener(new ProgressListener(RestorePatientFarmac.this.progress2));
-                worker.execute();
                 if (b.getLabel().equalsIgnoreCase("Fechar")) {
+                    RestorePatientFarmac.this.setStop(true);
                     RestorePatientFarmac.this.setVisible(false);
+                } else {
+
+                    Task4 worker = new Task4() {
+
+                        @Override
+                        public void done() {
+                            if (b.isDisplayable()) {
+                                b.setEnabled(true);
+                                b.setLabel("Fechar");
+                            }
+                        }
+                    };
+                    worker.addPropertyChangeListener(new ProgressListener(RestorePatientFarmac.this.progress2));
+                    worker.execute();
                 }
             }
 
         }), "South");
-        JPanel p = new JPanel(new GridLayout(1, 2));
+        JPanel  p = new JPanel(new GridLayout(1, 2));
         p.add(new JScrollPane(textArea));
         p.add(this.progress2);
         this.add(p);
         this.setPreferredSize(new Dimension(920, 440));
     }
 
-    public static /* varargs */ void main(String ... args) {
-        EventQueue.invokeLater(new Runnable(){
-
-            @Override
-            public void run() {
-                RestorePatientFarmac.createAndShowGUI();
-            }
-        });
+    public static /* varargs */ void main(String... args) {
+        RestorePatientFarmac restoreFarmac = new RestorePatientFarmac();
+        restoreFarmac.run();
+//        EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 
     public static void createAndShowGUI() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
         JFrame frame = new JFrame("Carregar Pacientes da Unidade Sanitaria");
@@ -121,5 +128,23 @@ public class RestorePatientFarmac extends JPanel {
         frame.setVisible(true);
     }
 
-}
+    public Boolean getStop() {
+        return stop;
+    }
 
+    public void setStop(Boolean stop) {
+        this.stop = stop;
+    }
+
+    @Override
+    public void run() {
+        while (!stop) {
+            RestorePatientFarmac.createAndShowGUI();
+            RestorePatientFarmac.stop = true;
+        }
+//        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
+
+    }
+
+}
