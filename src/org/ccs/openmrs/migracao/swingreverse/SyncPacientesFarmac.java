@@ -11,17 +11,20 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.PrintStream;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -37,7 +40,7 @@ public class SyncPacientesFarmac extends JPanel implements Runnable {
 
     public SyncPacientesFarmac() {
         super(new BorderLayout());
-        this.progress1 = new JProgressBar(){
+        this.progress1 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -46,7 +49,7 @@ public class SyncPacientesFarmac extends JPanel implements Runnable {
                 this.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
             }
         };
-        this.progress2 = new JProgressBar(){
+        this.progress2 = new JProgressBar() {
 
             @Override
             public void updateUI() {
@@ -66,40 +69,47 @@ public class SyncPacientesFarmac extends JPanel implements Runnable {
         PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
         PrintStream standardOut = System.out;
         System.setErr(printStream);
-        this.add((Component)new JButton(new AbstractAction("Enviar Pacientes para FARMAC"){
+        this.add((Component) new JButton(new AbstractAction("Enviar Pacientes para FARMAC") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                final JButton b = (JButton)e.getSource();
+                final JButton b = (JButton) e.getSource();
                 b.setEnabled(false);
-                Task3 worker = new Task3(){
 
-                    @Override
-                    public void done() {
-                        if (b.isDisplayable()) {
-                            b.setEnabled(true);
-                            b.setLabel("Fechar");
-                        }
-                    }
-                };
-                worker.addPropertyChangeListener(new ProgressListener(SyncPacientesFarmac.this.progress2));
-                worker.execute();
                 if (b.getLabel().equalsIgnoreCase("Fechar")) {
                     SyncPacientesFarmac.this.setVisible(false);
+                    SyncPacientesFarmac.this.setStop(true);
+                    JComponent comp = (JComponent) e.getSource();
+                    Window win = SwingUtilities.getWindowAncestor(comp);
+                    win.dispose();
+                } else {
+
+                    Task3 worker = new Task3() {
+
+                        @Override
+                        public void done() {
+                            if (b.isDisplayable()) {
+                                b.setEnabled(true);
+                                b.setLabel("Fechar");
+                            }
+                        }
+                    };
+                    worker.addPropertyChangeListener(new ProgressListener(SyncPacientesFarmac.this.progress2));
+                    worker.execute();
                 }
             }
 
         }), "South");
         JPanel p = new JPanel(new GridLayout(1, 2));
         p.add(new JScrollPane(textArea));
-       // p.add(this.progress2);
+        // p.add(this.progress2);
         this.add(p);
         this.setPreferredSize(new Dimension(920, 440));
     }
 
-    public static /* varargs */ void main(String ... args) {
-        
-         SyncPacientesFarmac syncPacientFarmac = new SyncPacientesFarmac();
+    public static /* varargs */ void main(String... args) {
+
+        SyncPacientesFarmac syncPacientFarmac = new SyncPacientesFarmac();
         syncPacientFarmac.run();
 //        EventQueue.invokeLater(new Runnable(){
 //
@@ -113,8 +123,7 @@ public class SyncPacientesFarmac extends JPanel implements Runnable {
     public static void createAndShowGUI() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
         JFrame frame = new JFrame("Enviar Pacientes para FARMAC");
@@ -125,7 +134,7 @@ public class SyncPacientesFarmac extends JPanel implements Runnable {
         frame.setVisible(true);
     }
 
-     public Boolean getStop() {
+    public Boolean getStop() {
         return stop;
     }
 
@@ -135,15 +144,13 @@ public class SyncPacientesFarmac extends JPanel implements Runnable {
 
     @Override
     public void run() {
-            while (!stop) {
+        while (!stop) {
             SyncPacientesFarmac.createAndShowGUI();
             SyncPacientesFarmac.this.setStop(true);
         }
 //        throw new UnsupportedOperationException("Not supported yet."); 
 //To change body of generated methods, choose Tools | Templates.
-    
+
     }
 
-
 }
-

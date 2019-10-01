@@ -87,7 +87,8 @@ public class Task4 extends SwingWorker<String, Void> {
                 pzip.unCompressPasswordProtectedFiles(jfc.getSelectedFile());
             } catch (ZipException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+             //   e.printStackTrace();
             }
 
             JRestoreController restore = new JRestoreController();
@@ -124,14 +125,14 @@ public class Task4 extends SwingWorker<String, Void> {
                         current = lengthOfTask * 2;
                     }
                 } catch (Exception e) {
-                    System.err.println("ACONTECEU UM ERRO INESPERADO, Contacte o Administrador \n" + e);
-                    e.printStackTrace();
+                    System.err.println("1. Se o erro persistir,por favor, Contacte o Administrador \n" + e);
+                  //  e.printStackTrace();
                 } 
             }
             System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         } catch (Exception e) {
-            System.err.println("ACONTECEU UM ERRO INESPERADO, Contacte o Administrador \n" + e);
-            e.printStackTrace();
+            System.err.println("2. Se o erro persistir,por favor, Contacte o Administrador \n" + e);
+        //    e.printStackTrace();
         }
         return "Done";
     }

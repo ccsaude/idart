@@ -47,14 +47,19 @@ public class PasswordProtectedZip {
      * @throws ZipException
      */
     public void unCompressPasswordProtectedFiles(File ficheiro) throws ZipException {
-        String destPath = getFileName(ficheiro.getAbsolutePath());
-        System.err.println("Localizacao do Ficheiro  " + destPath);
-        ZipFile zipFile = new ZipFile(ficheiro);
-        // If it is encrypted then provide password
-        if (zipFile.isEncrypted()) {
-            zipFile.setPassword(iDartProperties.ZIPFILEPASSWORD);
+        try {
+            String destPath = getFileName(ficheiro.getAbsolutePath());
+            System.err.println("Localizacao do Ficheiro  " + destPath);
+            ZipFile zipFile = new ZipFile(ficheiro);
+            // If it is encrypted then provide password
+            if (zipFile.isEncrypted()) {
+                zipFile.setPassword(iDartProperties.ZIPFILEPASSWORD);
+            }
+            zipFile.extractAll(destPath, null);
+        } catch (Exception e) {
+            System.err.println("FICHEIRO NAO SELECCIONADO/INVALIDO");
+            //    e.getStackTrace();
         }
-        zipFile.extractAll(destPath,null);
     }
 
     private String getFileName(String filePath) {

@@ -11,18 +11,21 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.PrintStream;
 import java.util.Locale;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -78,6 +81,9 @@ public class RestorePatientFarmac extends JPanel implements Runnable {
                 if (b.getLabel().equalsIgnoreCase("Fechar")) {
                     RestorePatientFarmac.this.setStop(true);
                     RestorePatientFarmac.this.setVisible(false);
+                    JComponent comp = (JComponent) e.getSource();
+                    Window win = SwingUtilities.getWindowAncestor(comp);
+                    win.dispose();
                 } else {
 
                     Task4 worker = new Task4() {

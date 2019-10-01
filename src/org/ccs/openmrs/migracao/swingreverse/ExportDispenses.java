@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.PrintStream;
 import java.util.concurrent.ExecutorService;
@@ -15,12 +16,14 @@ import java.util.concurrent.Executors;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -74,6 +77,9 @@ public class ExportDispenses extends JPanel implements Runnable {
                 if (b.getLabel().equalsIgnoreCase("Fechar")) {
                     ExportDispenses.this.setStop(true);
                     ExportDispenses.this.setVisible(false);
+                    JComponent comp = (JComponent) e.getSource();
+                    Window win = SwingUtilities.getWindowAncestor(comp);
+                    win.dispose();
                 } else {
 
                     Task1 worker = new Task1() {

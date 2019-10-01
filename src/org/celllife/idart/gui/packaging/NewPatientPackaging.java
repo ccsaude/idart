@@ -1599,7 +1599,7 @@ public class NewPatientPackaging extends GenericFormGui implements
         tblPrescriptionInfo.setHeaderVisible(true);
         tblPrescriptionInfo.setLinesVisible(true);
         tblPrescriptionInfo
-                .setToolTipText("lique em uma linha para visualizar as informações adicionais da dispensa");
+                .setToolTipText("Clique em uma linha para visualizar as informações adicionais da dispensa");
 
         tblPrescriptionInfo
                 .setFont(ResourceUtils.getFont(iDartFont.VERASANS_8));
@@ -3050,7 +3050,7 @@ public class NewPatientPackaging extends GenericFormGui implements
             prescription.setTipoDT("Manuntencao");
         }
 
-        PackageManager.saveNewPrescription(getHSession(), prescription, true);
+     
 
 //         List<PrescribedDrugs> prescribedDrugsList = new ArrayList<PrescribedDrugs>();
 //
@@ -3070,6 +3070,8 @@ public class NewPatientPackaging extends GenericFormGui implements
 //                prescribedDrugsList.add(newPD);
 //            }
 //        }
+
+   PackageManager.saveNewPrescription(getHSession(), prescription, true);
         return prescription;
 
     }

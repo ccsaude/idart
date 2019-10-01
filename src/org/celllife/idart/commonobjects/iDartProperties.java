@@ -30,7 +30,7 @@ public class iDartProperties {
 
 	public static boolean allowMultipleUncollectedPackages = false;
 
-	public static String downReferralMode = "online";
+	public static String downReferralMode = "offline";
 
 	public static boolean showDownReferButton = false;
 
