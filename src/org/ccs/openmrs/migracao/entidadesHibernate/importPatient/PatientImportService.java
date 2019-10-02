@@ -71,13 +71,28 @@ public class PatientImportService {
         return patients;
     }
 
-    public List<SyncTempDispense> findAllExported(String clinicName) {
+    public List<SyncTempDispense> findAllExportedFromPatient(String clinicName,Patient patient) {
         patientImportDao.openCurrentSession();
-        List<SyncTempDispense> patients = patientImportDao.findAllExported(clinicName);
+        List<SyncTempDispense> patients = patientImportDao.findAllExportedFromPatient(clinicName,patient);
         patientImportDao.closeCurrentSession();
         return patients;
     }
 
+    public List<Patient> findAllPatientFromClinic(String clinicName) {
+        patientImportDao.openCurrentSession();
+        List<Patient> patients = patientImportDao.findAllPatientFromClinic(clinicName);
+        patientImportDao.closeCurrentSession();
+        return patients;
+    }
+    
+     public Patient findByPatientUuid(String uuid) {
+        patientImportDao.openCurrentSession();
+        Patient patient = patientImportDao.findByPatientUuid(uuid);
+        patientImportDao.closeCurrentSession();
+        return patient;
+    }
+    
+    
     public void deleteAll() {
         patientImportDao.openCurrentSessionwithTransaction();
         patientImportDao.deleteAll();

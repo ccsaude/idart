@@ -17,6 +17,7 @@ import org.celllife.idart.database.hibernate.Patient;
 import org.celllife.idart.database.hibernate.SyncTempDispense;
 import org.celllife.idart.database.hibernate.SyncTempPatient;
 import org.celllife.idart.database.hibernate.tmp.PackageDrugInfo;
+import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -127,14 +128,43 @@ public class PatientImportDao
     }
 
       @Override
-    public List<SyncTempDispense> findAllExported(String clinicName) {
+    public List<SyncTempDispense> findAllExportedFromPatient(String clinicName,Patient patient) {
          List syncDispenseExport = null;
     try{
-         syncDispenseExport = this.getCurrentSession().createQuery("from SyncTempDispense where syncTempDispenseid = '"+clinicName+"'").list();
+         syncDispenseExport = this.getCurrentSession().createQuery("from SyncTempDispense where syncTempDispenseid = '"+clinicName+"'"
+                                                                 + " AND patient ="+patient.getId()).list();
     }catch(Exception e){
     System.out.println(e.getMessage());
     }
 
         return syncDispenseExport;
     }
+    
+    public List<Patient> findAllPatientFromClinic(String clinicName) {
+        List<Patient> patients = null;
+   
+        SQLQuery query = this.getCurrentSession().createSQLQuery("select distinct * from sync_temp_dispense "
+                                                               + " where sync_temp_dispenseid = '"+clinicName+"'");
+        
+        query.addEntity(Patient.class);
+        try{
+               patients = query.list();
+        }catch(HibernateException e){
+            System.err.println(e.getMessage());}
+        
+        return patients;
+    }
+    
+      /*
+    Modified by  Colaco 20/2018 
+    Vamos usar um identificador unico Uuid dos pacientes
+    para evitar a busca do paciente pelo Nid e apelido
+     */
+    public Patient findByPatientUuid(String uuid) {
+        
+        Patient patient = (Patient) this.getCurrentSession().createQuery("from Patient pa where pa.uuid = '" + uuid + "'").uniqueResult();
+        
+        return patient;
+    }
+    
 }

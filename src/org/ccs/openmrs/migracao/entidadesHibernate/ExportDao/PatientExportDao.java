@@ -121,8 +121,10 @@ implements PatientDaoInterface<Patient, String> {
     }
 
     @Override
-    public List<SyncTempDispense> findAllExported(String T) {
+    public List<SyncTempDispense> findAllExportedFromPatient(String T, org.celllife.idart.database.hibernate.Patient p) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+  
 }
 

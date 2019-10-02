@@ -46,6 +46,7 @@ import org.celllife.idart.database.hibernate.PackagedDrugs;
 import org.celllife.idart.database.hibernate.Packages;
 import org.celllife.idart.database.hibernate.Patient;
 import org.celllife.idart.database.hibernate.PatientIdentifier;
+import org.celllife.idart.database.hibernate.PrescribedDrugs;
 import org.celllife.idart.database.hibernate.Prescription;
 import org.celllife.idart.database.hibernate.RegimeTerapeutico;
 import org.celllife.idart.database.hibernate.Stock;
@@ -76,6 +77,7 @@ public class Task6 extends SwingWorker<String, Void> {
     // C:\\idart ou C:\\Program Files\\idart ou C:\\Program Files (x86)\\idart.
     ReadWriteTextFile rwTextFile = new ReadWriteTextFile();
     String logFile;
+    int lengthOfTask = 0;
 
     Task6() {
 
@@ -95,7 +97,7 @@ public class Task6 extends SwingWorker<String, Void> {
         try {
 
             PasswordProtectedZip pzip = new PasswordProtectedZip();
-            JFileChooser jfc = new JFileChooser(System.getProperty("user.home") + File.separator + "Dropbox" + File.separator + "FARMAC" +  File.separator + "DISPENSAS" + File.separator, FileSystemView.getFileSystemView());
+            JFileChooser jfc = new JFileChooser(System.getProperty("user.home") + File.separator + "Dropbox" + File.separator + "FARMAC" + File.separator + "DISPENSAS" + File.separator, FileSystemView.getFileSystemView());
             jfc.setDialogTitle("Seleccione o ficheiro: ");
             jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             jfc.setAcceptAllFileFilterUsed(true);
@@ -107,8 +109,8 @@ public class Task6 extends SwingWorker<String, Void> {
                     System.out.println("You selected the directory: " + jfc.getSelectedFile());
                 }
             }
-            
-             try {
+
+            try {
                 pzip.unCompressPasswordProtectedFiles(jfc.getSelectedFile());
             } catch (ZipException e) {
                 // TODO Auto-generated catch block
@@ -118,14 +120,14 @@ public class Task6 extends SwingWorker<String, Void> {
             JRestoreController restore = new JRestoreController();
             restore.executeCommand(iDartProperties.hibernateDatabase, iDartProperties.hibernatePassword, "restore", iDartProperties.hibernateTableExport, jfc.getSelectedFile().getPath().replaceAll(".zip", ""), jfc.getSelectedFile());
 
-             if (new File(jfc.getSelectedFile().getPath().replace(".zip", "")).exists()) {
-                        try {
-                            FileUtils.deleteDirectory(new File(jfc.getSelectedFile().getPath().replace(".zip", "")));
-                        }catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            if (new File(jfc.getSelectedFile().getPath().replace(".zip", "")).exists()) {
+                try {
+                    FileUtils.deleteDirectory(new File(jfc.getSelectedFile().getPath().replace(".zip", "")));
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
-             }
             Session session = HibernateUtil.getNewSession();
             PackageDrugInfoExportService packageDrugInfoExportService = new PackageDrugInfoExportService();
             PatientImportService patientImportService = new PatientImportService();
@@ -136,14 +138,16 @@ public class Task6 extends SwingWorker<String, Void> {
             if (user == null) {
                 user = AdministrationManager.getUserByName(patientImportService.patientImportDao().openCurrentSessionwithTransaction(), "Admin");
             }
+            List<Patient> listPacientes = patientImportService.findAllPatientFromClinic(clinic.getClinicName());
 
-            List<SyncTempDispense> dispensasFarmacs = patientImportService.findAllExported(clinic.getClinicName());
-
+            
+            if(listPacientes != null)
+                lengthOfTask = listPacientes.size();
+                
             System.err.println("PROCESSANDO ....");
 
             int current = 0;
             int contanonSend = 0;
-            int lengthOfTask = dispensasFarmacs.size();
             int pacientesEmTransito = 0;
             //Esvazia o log file
             logFile = getLogFileLocation();
@@ -157,27 +161,35 @@ public class Task6 extends SwingWorker<String, Void> {
                 }
                 //   Users users = usersService.findById("1");
 
-                for (SyncTempDispense dispensasFarmac : dispensasFarmacs) {
+                for (Patient patient : listPacientes) {
                     ++current;
 
                     // os erros vao para o logfile
                     try {
                         this.setProgress(100 * current / lengthOfTask);
 
-                        org.celllife.idart.database.hibernate.Patient importedPatient = patientImportService.findByPatientId(dispensasFarmac.getPatientid());
+                        Patient importedPatient = null;
+
+                        if (!patient.getUuid().isEmpty()) {
+                            importedPatient = patientImportService.findByPatientUuid(patient.getUuid());
+                        }
+
+                        if (importedPatient == null) {
+                            importedPatient = patientImportService.findByPatientId(patient.getPatientId());
+                        }
+
                         Session sess = HibernateUtil.getNewSession();
                         if (importedPatient != null) {
 
-                            PatientIdentifierService identifierDao = new PatientIdentifierService();
-                            saveDispenseFarmacQty0(importedPatient, dispensasFarmac, current, clinic, user, sess);
+                            List<SyncTempDispense> dispenses = patientImportService.findAllExportedFromPatient(clinic.getClinicName(), patient);
 
-//                            PackageDrugInfoExportService rapidSave = new PackageDrugInfoExportService();
-//                            packageDrugInfo.setNotes("Exported");
-//                            rapidSave.update(packageDrugInfo);
+                            Prescription prescription = getPrescritionFarmacQty0(patient, dispenses, sess);
+
+                            saveDispenseFarmacQty0(prescription, importedPatient, dispenses, clinic, user, sess);
+
                             System.err.println("**********************************************************************************************************************************************************************************");
                             System.err.println(" Dispensa do Paciente " + importedPatient.getFirstNames() + " " + importedPatient.getLastname() + " com o nid NID " + importedPatient.getPatientId() + " Enviado para o IDART.");
                             System.err.println("**********************************************************************************************************************************************************************************");
-
                         }
 
                     } catch (NullPointerException nl) {
@@ -187,9 +199,9 @@ public class Task6 extends SwingWorker<String, Void> {
                         //num logfile e continuar com a execucao ciclo   
                         List<String> listNidsProblematicos = new ArrayList<>();
                         listNidsProblematicos.add("---------------------------------------------------------------------- ----------------------------------------------------------------");
-                        listNidsProblematicos.add("NID: " + dispensasFarmac.getPatientid());
-                        listNidsProblematicos.add("NOME: " + dispensasFarmac.getPatientfirstname());
-                        listNidsProblematicos.add("APELIDO: " + dispensasFarmac.getPatientlastname());
+                        listNidsProblematicos.add("NID: " + patient.getPatientId());
+                        listNidsProblematicos.add("NOME: " + patient.getFirstNames());
+                        listNidsProblematicos.add("APELIDO: " + patient.getLastname());
                         listNidsProblematicos.add("ERRO: " + e.getMessage());
                         rwTextFile.writeSmallTextFile(listNidsProblematicos, logFile);
                     }
@@ -261,58 +273,63 @@ public class Task6 extends SwingWorker<String, Void> {
     }
 
     // Add for dispense more than 1 month with Qty = 0
-    public void saveDispenseFarmacQty0(Patient patient, SyncTempDispense syncTempDispense, int i, Clinic clinic, User user, Session sess) {
+    public void saveDispenseFarmacQty0(Prescription prescription, Patient patient, List<SyncTempDispense> syncTempDispense, Clinic clinic, User user, Session sess) {
 
         Transaction tx = null;
         try {
             // Prescriotion Duration
             tx = sess.beginTransaction();
-            Calendar theCal = Calendar.getInstance();
-            theCal.setTime(syncTempDispense.getDispensedate());
-            //  theCal.add(Calendar.DATE, (4 * i * 7) + (i * 2));
-            theCal.add(Calendar.DATE, i * 30);
-            Drug drug = DrugManager.getDrug(sess, syncTempDispense.getDrugname());
-            Stock stock = null;
-            
-            if(drug != null)
-                stock = StockManager.getAllStockForDrug(sess, drug).get(0);
-            else
-                stock = StockManager.getAllCurrentStock(sess).get(0);
-            
-            Prescription prescription = getPrescritionFarmacQty0(patient, syncTempDispense, sess);
-            //fazer find prescricao
-            java.util.List<PackageDrugInfo> allPackagedDrugsListTemp = new ArrayList<PackageDrugInfo>();
+              java.util.List<PackageDrugInfo> allPackagedDrugsListTemp = new ArrayList<PackageDrugInfo>();
 
-            PackageDrugInfo pditemp = new PackageDrugInfo();
-            pditemp.setAmountPerTime(0);
-            pditemp.setClinic(clinic.getClinicName());
-            pditemp.setDispensedQty(0);
-            pditemp.setBatchNumber("");
-            pditemp.setFormLanguage1("");
-            pditemp.setFormLanguage2("");
-            pditemp.setFormLanguage3("");
-            pditemp.setDrugName(syncTempDispense.getDrugname());
-            pditemp.setExpiryDate(syncTempDispense.getExpirydate());
-            pditemp.setPatientId(syncTempDispense.getPatientid());
-            pditemp.setPatientFirstName(syncTempDispense.getPatientfirstname());
-            pditemp.setPatientLastName(syncTempDispense.getPatientlastname());
-            pditemp.setSpecialInstructions1("");
-            pditemp.setSpecialInstructions2("");
-            pditemp.setStockId(stock.getId());
-            pditemp.setTimesPerDay(syncTempDispense.getTimesperday());
-            pditemp.setNumberOfLabels(0);
-            pditemp.setCluser(user);
-            pditemp.setDispenseDate(theCal.getTime());
-            pditemp.setWeeksSupply(syncTempDispense.getWeekssupply());
-            pditemp.setQtyInHand(syncTempDispense.getQtyinhand());
-            pditemp.setSummaryQtyInHand(syncTempDispense.getSummaryqtyinhand());
-            pditemp.setQtyInLastBatch(syncTempDispense.getQtyinlastbatch());
-            pditemp.setPrescriptionDuration(syncTempDispense.getDuration());
-            pditemp.setDateExpectedString(syncTempDispense.getDateexpectedstring());
-            pditemp.setPickupDate(theCal.getTime());
-            pditemp.setNotes("");
-            allPackagedDrugsListTemp.add(pditemp);
-            savePackageAndPackagedDrugsWhithFarmacQty0(true, allPackagedDrugsListTemp, prescription, i, clinic, sess);
+            for (int i = 0; i < syncTempDispense.size(); i++) {
+
+                Calendar theCal = Calendar.getInstance();
+                theCal.setTime(syncTempDispense.get(i).getDispensedate());
+                //  theCal.add(Calendar.DATE, (4 * i * 7) + (i * 2));
+                theCal.add(Calendar.DATE, i * 30);
+             
+              
+                Drug drug = DrugManager.getDrug(sess, syncTempDispense.get(i).getDrugname());
+                Stock stock = null;
+
+                if (drug != null) {
+                    stock = StockManager.getAllStockForDrug(sess, drug).get(0);
+                } else {
+                    stock = StockManager.getAllCurrentStock(sess).get(0);
+                }
+
+                PackageDrugInfo pditemp = new PackageDrugInfo();
+                pditemp.setAmountPerTime(0);
+                pditemp.setClinic(clinic.getClinicName());
+                pditemp.setDispensedQty(0);
+                pditemp.setBatchNumber("");
+                pditemp.setFormLanguage1("");
+                pditemp.setFormLanguage2("");
+                pditemp.setFormLanguage3("");
+                pditemp.setDrugName(syncTempDispense.get(i).getDrugname());
+                pditemp.setExpiryDate(syncTempDispense.get(i).getExpirydate());
+                pditemp.setPatientId(syncTempDispense.get(i).getPatientid());
+                pditemp.setPatientFirstName(syncTempDispense.get(i).getPatientfirstname());
+                pditemp.setPatientLastName(syncTempDispense.get(i).getPatientlastname());
+                pditemp.setSpecialInstructions1("");
+                pditemp.setSpecialInstructions2("");
+                pditemp.setStockId(stock.getId());
+                pditemp.setTimesPerDay(syncTempDispense.get(i).getTimesperday());
+                pditemp.setNumberOfLabels(0);
+                pditemp.setCluser(user);
+                pditemp.setDispenseDate(theCal.getTime());
+                pditemp.setWeeksSupply(syncTempDispense.get(i).getWeekssupply());
+                pditemp.setQtyInHand(syncTempDispense.get(i).getQtyinhand());
+                pditemp.setSummaryQtyInHand(syncTempDispense.get(i).getSummaryqtyinhand());
+                pditemp.setQtyInLastBatch(syncTempDispense.get(i).getQtyinlastbatch());
+                pditemp.setPrescriptionDuration(syncTempDispense.get(i).getDuration());
+                pditemp.setDateExpectedString(syncTempDispense.get(i).getDateexpectedstring());
+                pditemp.setPickupDate(theCal.getTime());
+                pditemp.setNotes("");
+                allPackagedDrugsListTemp.add(pditemp);
+            }
+
+            savePackageAndPackagedDrugsWhithFarmacQty0(true, allPackagedDrugsListTemp, prescription, clinic, sess);
             TemporaryRecordsManager.savePackageDrugInfosToDB(sess, allPackagedDrugsListTemp);
             sess.flush();
             tx.commit();
@@ -330,10 +347,11 @@ public class Task6 extends SwingWorker<String, Void> {
     }
 
     // Create or edit Prescription FARMAC
-    Prescription getPrescritionFarmacQty0(Patient patient, SyncTempDispense syncTempDispense, Session sess) {
+    Prescription getPrescritionFarmacQty0(Patient patient, List<SyncTempDispense> syncTempDispense, Session sess) {
 
         Prescription prescription = null;
-        prescription = PackageManager.getPrescriptionFromPatient(sess, patient, syncTempDispense.getPickupdate());
+
+        prescription = PackageManager.getPrescriptionFromPatient(sess, patient, syncTempDispense.get(0).getDispensedate());
 
         if (prescription == null) {
             prescription = new Prescription();
@@ -341,36 +359,51 @@ public class Task6 extends SwingWorker<String, Void> {
             //   String prescriptionId = PackageManager.getNewPrescriptionId(sess, patient, syncTempDispense.getDate());
             SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
             Doctor doctorProvider = PrescriptionManager.getProvider(sess);
-            LinhaT linhat = AdministrationManager.getLinha(sess, syncTempDispense.getLinhaid());
-            RegimeTerapeutico regimeTerapeutico = AdministrationManager.getRegimeTerapeutico(sess, syncTempDispense.getRegimeid());
+            LinhaT linhat = AdministrationManager.getLinha(sess, syncTempDispense.get(0).getLinhaid());
+            RegimeTerapeutico regimeTerapeutico = AdministrationManager.getRegimeTerapeutico(sess, syncTempDispense.get(0).getRegimeid());
 
             prescription.setClinicalStage(0);
             prescription.setCurrent('T');
-            prescription.setDate(syncTempDispense.getDate());
-            prescription.setEndDate(syncTempDispense.getEnddate());
+            prescription.setDate(syncTempDispense.get(0).getDate());
+            prescription.setEndDate(syncTempDispense.get(0).getEnddate());
             prescription.setDoctor(doctorProvider);
-            prescription.setDuration(syncTempDispense.getDuration());
-            prescription.setModified(syncTempDispense.getModified());
+            prescription.setDuration(syncTempDispense.get(0).getDuration());
+            prescription.setModified(syncTempDispense.get(0).getModified());
             prescription.setPatient(patient);
-            prescription.setPrescriptionId(patient.getPatientId() + "-" + df.format(syncTempDispense.getDate()) + " - Farmac");
-            prescription.setReasonForUpdate(syncTempDispense.getReasonforupdate());
-            prescription.setNotes("FARMAC: " + syncTempDispense.getNotes());
+            prescription.setPrescriptionId(patient.getPatientId() + "-" + df.format(syncTempDispense.get(0).getDate()) + " - Farmac");
+            prescription.setReasonForUpdate(syncTempDispense.get(0).getReasonforupdate());
+            prescription.setNotes("FARMAC: " + syncTempDispense.get(0).getNotes());
             prescription.setRegimeTerapeutico(regimeTerapeutico);
             prescription.setLinha(linhat);
-            prescription.setDatainicionoutroservico(syncTempDispense.getDatainicionoutroservico());
-            prescription.setMotivoMudanca(syncTempDispense.getMotivomudanca());
-            prescription.setPpe(syncTempDispense.getPpe());
-            prescription.setPtv(syncTempDispense.getPtv());
-            prescription.setTb(syncTempDispense.getTb());
-            prescription.setGaac(syncTempDispense.getGaac());
-            prescription.setAf(syncTempDispense.getAf());
-            prescription.setFr(syncTempDispense.getFr());
-            prescription.setCa(syncTempDispense.getCa());
-            prescription.setSaaj(syncTempDispense.getSaaj());
-            prescription.setCcr(syncTempDispense.getCcr());
-            prescription.setTpc(syncTempDispense.getTpc());
-            prescription.setTpi(syncTempDispense.getTpi());
-            prescription.setDrugTypes(syncTempDispense.getDrugtypes());
+            prescription.setDatainicionoutroservico(syncTempDispense.get(0).getDatainicionoutroservico());
+            prescription.setMotivoMudanca(syncTempDispense.get(0).getMotivomudanca());
+            prescription.setPpe(syncTempDispense.get(0).getPpe());
+            prescription.setPtv(syncTempDispense.get(0).getPtv());
+            prescription.setTb(syncTempDispense.get(0).getTb());
+            prescription.setGaac(syncTempDispense.get(0).getGaac());
+            prescription.setAf(syncTempDispense.get(0).getAf());
+            prescription.setFr(syncTempDispense.get(0).getFr());
+            prescription.setCa(syncTempDispense.get(0).getCa());
+            prescription.setSaaj(syncTempDispense.get(0).getSaaj());
+            prescription.setCcr(syncTempDispense.get(0).getCcr());
+            prescription.setTpc(syncTempDispense.get(0).getTpc());
+            prescription.setTpi(syncTempDispense.get(0).getTpi());
+            prescription.setDrugTypes(syncTempDispense.get(0).getDrugtypes());
+
+            List<PrescribedDrugs> prescribedDrugsList = new ArrayList<PrescribedDrugs>();
+
+            // Save the Prescription Drugs
+            for (int i = 0; i < syncTempDispense.size(); i++) {
+
+                Drug drug = DrugManager.getDrug(sess, syncTempDispense.get(i).getDrugname());
+                PrescribedDrugs newPD = new PrescribedDrugs();
+                newPD.setAmtPerTime(Double.parseDouble(syncTempDispense.get(i).getAmountpertime()));
+                newPD.setDrug(drug);
+                newPD.setModified(syncTempDispense.get(i).getModified());
+                newPD.setPrescription(prescription);
+                newPD.setTimesPerDay(syncTempDispense.get(i).getTimesperday());
+                prescribedDrugsList.add(newPD);
+            }
 
             PackageManager.saveNewPrescription(sess, prescription, true);
         }
@@ -380,7 +413,7 @@ public class Task6 extends SwingWorker<String, Void> {
     }
 
     public void savePackageAndPackagedDrugsWhithFarmacQty0(boolean dispenseNow,
-            java.util.List<PackageDrugInfo> allPackageDrugsList, Prescription prescription, int i, Clinic clinic, Session sess) {
+            java.util.List<PackageDrugInfo> allPackageDrugsList, Prescription prescription, Clinic clinic, Session sess) {
 
         // if pack date is today, store the time too, else store 12am
         PackageDrugInfo packageDrugInfo = allPackageDrugsList.get(0);

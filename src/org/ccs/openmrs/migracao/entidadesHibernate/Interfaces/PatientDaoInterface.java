@@ -6,6 +6,7 @@ package org.ccs.openmrs.migracao.entidadesHibernate.Interfaces;
 import java.io.Serializable;
 import java.util.List;
 import org.ccs.openmrs.migracao.swingreverse.SyncDispensasFarmac;
+import org.celllife.idart.database.hibernate.Patient;
 import org.celllife.idart.database.hibernate.SyncTempDispense;
 import org.celllife.idart.database.hibernate.SyncTempPatient;
 
@@ -22,7 +23,7 @@ public interface PatientDaoInterface<T, Id extends Serializable> {
     
     public List<SyncTempPatient> findAllImport();
     
-    List<SyncTempDispense> findAllExported(String T);
+    List<SyncTempDispense> findAllExportedFromPatient(String T,Patient p);
 
     public void deleteAll();
 }
