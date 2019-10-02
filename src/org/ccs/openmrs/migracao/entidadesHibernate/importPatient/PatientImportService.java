@@ -6,6 +6,7 @@
  */
 package org.ccs.openmrs.migracao.entidadesHibernate.importPatient;
 
+import java.util.Date;
 import java.util.List;
 import org.ccs.openmrs.migracao.entidadesHibernate.ImportDao.PatientImportDao;
 import org.celllife.idart.database.hibernate.Patient;
@@ -71,16 +72,16 @@ public class PatientImportService {
         return patients;
     }
 
-    public List<SyncTempDispense> findAllExportedFromPatient(String clinicName,Patient patient) {
+    public List<SyncTempDispense> findAllExportedFromPatient(String clinicName,Patient patient, Date dataDispensa) {
         patientImportDao.openCurrentSession();
-        List<SyncTempDispense> patients = patientImportDao.findAllExportedFromPatient(clinicName,patient);
+        List<SyncTempDispense> patients = patientImportDao.findAllExportedFromPatient(clinicName,patient,dataDispensa);
         patientImportDao.closeCurrentSession();
         return patients;
     }
 
-    public List<Patient> findAllPatientFromClinic(String clinicName) {
+    public List findAllPatientFromClinic(String clinicName) {
         patientImportDao.openCurrentSession();
-        List<Patient> patients = patientImportDao.findAllPatientFromClinic(clinicName);
+        List patients = patientImportDao.findAllPatientFromClinic(clinicName);
         patientImportDao.closeCurrentSession();
         return patients;
     }

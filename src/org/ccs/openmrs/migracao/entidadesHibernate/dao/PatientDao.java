@@ -10,6 +10,7 @@ package org.ccs.openmrs.migracao.entidadesHibernate.dao;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 import org.ccs.openmrs.migracao.connection.hibernateConectionRemote;
 import org.ccs.openmrs.migracao.entidades.Patient;
@@ -107,7 +108,7 @@ implements PatientDaoInterface<Patient, String> {
     }
 
     @Override
-    public List<SyncTempDispense> findAllExportedFromPatient(String T, org.celllife.idart.database.hibernate.Patient p) {
+    public List<SyncTempDispense> findAllExportedFromPatient(String T, org.celllife.idart.database.hibernate.Patient p, Date d) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

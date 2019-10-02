@@ -9,6 +9,7 @@
 package org.ccs.openmrs.migracao.entidadesHibernate.ImportDao;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import org.ccs.openmrs.migracao.connection.hibernateConection;
 import org.ccs.openmrs.migracao.entidadesHibernate.Interfaces.PatientDaoInterface;
@@ -104,12 +105,11 @@ public class PatientImportDao
 //        List<SyncTempPatient> syncPatientImport = query.list();
 //        
         List syncPatientImport = null;
-    try{
-         syncPatientImport = this.getCurrentSession().createQuery("from SyncTempPatient").list();
-    }catch(Exception e){
-    System.out.println(e.getMessage());
-    }
-
+        try {
+            syncPatientImport = this.getCurrentSession().createQuery("from SyncTempPatient").list();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         return syncPatientImport;
     }
@@ -127,44 +127,45 @@ public class PatientImportDao
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-      @Override
-    public List<SyncTempDispense> findAllExportedFromPatient(String clinicName,Patient patient) {
-         List syncDispenseExport = null;
-    try{
-         syncDispenseExport = this.getCurrentSession().createQuery("from SyncTempDispense where syncTempDispenseid = '"+clinicName+"'"
-                                                                 + " AND patient ="+patient.getId()).list();
-    }catch(Exception e){
-    System.out.println(e.getMessage());
-    }
+    @Override
+    public List<SyncTempDispense> findAllExportedFromPatient(String clinicName, Patient patient, Date datadispensa) {
+        List syncDispenseExport = null;
+        try {
+            syncDispenseExport = this.getCurrentSession().createQuery("from SyncTempDispense where syncTempDispenseid = '" + clinicName + "'"
+                    + " AND patientid = '" + patient.getPatientId() + "' AND dispensedate = '"+datadispensa+"'").list();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         return syncDispenseExport;
     }
-    
-    public List<Patient> findAllPatientFromClinic(String clinicName) {
-        List<Patient> patients = null;
-   
-        SQLQuery query = this.getCurrentSession().createSQLQuery("select distinct * from sync_temp_dispense "
-                                                               + " where sync_temp_dispenseid = '"+clinicName+"'");
-        
-        query.addEntity(Patient.class);
-        try{
-               patients = query.list();
-        }catch(HibernateException e){
-            System.err.println(e.getMessage());}
-        
+
+    public List findAllPatientFromClinic(String clinicName) {
+        List patients = null;
+
+        SQLQuery query = this.getCurrentSession().createSQLQuery("select distinct patientid,dispensedate from sync_temp_dispense "
+                + " where sync_temp_dispenseid = '" + clinicName + "' order by dispensedate desc");
+
+    //    query.addEntity(Patient.class);
+        try {
+            patients = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        }
+
         return patients;
     }
-    
-      /*
+
+    /*
     Modified by  Colaco 20/2018 
     Vamos usar um identificador unico Uuid dos pacientes
     para evitar a busca do paciente pelo Nid e apelido
      */
     public Patient findByPatientUuid(String uuid) {
-        
+
         Patient patient = (Patient) this.getCurrentSession().createQuery("from Patient pa where pa.uuid = '" + uuid + "'").uniqueResult();
-        
+
         return patient;
     }
-    
+
 }

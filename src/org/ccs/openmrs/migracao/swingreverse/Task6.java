@@ -138,12 +138,12 @@ public class Task6 extends SwingWorker<String, Void> {
             if (user == null) {
                 user = AdministrationManager.getUserByName(patientImportService.patientImportDao().openCurrentSessionwithTransaction(), "Admin");
             }
-            List<Patient> listPacientes = patientImportService.findAllPatientFromClinic(clinic.getClinicName());
+            List listPacientes = patientImportService.findAllPatientFromClinic(clinic.getClinicName());
 
-            
-            if(listPacientes != null)
+            if (listPacientes != null) {
                 lengthOfTask = listPacientes.size();
-                
+            }
+
             System.err.println("PROCESSANDO ....");
 
             int current = 0;
@@ -161,29 +161,22 @@ public class Task6 extends SwingWorker<String, Void> {
                 }
                 //   Users users = usersService.findById("1");
 
-                for (Patient patient : listPacientes) {
+                for (Object patient : listPacientes) {
                     ++current;
-
+                    String nidPaciente = ((Object[]) patient)[0].toString();
+                    Date dataDispensa = (Date) ((Object[]) patient)[1];
                     // os erros vao para o logfile
                     try {
                         this.setProgress(100 * current / lengthOfTask);
-
-                        Patient importedPatient = null;
-
-                        if (!patient.getUuid().isEmpty()) {
-                            importedPatient = patientImportService.findByPatientUuid(patient.getUuid());
-                        }
-
-                        if (importedPatient == null) {
-                            importedPatient = patientImportService.findByPatientId(patient.getPatientId());
-                        }
-
                         Session sess = HibernateUtil.getNewSession();
+
+                        Patient importedPatient = patientImportService.findByPatientId(nidPaciente);
+
                         if (importedPatient != null) {
 
-                            List<SyncTempDispense> dispenses = patientImportService.findAllExportedFromPatient(clinic.getClinicName(), patient);
+                            List<SyncTempDispense> dispenses = patientImportService.findAllExportedFromPatient(clinic.getClinicName(), importedPatient, dataDispensa);
 
-                            Prescription prescription = getPrescritionFarmacQty0(patient, dispenses, sess);
+                            Prescription prescription = getPrescritionFarmacQty0(importedPatient, dispenses, sess);
 
                             saveDispenseFarmacQty0(prescription, importedPatient, dispenses, clinic, user, sess);
 
@@ -199,9 +192,9 @@ public class Task6 extends SwingWorker<String, Void> {
                         //num logfile e continuar com a execucao ciclo   
                         List<String> listNidsProblematicos = new ArrayList<>();
                         listNidsProblematicos.add("---------------------------------------------------------------------- ----------------------------------------------------------------");
-                        listNidsProblematicos.add("NID: " + patient.getPatientId());
-                        listNidsProblematicos.add("NOME: " + patient.getFirstNames());
-                        listNidsProblematicos.add("APELIDO: " + patient.getLastname());
+//                        listNidsProblematicos.add("NID: " + patient.getPatientId());
+//                        listNidsProblematicos.add("NOME: " + patient.getFirstNames());
+//                        listNidsProblematicos.add("APELIDO: " + patient.getLastname());
                         listNidsProblematicos.add("ERRO: " + e.getMessage());
                         rwTextFile.writeSmallTextFile(listNidsProblematicos, logFile);
                     }
@@ -279,7 +272,7 @@ public class Task6 extends SwingWorker<String, Void> {
         try {
             // Prescriotion Duration
             tx = sess.beginTransaction();
-              java.util.List<PackageDrugInfo> allPackagedDrugsListTemp = new ArrayList<PackageDrugInfo>();
+            java.util.List<PackageDrugInfo> allPackagedDrugsListTemp = new ArrayList<PackageDrugInfo>();
 
             for (int i = 0; i < syncTempDispense.size(); i++) {
 
@@ -287,15 +280,23 @@ public class Task6 extends SwingWorker<String, Void> {
                 theCal.setTime(syncTempDispense.get(i).getDispensedate());
                 //  theCal.add(Calendar.DATE, (4 * i * 7) + (i * 2));
                 theCal.add(Calendar.DATE, i * 30);
-             
-              
+
                 Drug drug = DrugManager.getDrug(sess, syncTempDispense.get(i).getDrugname());
+                List<Stock> stockList = null;
                 Stock stock = null;
 
                 if (drug != null) {
-                    stock = StockManager.getAllStockForDrug(sess, drug).get(0);
-                } else {
+                    stockList = StockManager.getAllStockForDrug(sess, drug);
+                }
+
+                if (stockList == null) {
                     stock = StockManager.getAllCurrentStock(sess).get(0);
+                } else {
+                    if (stockList.size() == 0) {
+                        stock = StockManager.getAllCurrentStock(sess).get(0);
+                    } else {
+                        stock = stockList.get(0);
+                    }
                 }
 
                 PackageDrugInfo pditemp = new PackageDrugInfo();
@@ -397,7 +398,11 @@ public class Task6 extends SwingWorker<String, Void> {
 
                 Drug drug = DrugManager.getDrug(sess, syncTempDispense.get(i).getDrugname());
                 PrescribedDrugs newPD = new PrescribedDrugs();
-                newPD.setAmtPerTime(Double.parseDouble(syncTempDispense.get(i).getAmountpertime()));
+                if (drug.getPackSize() > 30) {
+                    newPD.setAmtPerTime(2);
+                } else {
+                    newPD.setAmtPerTime(1);
+                }
                 newPD.setDrug(drug);
                 newPD.setModified(syncTempDispense.get(i).getModified());
                 newPD.setPrescription(prescription);
