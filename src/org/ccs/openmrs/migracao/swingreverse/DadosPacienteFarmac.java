@@ -55,7 +55,7 @@ public class DadosPacienteFarmac {
             patient.setProvince(patientSync.getProvince());
             patient.setSex(patientSync.getSex());
             patient.setWorkPhone(null);
-            patient.setRace(patientSync.getClinicName());
+            patient.setRace(patientSync.getMainClinicName());
             patient.setUuid(patientSync.getUuid());
 
             if (importedPatientIdentifier == null) {
