@@ -63,6 +63,7 @@ public class Task4 extends SwingWorker<String, Void> {
         List<SyncTempPatient> patientList = patientImportService.findAllImport();
 
         int current = 0;
+        int npacientesDaFarmac = 0;
         int lengthOfTask = patientList.size();
 
         try {
@@ -109,6 +110,11 @@ public class Task4 extends SwingWorker<String, Void> {
                             // Inicia a Insercao de pacientes no Idart
                             for (SyncTempPatient patientSync : patientList) {
                                 ++current;
+                                
+                                if (clinic.getClinicName().equalsIgnoreCase(patientSync.getClinicName())){
+                                    ++npacientesDaFarmac;
+                                }
+                                
                                 Patient paciente = DadosPacienteFarmac.InserePaciente(patientSync, clinic);
                                 if (paciente != null) {
                                     DadosPacienteFarmac.InserePatientIdentifier(paciente, identifierType);
@@ -120,7 +126,7 @@ public class Task4 extends SwingWorker<String, Void> {
                             Logger.getLogger(JBackupController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                        System.err.println("" + lengthOfTask + " Pacientes Importados para o IDART com sucesso!!!!!!");
+                        System.err.println("" + npacientesDaFarmac + " Pacientes Importados para o IDART com sucesso!!!!!!");
                         //hibernateConection.getInstanceLocal().close();
                         current = lengthOfTask * 2;
                     }

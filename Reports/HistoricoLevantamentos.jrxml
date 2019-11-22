@@ -99,6 +99,18 @@ WHEN pdit.dateexpectedstring LIKE '%Set%' THEN REPLACE(pdit.dateexpectedstring,'
 WHEN pdit.dateexpectedstring LIKE '%Out%' THEN REPLACE(pdit.dateexpectedstring,'Out','Oct')
 WHEN pdit.dateexpectedstring LIKE '%Nov%' THEN REPLACE(pdit.dateexpectedstring,'Nov','Nov')
 WHEN pdit.dateexpectedstring LIKE '%Dez%' THEN REPLACE(pdit.dateexpectedstring,'Dez','Dec')
+WHEN pdit.dateexpectedstring LIKE '%jan%' THEN REPLACE(pdit.dateexpectedstring,'jan','Jan')
+WHEN pdit.dateexpectedstring LIKE '%fev%' THEN REPLACE(pdit.dateexpectedstring,'fev','Feb')
+WHEN pdit.dateexpectedstring LIKE '%mar%' THEN REPLACE(pdit.dateexpectedstring,'mar','Mar')
+WHEN pdit.dateexpectedstring LIKE '%abr%' THEN REPLACE(pdit.dateexpectedstring,'abr','Apr')
+WHEN pdit.dateexpectedstring LIKE '%mai%' THEN REPLACE(pdit.dateexpectedstring,'mai','May')
+WHEN pdit.dateexpectedstring LIKE '%jun%' THEN REPLACE(pdit.dateexpectedstring,'jun','Jun')
+WHEN pdit.dateexpectedstring LIKE '%jul%' THEN REPLACE(pdit.dateexpectedstring,'jul','Jul')
+WHEN pdit.dateexpectedstring LIKE '%ago%' THEN REPLACE(pdit.dateexpectedstring,'ago','Aug')
+WHEN pdit.dateexpectedstring LIKE '%set%' THEN REPLACE(pdit.dateexpectedstring,'set','Sep')
+WHEN pdit.dateexpectedstring LIKE '%out%' THEN REPLACE(pdit.dateexpectedstring,'out','Oct')
+WHEN pdit.dateexpectedstring LIKE '%nov%' THEN REPLACE(pdit.dateexpectedstring,'nov','Nov')
+WHEN pdit.dateexpectedstring LIKE '%dez%' THEN REPLACE(pdit.dateexpectedstring,'dez','Dec')
 ELSE
 pdit.dateexpectedstring
 END
